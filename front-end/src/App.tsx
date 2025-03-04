@@ -1,10 +1,18 @@
 import "./App.css";
+import SliderBanner from "./client/banner/SliderBanner";
+import Header from "./client/header/Header";
 
 function App() {
   return (
-    <>
-      <p className="text-xs p-10 bg-white text-black rounded-2xl">abc</p>
-    </>
+    <div className="flex flex-col">
+      <header>
+        <Header />
+      </header>
+      <main>
+        <SliderBanner />
+      </main>
+      <footer></footer>
+    </div>
   );
 }
 

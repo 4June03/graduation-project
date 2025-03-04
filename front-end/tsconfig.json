@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    // các tùy chọn khác...
+  }
+  ,
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
