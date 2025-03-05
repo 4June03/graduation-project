@@ -1,18 +1,31 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import SliderBanner from "./client/banner/SliderBanner";
-import Header from "./client/header/Header";
+import ShowingFilm from "./client/MoviesList/ShowingFilm";
+import UpComingFilm from "./client/MoviesList/UpComingFilm";
+import MainLayout from "./client/layout/MainLayout";
+import DetailMovie from "./client/Movie/DetailMovie";
 
 function App() {
   return (
-    <div className="flex flex-col">
-      <header>
-        <Header />
-      </header>
-      <main>
-        <SliderBanner />
-      </main>
-      <footer></footer>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route
+            index
+            element={
+              <>
+                <SliderBanner />
+                <ShowingFilm />
+                <UpComingFilm />
+              </>
+            }
+          />
+
+          <Route path="movie" element={<DetailMovie />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

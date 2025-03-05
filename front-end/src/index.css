@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -11,22 +9,30 @@
   /* background-color: #f3ebeb; */
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .bg-primary {
   @apply bg-[#10141b];
 }
 
 .menu-text-style {
-  @apply text-white hover:text-red-500 whitespace-nowrap text-[23px];
+  @apply hover:text-red-500 whitespace-nowrap text-[16px];
 }
 
 .primary-font-size {
-  @apply text-[23px];
+  @apply text-[16px];
 }
 
 .secondary-font-size {
-  @apply text-[18px];
+  @apply text-[14px];
 }
 
 .bg-border {
   @apply bg-[#1e293b];
+}
+
+.header-primary-font-size {
+  @apply text-[24px];
 }

@@ -18,7 +18,7 @@ const Header = () => {
   };
 
   return (
-    <div className="w-full text-white z-40 fixed transition duration-500 bg-black py-4 xl:py-7 top-0 left-0 opacity-90 px-4">
+    <div className="w-full text-white z-40 fixed transition duration-500 bg-black py-1 xl:py-3 top-0 left-0 px-4">
       <div className="mx-auto max-w-7xl flex items-center h-16 xl:h20 gap-2 ">
         <div className="relative w-[100px] xl:w-[110px] h-[35px] xl:h-[40px]">
           <Link to={"/"}>
@@ -29,7 +29,7 @@ const Header = () => {
             />
           </Link>
         </div>
-        <div className="font-semibold lg:hidden text-left">
+        <div className="font-semibold xl:hidden text-left">
           <p className="text-md">Trung tâm chiếu phim quốc gia</p>
           <p className="text-md">National Cinema Center</p>
         </div>
@@ -68,7 +68,7 @@ const Header = () => {
             <div className="flex gap-4">
               <RoundedButton
                 text="Đăng ký"
-                className="py-2 px-8 hover:scale-105 trasition duration-500 ring-2 py-4"
+                className="py-2 px-8 hover:scale-105 trasition duration-500 ring-2"
               />
               <RoundedButton
                 text="đăng nhập"

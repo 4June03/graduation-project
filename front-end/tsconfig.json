@@ -3,6 +3,11 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     // các tùy chọn khác...
+    "baseUrl": ".",
+    "paths": {
+      "swiper/*": ["node_modules/swiper/*"]
+    },
+    "typeRoots": ["node_modules/@types", "node_modules"]
   }
   ,
   "files": [],

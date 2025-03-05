@@ -6,7 +6,7 @@ const DropDownMenu = forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <div
       ref={ref}
-      className="xl:hidden w-full absolute top-full bg-black flex flex-col items-center justify-evenly gap-8 transition-all duration-300 overflow-hidden max-h-0 pt-5 z-20 shadow-md"
+      className="xl:hidden w-full absolute top-full bg-black flex flex-col items-center justify-evenly gap-8 transition-all duration-300 overflow-hidden max-h-0 z-20 shadow-md"
     >
       <Link to={"/"} className="menu-text-style">
         Trang chủ
