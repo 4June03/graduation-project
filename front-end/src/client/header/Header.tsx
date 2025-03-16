@@ -1,90 +1,29 @@
-import React, { useRef } from "react";
-import { FaCircleUser } from "react-icons/fa6";
-import { MdOutlineExpandMore } from "react-icons/md";
-import { Link } from "react-router-dom";
-import RoundedButton from "../../components/common/RoundedButton";
-import { IoMdMenu } from "react-icons/io";
-import DropDownMenu from "./DropDownMenu";
+import SearchBox from "../../components/common/SearchBox";
+import { IoMenu } from "react-icons/io5";
 
 const Header = () => {
-  const user: string = "";
-
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  const handleToggleMenu = () => {
-    if (menuRef.current) {
-      menuRef.current.classList.toggle("max-h-[600px]");
-    }
-  };
-
   return (
-    <div className="w-full text-white z-40 fixed transition duration-500 bg-black py-1 xl:py-3 top-0 left-0 px-4">
-      <div className="mx-auto max-w-7xl flex items-center h-16 xl:h20 gap-2 ">
-        <div className="relative w-[100px] xl:w-[110px] h-[35px] xl:h-[40px]">
-          <Link to={"/"}>
-            <img
-              src="https://chieuphimquocgia.com.vn/images/logo-text-new.svg"
-              alt=""
-              className="object-cover w-full h-full"
-            />
-          </Link>
-        </div>
-        <div className="font-semibold xl:hidden text-left">
-          <p className="text-md">Trung tâm chiếu phim quốc gia</p>
-          <p className="text-md">National Cinema Center</p>
-        </div>
-        <nav className="hidden xl:flex items-center justify-between gap-6 px-6 flex-1 z-30">
-          <Link to={"/"} className="menu-text-style">
-            Trang chủ
-          </Link>
-          <Link to={"/"} className="menu-text-style">
-            Lịch chiếu
-          </Link>
-          <Link to={"/"} className="menu-text-style">
-            Tin tức
-          </Link>
-          <Link to={"/"} className="menu-text-style">
-            Khuyến mãi
-          </Link>
-          <Link to={"/"} className="menu-text-style">
-            Giá vé
-          </Link>
-          <Link to={"/"} className="menu-text-style">
-            Giới thiệu
-          </Link>
-        </nav>
-        <div className="hidden xl:flex lg:gap-2 items-center">
-          {user ? (
-            <>
-              <span>
-                <FaCircleUser />
-              </span>
-              <p>username</p>
-              <span>
-                <MdOutlineExpandMore />
-              </span>
-            </>
-          ) : (
-            <div className="flex gap-4">
-              <RoundedButton
-                text="Đăng ký"
-                className="py-2 px-8 hover:scale-105 trasition duration-500 ring-2"
-              />
-              <RoundedButton
-                text="đăng nhập"
-                className={`hover:scale-105 trasition duration-500 bg-red-500 text-black`}
-              />
-            </div>
-          )}
-        </div>
-        <div
-          className="xl:hidden ml-auto inline-flex text-4xl cursor-pointer"
-          onClick={handleToggleMenu}
-        >
-          <IoMdMenu />
-        </div>
+    <div className="fixed top-0 right-0 w-full flex py-5 px-10 items-center justify-between gap-4 h-[70px] z-20 bg-white shadow-md">
+      <div className="w-20 h-5">
+        <img
+          src="https://yamaha-motor.com.vn/wp/wp-content/themes/yamaha/assets/img/share/logo_sp.png"
+          alt=""
+          className="object-cover"
+        />
       </div>
-      <DropDownMenu ref={menuRef} />
+      <ul className="items-center gap-7 text-black font-semibold uppercase hidden md:flex">
+        <li className="menu-text-style">Sản phẩm</li>
+        <li className="menu-text-style">Khuyến mãi</li>
+        <li className="menu-text-style">Tin tức</li>
+        <li className="menu-text-style">Bảng giá</li>
+        <li className="menu-text-style">Phụ tùng và phụ kiện</li>
+        <li className="menu-text-style">Khuyến mãi</li>
+      </ul>
+
+      <SearchBox />
+      <span className=" text-3xl block md:hidden text-black">
+        <IoMenu />
+      </span>
     </div>
   );
 };

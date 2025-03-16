@@ -1,12 +1,13 @@
-import React from "react";
-import Header from "../header/Header";
 import { Outlet } from "react-router-dom";
+import Footer from "../footer/Footer";
+import Header from "../header/Header";
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col w-full">
+    <div className=" w-full">
       <Header />
       <Outlet />
+      <Footer />
     </div>
   );
 };

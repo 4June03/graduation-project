@@ -1,10 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import SliderBanner from "./client/banner/SliderBanner";
-import ShowingFilm from "./client/MoviesList/ShowingFilm";
-import UpComingFilm from "./client/MoviesList/UpComingFilm";
 import MainLayout from "./client/layout/MainLayout";
-import DetailMovie from "./client/Movie/DetailMovie";
+import SlideBanner from "./client/banner/SlideBanner";
+import CategoryGrid from "./client/main/CategoryGrid";
+import MotorByCategoryPage from "@/client/products/MotorByCategoryPage";
 
 function App() {
   return (
@@ -15,14 +14,12 @@ function App() {
             index
             element={
               <>
-                <SliderBanner />
-                <ShowingFilm />
-                <UpComingFilm />
+                <SlideBanner />
+                <CategoryGrid />
               </>
             }
           />
-
-          <Route path="movie" element={<DetailMovie />} />
+          <Route path="products" element={<MotorByCategoryPage />} />
         </Route>
       </Routes>
     </>

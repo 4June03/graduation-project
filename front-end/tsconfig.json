@@ -5,7 +5,8 @@
     // các tùy chọn khác...
     "baseUrl": ".",
     "paths": {
-      "swiper/*": ["node_modules/swiper/*"]
+      "swiper/*": ["node_modules/swiper/*"], 
+      "@/*": ["./src/*"]
     },
     "typeRoots": ["node_modules/@types", "node_modules"]
   }
