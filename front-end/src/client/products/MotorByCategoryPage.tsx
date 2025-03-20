@@ -2,7 +2,7 @@ import CategoryMotorBanner from "@/client/banner/CategoryMotorBanner";
 import FunctionBar from "@/client/products/FunctionBar";
 import ListProductByTab from "@/client/products/ListProductByTab";
 import MenuTab from "@/client/products/MenuTab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Breadcrumb, Pagination } from "antd";
 import FilterDrawer from "@/client/products/ui components/FilterDrawer";
 
@@ -12,6 +12,8 @@ const MotorByCategoryPage = () => {
   const handleChangeTab = (tab: string) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {}, []);
 
   const [isDrawerFilterOpen, setIsDrawerFilterOpen] = useState(false);
 

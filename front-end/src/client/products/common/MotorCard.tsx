@@ -1,9 +1,9 @@
 import { MotorCardProps } from "@/client/products/common/interfaces";
 import React, { FC } from "react";
 
-const MotorCard: FC<MotorCardProps> = ({ name, image, price }) => {
+const MotorCard: FC<MotorCardProps> = ({ name, image, price, handleClick }) => {
   return (
-    <div className="flex flex-col p-4 gap-4">
+    <div className="flex flex-col p-4 gap-4" onClick={handleClick}>
       <h2 className="font-bold text-2xl">{name}</h2>
       <p className="w-full h-[70%]">
         <img

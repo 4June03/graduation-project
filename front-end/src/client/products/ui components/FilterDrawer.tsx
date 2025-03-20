@@ -2,6 +2,8 @@ import React, { FC } from "react";
 import { IoClose } from "react-icons/io5";
 
 import { Slider } from "antd";
+import PriceRangeFilter from "@/client/products/ui components/PriceRangeFilter";
+import { CSSTransition } from "react-transition-group";
 
 interface FilterDrawerProps {
   isOpen: boolean;
@@ -10,7 +12,6 @@ interface FilterDrawerProps {
 
 const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
-
   return (
     <div className="">
       <div
@@ -20,7 +21,7 @@ const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onClose }) => {
       <div className="fixed top-0 right-0 w-[100vw] md:w-[50vw] bg-white shadow-lg h-full p-6 overflow-y-auto z-30">
         {/* Nút đóng */}
         <button
-          className="absolute top-4 right-4 text-red-600 hover:text-red-800"
+          className="absolute top-4 right-4 text-red-600 hover:text-red-800 text-3xl"
           onClick={onClose}
           title="btn"
         >
@@ -63,6 +64,8 @@ const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onClose }) => {
             <span className="w-6 h-6 rounded-full bg-blue-500 cursor-pointer" />
           </div>
         </div>
+
+        <PriceRangeFilter minPrice={200} maxPrice={100000} />
 
         <button className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
           LỌC ➜

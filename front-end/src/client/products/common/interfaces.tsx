@@ -2,6 +2,7 @@ export interface MotorCardProps {
   name?: string;
   image?: string;
   price?: number;
+  handleClick: () => void;
 }
 
 export interface ListProductByTabProps {

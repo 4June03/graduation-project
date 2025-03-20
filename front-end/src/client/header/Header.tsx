@@ -1,3 +1,4 @@
+import UserDropDown from "@/client/header/UserDropDown";
 import SearchBox from "../../components/common/SearchBox";
 import { IoMenu } from "react-icons/io5";
 
@@ -21,6 +22,7 @@ const Header = () => {
       </ul>
 
       <SearchBox />
+      <UserDropDown />
       <span className=" text-3xl block md:hidden text-black">
         <IoMenu />
       </span>
