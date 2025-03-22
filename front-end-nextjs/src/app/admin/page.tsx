@@ -38,12 +38,12 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     // Handle logout logic here
-    router.push("/login");
+    router.push("/auth/login");
   };
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen bg-muted/40">
+      <div className="flex min-h-screen bg-muted/40 w-full">
         <Sidebar>
           <SidebarHeader className="flex items-center justify-center py-4">
             <div className="flex items-center gap-2">
