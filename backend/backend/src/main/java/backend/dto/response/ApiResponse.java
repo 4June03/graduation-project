@@ -1,14 +1,12 @@
 package backend.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 
 @Getter
 @Setter
+@Builder
 public class ApiResponse<T> {
     private boolean success;
     private String message;

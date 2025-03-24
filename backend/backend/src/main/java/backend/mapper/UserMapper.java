@@ -10,6 +10,6 @@ public interface UserMapper {
 
     public User RegisterUserRequestToUser (RegisterUserRequest request);
 
-    RegisterUserResponse UserToRegisterUserResponse(User user);
+    RegisterUserResponse userToRegisterUserResponse(User user);
 
 }

@@ -38,9 +38,9 @@ public class User {
 
     private LocalDate dob;
 
-    private LocalDate created_at;
+    private LocalDate createdAt;
 
-    private Date update_at;
+    private Date updatedAt;
 
     private Boolean isActive;
 
