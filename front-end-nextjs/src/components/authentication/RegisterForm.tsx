@@ -20,6 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useRegister } from "@/hooks/useAuth";
 
 const RegisterFormSchema = z.object({
   firstName: z.string().min(2, { message: "họ phải tối thiểu 2 ký tự" }),
@@ -37,6 +38,7 @@ const RegisterFormSchema = z.object({
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { mutate: register } = useRegister();
 
   const form = useForm<z.infer<typeof RegisterFormSchema>>({
     resolver: zodResolver(RegisterFormSchema),
@@ -51,8 +53,15 @@ const RegisterForm = () => {
   });
 
   const onsubmit = (data: z.infer<typeof RegisterFormSchema>) => {
-    console.log(data);
-    // form.reset();
+    console.log("data register", data);
+
+    register({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      phone: data.phone,
+    });
   };
 
   return (
@@ -66,7 +75,7 @@ const RegisterForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <div className="grid gap-2">
-                    <FormLabel>Họ</FormLabel>
+                    <FormLabel>Tên</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -90,7 +99,7 @@ const RegisterForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <div className="grid gap-2">
-                    <FormLabel>Tên</FormLabel>
+                    <FormLabel>Họ</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />

@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { useLogin } from "@/hooks/useAuth";
 
 const loginSchema = z.object({
   email: z
@@ -34,6 +35,7 @@ const loginSchema = z.object({
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { mutate: login, isError } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -46,6 +48,7 @@ const LoginForm = () => {
 
   function onSubmit(data: z.infer<typeof loginSchema>) {
     console.log(data);
+    login({ email: data.email, password: data.password });
   }
 
   return (
