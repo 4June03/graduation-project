@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import {
   ChevronDown,
   ChevronUp,
@@ -36,16 +36,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+
+import AddCategoryModal from "@/components/admin/category/AddCategoryModal";
+import EditCategoryModal from "@/components/admin/category/EditCategoryModal";
+import DeleteCategoryModal from "@/components/admin/category/DeleteCategoryModal";
+import { useFetchData } from "@/hooks/useCRUD";
+
+import { ClipLoader } from "react-spinners";
+
+interface Category {
+  categoryId: number;
+  categoryName: string;
+  description: string;
+  createdAt: string;
+}
+
+interface CategoriesResponse {
+  success: boolean;
+  message: string;
+  data: Category[];
+}
 
 // Sample data
 const categoriesData = [
@@ -101,20 +111,30 @@ const categoriesData = [
 ];
 
 export function Categories() {
-  const [categories, setCategories] = useState(categoriesData);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState({
     key: "id",
     direction: "ascending",
   });
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState(null);
-  const [newCategory, setNewCategory] = useState({ name: "", description: "" });
+  const [currentCategory, setCurrentCategory] = useState<Category>({
+    categoryId: 0,
+    categoryName: "",
+    description: "",
+    createdAt: "",
+  });
 
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+  const {
+    data: categorySample,
+    isLoading,
+    isError,
+  } = useFetchData<CategoriesResponse>(["categories"], "categories");
+  console.log("data fetch bởi useFetchData", categorySample?.data);
+  const [categories, setCategories] = useState(categoriesData);
   // Sorting function
-  const requestSort = (key) => {
+  const requestSort = (key: string) => {
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
@@ -142,106 +162,12 @@ export function Categories() {
     });
   };
 
-  // Handle add category
-  const handleAddCategory = () => {
-    const id = Math.max(...categories.map((c) => c.id)) + 1;
-    const today = new Date().toISOString().split("T")[0];
-
-    setCategories([
-      ...categories,
-      {
-        id,
-        name: newCategory.name,
-        description: newCategory.description,
-        products: 0,
-        createdAt: today,
-      },
-    ]);
-
-    setNewCategory({ name: "", description: "" });
-    setIsAddDialogOpen(false);
-  };
-
-  // Handle edit category
-  const handleEditCategory = () => {
-    setCategories(
-      categories.map((category) =>
-        category.id === currentCategory?.id
-          ? {
-              ...category,
-              name: currentCategory?.name,
-              description: currentCategory?.description,
-            }
-          : category
-      )
-    );
-    setIsEditDialogOpen(false);
-  };
-
-  // Handle delete category
-  const handleDeleteCategory = () => {
-    setCategories(
-      categories.filter((category) => category.id !== currentCategory?.id)
-    );
-    setIsDeleteDialogOpen(false);
-  };
-
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Categories</h1>
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Category
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add New Category</DialogTitle>
-              <DialogDescription>
-                Create a new category for your motorcycle products.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  value={newCategory.name}
-                  onChange={(e) =>
-                    setNewCategory({ ...newCategory, name: e.target.value })
-                  }
-                  placeholder="Category name"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="description">Description</Label>
-                <Input
-                  id="description"
-                  value={newCategory.description}
-                  onChange={(e) =>
-                    setNewCategory({
-                      ...newCategory,
-                      description: e.target.value,
-                    })
-                  }
-                  placeholder="Category description"
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsAddDialogOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button onClick={handleAddCategory}>Add Category</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+
+        <AddCategoryModal />
       </div>
 
       <Card>
@@ -319,15 +245,22 @@ export function Categories() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {getSortedCategories().map((category) => (
-                <TableRow key={category.id}>
-                  <TableCell className="font-medium">{category.id}</TableCell>
-                  <TableCell>{category.name}</TableCell>
+              {categorySample?.data.map((category) => (
+                <TableRow key={category.categoryId}>
+                  {isLoading && (
+                    <TableCell className="w-full flex justify-center pt-4">
+                      <ClipLoader color="#36d7b7" size={50} />
+                    </TableCell>
+                  )}
+                  <TableCell className="font-medium">
+                    {category.categoryId}
+                  </TableCell>
+                  <TableCell>{category.categoryName}</TableCell>
                   <TableCell className="hidden md:table-cell">
                     {category.description}
                   </TableCell>
                   <TableCell className="text-right">
-                    {category.products}
+                    {category?.categoryName}
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
                     {category.createdAt}
@@ -355,7 +288,6 @@ export function Categories() {
                         <DropdownMenuItem
                           className="text-red-600"
                           onClick={() => {
-                            setCurrentCategory(category);
                             setIsDeleteDialogOpen(true);
                           }}
                         >
@@ -367,13 +299,23 @@ export function Categories() {
                   </TableCell>
                 </TableRow>
               ))}
-              {getSortedCategories().length === 0 && (
+              {isError && (
                 <TableRow>
                   <TableCell
                     colSpan={6}
                     className="text-center py-6 text-muted-foreground"
                   >
-                    No categories found. Try a different search term.
+                    Lỗi load danh sách category
+                  </TableCell>
+                </TableRow>
+              )}
+              {isLoading && (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-6 text-muted-foreground"
+                  >
+                    <ClipLoader color="#36d7b7" size={50} />
                   </TableCell>
                 </TableRow>
               )}
@@ -383,89 +325,17 @@ export function Categories() {
       </Card>
 
       {/* Edit Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit Category</DialogTitle>
-            <DialogDescription>
-              Make changes to the category details.
-            </DialogDescription>
-          </DialogHeader>
-          {currentCategory && (
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="edit-name">Name</Label>
-                <Input
-                  id="edit-name"
-                  value={currentCategory.name}
-                  onChange={(e) =>
-                    setCurrentCategory({
-                      ...currentCategory,
-                      name: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="edit-description">Description</Label>
-                <Input
-                  id="edit-description"
-                  value={currentCategory.description}
-                  onChange={(e) =>
-                    setCurrentCategory({
-                      ...currentCategory,
-                      description: e.target.value,
-                    })
-                  }
-                />
-              </div>
-            </div>
-          )}
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsEditDialogOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button onClick={handleEditCategory}>Save Changes</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <EditCategoryModal
+        currentCategory={currentCategory}
+        isEditDialogOpen={isEditDialogOpen}
+        setIsEditDialogOpen={setIsEditDialogOpen}
+      />
 
       {/* Delete Dialog */}
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete Category</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete this category? This action cannot
-              be undone.
-            </DialogDescription>
-          </DialogHeader>
-          {currentCategory && (
-            <div className="py-4">
-              <p>
-                You are about to delete: <strong>{currentCategory.name}</strong>
-              </p>
-              <p className="text-sm text-muted-foreground mt-2">
-                This will remove the category and all its associations.
-              </p>
-            </div>
-          )}
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsDeleteDialogOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button variant="destructive" onClick={handleDeleteCategory}>
-              Delete
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DeleteCategoryModal
+        isDeleteDialogOpen={isDeleteDialogOpen}
+        setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+      />
     </div>
   );
 }

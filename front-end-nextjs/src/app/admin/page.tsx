@@ -26,7 +26,7 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { Dashboard } from "@/components/admin/dashboard";
-import { Categories } from "@/components/admin/categories";
+import { Categories } from "@/components/admin/category/categories";
 import { Products } from "@/components/admin/products";
 import { Accounts } from "@/components/admin/accounts";
 import { Orders } from "@/components/admin/orders";
