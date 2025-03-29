@@ -1,9 +1,6 @@
 package backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -25,5 +22,8 @@ public class EngineAndFrame {
     private Double bore;
     private Double stroke;
     private Double compressionRatio;
+
+    @OneToOne(mappedBy = "engineAndFrame")
+    private Motorbike motorbike;
 
 }

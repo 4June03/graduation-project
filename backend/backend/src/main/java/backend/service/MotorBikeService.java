@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.dto.request.AddMotorBikeRequest;
 import backend.entity.Motorbike;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface MotorBikeService {
 
     public List<Motorbike> findAll();
     public Optional<Motorbike> findById(Integer id);
-    public Motorbike save(Motorbike motorbike);
+    public Motorbike save(AddMotorBikeRequest request);
 
     public Motorbike update(Motorbike motorbike);
 

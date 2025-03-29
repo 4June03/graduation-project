@@ -13,11 +13,13 @@ import {
 interface deleteCategoryModalProps {
   isDeleteDialogOpen?: boolean;
   setIsDeleteDialogOpen: (value: boolean) => void;
+  currentCategory: any;
 }
 
 const DeleteCategoryModal: FC<deleteCategoryModalProps> = ({
   isDeleteDialogOpen,
   setIsDeleteDialogOpen,
+  currentCategory,
 }) => {
   const handleDeleteCategory = () => {
     console.log("Xóa danh mục thành công");
@@ -36,7 +38,8 @@ const DeleteCategoryModal: FC<deleteCategoryModalProps> = ({
 
         <div className="py-4">
           <p>
-            You are about to delete: <strong></strong>
+            Bạn có muốn xóa danh mục:{" "}
+            <strong>{currentCategory.categoryName}</strong>
           </p>
           <p className="text-sm text-muted-foreground mt-2">
             This will remove the category and all its associations.

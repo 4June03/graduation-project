@@ -335,6 +335,7 @@ export function Categories() {
       <DeleteCategoryModal
         isDeleteDialogOpen={isDeleteDialogOpen}
         setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+        currentCategory={currentCategory}
       />
     </div>
   );

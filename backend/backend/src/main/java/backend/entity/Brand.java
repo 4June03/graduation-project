@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.util.List;
 
-
 @Entity
 @Getter
 @Setter
@@ -13,15 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BikeImage {
+public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer imageId;
+    private Integer brandId;
 
-    private String imageUrl;
+    private String brandName;
 
-    @ManyToOne
-    @JoinColumn(name = "variant_color_id")
-    private VariantColor variantColor;
-
+    @OneToMany(mappedBy = "brand")
+    private List<Motorbike> motorbikeList;
 }

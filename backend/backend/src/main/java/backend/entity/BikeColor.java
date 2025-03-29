@@ -3,7 +3,8 @@ package backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -19,10 +20,14 @@ public class BikeColor {
 
     private String colorName;
 
-    @ManyToOne
-    @JoinColumn(name = "bike_id")
-    private Motorbike motorbike;
+    @OneToMany(mappedBy = "color")
+    private Set<VariantColor> variantColors;
 
-    @OneToMany(mappedBy = "color", cascade = CascadeType.ALL)
-    private List<BikeImage> bikeImageList;
+    // Phương thức tiện ích để lấy danh sách variant (nếu cần)
+    public Set<Variant> getVariants() {
+        return variantColors.stream()
+                .map(VariantColor::getVariant)
+                .collect(Collectors.toSet());
+    }
+
 }
