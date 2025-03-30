@@ -26,7 +26,7 @@ public class VariantColor {
     @JoinColumn(name = "color_id")
     private BikeColor color;
 
-    @OneToMany(mappedBy = "variantColor",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "variantColor",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BikeImage> images;
 
 }

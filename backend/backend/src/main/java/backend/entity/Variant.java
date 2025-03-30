@@ -21,9 +21,9 @@ public class Variant {
 
     private String variantName;
 
-    private Double variant_price;
+    private Double variantPrice;
 
-    private Integer variant_stock;
+    private Integer variantStock;
 
     //QH many to many với bike
     @ManyToOne
@@ -31,7 +31,7 @@ public class Variant {
     private Motorbike motorbikes;
 
 
-    @OneToMany(mappedBy = "variant")
+    @OneToMany(mappedBy = "variant",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<VariantColor> variantColors;
 
     // Phương thức tiện ích để lấy danh sách màu (nếu cần giữ tính tiện lợi)

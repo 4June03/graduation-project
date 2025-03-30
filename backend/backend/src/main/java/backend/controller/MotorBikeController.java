@@ -2,6 +2,8 @@ package backend.controller;
 
 
 import backend.dto.request.AddMotorBikeRequest;
+import backend.dto.request.MotorBikeDTO;
+import backend.dto.response.ApiResponse;
 import backend.entity.Motorbike;
 import backend.service.BikeColorService;
 import backend.service.BikeImageService;
@@ -32,9 +34,16 @@ public class MotorBikeController {
 
 
     @PostMapping
-    public Motorbike addNewMotorBike(@RequestBody AddMotorBikeRequest request){
-        Motorbike res = motorBikeService.save(request);
-        return res;
+    public ApiResponse<Motorbike> addNewMotorBike(@RequestBody MotorBikeDTO request){
+        Motorbike response = motorBikeService.createNewMotorBike(request);
+        return ApiResponse.success(response, "Thêm thành motorbike thành công");
+    }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<String> deleteMotorBike(@PathVariable("id") Integer bikeId){
+        motorBikeService.deleteById(bikeId);
+
+        return ApiResponse.success("", "Xóa motorbike thành công");
     }
 
 

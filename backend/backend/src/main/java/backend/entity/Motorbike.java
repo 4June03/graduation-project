@@ -1,5 +1,6 @@
 package backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,21 +29,23 @@ public class Motorbike {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnore
     private Category category;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "basic_spec_id")
     private BasicSpecification basicSpecification;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "engine_and_frame_id")
     private EngineAndFrame engineAndFrame;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
+    @JsonIgnore
     private Brand brand;
 
     //Quan hệ One-to-Many với Variant
-    @OneToMany(mappedBy = "motorbikes")
+    @OneToMany(mappedBy = "motorbikes",cascade = CascadeType.ALL)
     private Set<Variant> variants;
 }

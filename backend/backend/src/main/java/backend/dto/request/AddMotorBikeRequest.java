@@ -12,8 +12,6 @@ public class AddMotorBikeRequest {
 
     private String description;
 
-    private Double price;
-
     private String videoUrl;
 
     private Integer categoryId;

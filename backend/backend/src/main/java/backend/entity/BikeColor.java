@@ -20,7 +20,7 @@ public class BikeColor {
 
     private String colorName;
 
-    @OneToMany(mappedBy = "color")
+    @OneToMany(mappedBy = "color", cascade = CascadeType.ALL)
     private Set<VariantColor> variantColors;
 
     // Phương thức tiện ích để lấy danh sách variant (nếu cần)
