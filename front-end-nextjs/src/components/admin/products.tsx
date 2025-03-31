@@ -376,6 +376,7 @@ export function Products() {
                 </div>
               </div>
             </div>
+
             <DialogFooter>
               <Button
                 variant="outline"
