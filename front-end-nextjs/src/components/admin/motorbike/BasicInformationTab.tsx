@@ -8,6 +8,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 
 import {
@@ -55,40 +56,44 @@ const BasicInformationTab: FC<TabFormProps> = ({ form }) => {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <FormField
           control={form.control}
-          name="category"
-          render={({ field }) => (
+          name="categoryId"
+          render={({ field: { onChange, value } }) => (
             <FormItem>
               <FormLabel>Category</FormLabel>
               <FormControl>
-                <Select {...field}>
+                <Select value={value} onValueChange={onChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Chọn danh mục" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="motorcycle">Danh mục</SelectItem>
+                    <SelectItem value="Danh mục">Danh mục</SelectItem>
+                    <SelectItem value="Danh mục 2">Danh mục 2</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
 
         <FormField
           control={form.control}
-          name="brand"
-          render={({ field }) => (
+          name="brandId"
+          render={({ field: { onChange, value } }) => (
             <FormItem>
               <FormLabel>Thương hiệu xe</FormLabel>
               <FormControl>
-                <Select {...field}>
+                <Select value={value} onValueChange={onChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Chọn thương hiệu" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="motorcycle">Honda</SelectItem>
+                    <SelectItem value="Honda">Honda</SelectItem>
+                    <SelectItem value="Yamaha">Yamaha</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -103,6 +108,7 @@ const BasicInformationTab: FC<TabFormProps> = ({ form }) => {
               <FormControl>
                 <Textarea placeholder="Mô tả xe" {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
