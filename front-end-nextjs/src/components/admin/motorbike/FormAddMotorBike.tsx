@@ -2,11 +2,14 @@
 import BasicInformationTab from "@/components/admin/motorbike/BasicInformationTab";
 import EngineAndFrameTab from "@/components/admin/motorbike/EngineAndFrameTab";
 import SpecificationsTab from "@/components/admin/motorbike/SpecificationsTab";
-import InputForm from "@/components/common/InputForm";
+import VariantTab from "@/components/admin/motorbike/VariantTab";
+
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { toast } from "sonner";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useDataMutation } from "@/hooks/useCRUD";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -15,6 +18,28 @@ import { z } from "zod";
 export interface TabFormProps {
   form: any;
 }
+
+// Schema cho hình ảnh
+const imageSchema = z.object({
+  imageUrl: z.string().nonempty("URL là bắt buộc"),
+});
+
+// Schema cho màu sắc trong variant
+const colorSchema = z.object({
+  colorId: z.string().nonempty("Màu sắc là bắt buộc"),
+  images: z
+    .array(imageSchema)
+    .min(1, "Phải có ít nhất 1 ảnh")
+    .max(3, "Tối đa 3 ảnh"),
+});
+
+// Schema cho variant
+const variantSchema = z.object({
+  variantName: z.string().nonempty("Tên biến thể là bắt buộc"),
+  variantPrice: z.number().min(0, "Giá phải lớn hơn hoặc bằng 0"),
+  variantStock: z.number().int().min(0, "Số lượng tồn kho phải không âm"),
+  variantColors: z.array(colorSchema).min(1, "Phải có ít nhất 1 màu"),
+});
 
 export const FormAddMotorBikeSchema = z.object({
   bikeName: z.string().min(1, "Tên xe không được để trống"),
@@ -70,10 +95,12 @@ export const FormAddMotorBikeSchema = z.object({
     .number()
     .nonnegative("Tỷ số nén không hợp lệ")
     .optional(),
-  // variants: z.array(z.string()).optional(),
+  variants: z.array(variantSchema).optional(),
 });
 
 const FormAddMotorBike = () => {
+  const { useCreate: useCreateMotorBike } = useDataMutation(["motorbike"]);
+
   const form = useForm({
     resolver: zodResolver(FormAddMotorBikeSchema),
     defaultValues: {
@@ -100,7 +127,19 @@ const FormAddMotorBike = () => {
       bore: 0.0,
       stroke: 0.0,
       compressionRatio: 0.0,
-      // variants: [],
+      variants: [
+        {
+          variantName: "",
+          variantPrice: 0,
+          variantStock: 0,
+          variantColors: [
+            {
+              colorId: "",
+              images: [{ imageUrl: "" }, { imageUrl: "" }, { imageUrl: "" }],
+            },
+          ],
+        },
+      ],
     },
   });
 
@@ -133,9 +172,25 @@ const FormAddMotorBike = () => {
         stroke: data.stroke,
         compressionRatio: data.compressionRatio,
       },
-      variants: [],
+      variants: data.variants,
     };
 
+    useCreateMotorBike.mutate(
+      {
+        url: "/motorbikes",
+        data: formattedData,
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          toast.success("Thêm mới motorbike thành công.");
+        },
+        onError: (error) => {
+          console.error(error);
+          toast.error(error.message || "Có lỗi xảy ra khi thêm mới motorbike.");
+        },
+      }
+    );
     console.log("data form: ", formattedData);
   };
 
@@ -164,6 +219,7 @@ const FormAddMotorBike = () => {
             <BasicInformationTab form={form} />
             <SpecificationsTab form={form} />
             <EngineAndFrameTab form={form} />
+            <VariantTab form={form} />
           </Tabs>
         </div>
       </form>

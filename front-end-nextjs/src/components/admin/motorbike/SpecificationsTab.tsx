@@ -7,7 +7,7 @@ import React, { FC } from "react";
 const SpecificationsTab: FC<TabFormProps> = ({ form }) => {
   return (
     <TabsContent value="specifications" className="space-y-4 pt-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <FormField
           control={form.control}
           name="weight"
@@ -49,7 +49,7 @@ const SpecificationsTab: FC<TabFormProps> = ({ form }) => {
           )}
         />
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <FormField
           control={form.control}
           name="height"
@@ -92,7 +92,7 @@ const SpecificationsTab: FC<TabFormProps> = ({ form }) => {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <FormField
           control={form.control}
           name="groundClearance"
@@ -134,7 +134,7 @@ const SpecificationsTab: FC<TabFormProps> = ({ form }) => {
           )}
         />
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <FormField
           control={form.control}
           name="rearTireSize"

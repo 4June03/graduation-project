@@ -46,10 +46,10 @@ public class MotorBikeServiceImpls implements MotorBikeService {
     public Motorbike createNewMotorBike(MotorBikeDTO request) {
 
         Brand brand = brandRepository.findById(request.getBrandId())
-                .orElseThrow(()->new RuntimeException("Không tồn tại thương hiệu này"));
+                .orElseThrow(()->new RuntimeException("Không tồn tại thương hiệu với Id: "+request.getBrandId()));
 
         Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(()->new RuntimeException("Không tồn tại danh mục xe này"));
+                .orElseThrow(()->new RuntimeException("Không tồn tại danh mục xe với id: "+request.getCategoryId()));
 
 
         Motorbike motorbike = new Motorbike();

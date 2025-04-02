@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true)
 @RequestMapping("/motorbikes")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MotorBikeController {
 
     private MotorBikeService motorBikeService;
