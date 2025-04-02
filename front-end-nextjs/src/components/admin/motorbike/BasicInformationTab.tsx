@@ -66,8 +66,8 @@ const BasicInformationTab: FC<TabFormProps> = ({ form }) => {
                     <SelectValue placeholder="Chọn danh mục" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Danh mục">Danh mục</SelectItem>
-                    <SelectItem value="Danh mục 2">Danh mục 2</SelectItem>
+                    <SelectItem value="1">Danh mục</SelectItem>
+                    <SelectItem value="2">Danh mục 2</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -88,8 +88,9 @@ const BasicInformationTab: FC<TabFormProps> = ({ form }) => {
                     <SelectValue placeholder="Chọn thương hiệu" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Honda">Honda</SelectItem>
-                    <SelectItem value="Yamaha">Yamaha</SelectItem>
+                    <SelectItem value="1">Honda</SelectItem>
+                    <SelectItem value="2">Yamaha</SelectItem>
+                    <SelectItem value="3">Suzuki</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
