@@ -24,7 +24,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface AddCategoryModalProps {
   isAddDialogOpen?: boolean;
@@ -39,7 +41,7 @@ const addCategorySchema = z.object({
 const AddCategoryModal: FC<AddCategoryModalProps> = () => {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const { useCreate } = useDataMutation(["category"]);
-
+  const queryClient = useQueryClient();
   const handleAddCategory = (data: z.infer<typeof addCategorySchema>) => {
     console.log(data);
 
@@ -51,6 +53,8 @@ const AddCategoryModal: FC<AddCategoryModalProps> = () => {
       {
         onSuccess: (data) => {
           console.log(data);
+          toast.success("Thêm danh mục thành công!");
+          queryClient.invalidateQueries({ queryKey: ["categories"] });
           setIsAddDialogOpen(false);
         },
       }

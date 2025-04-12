@@ -23,6 +23,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useQueryClient } from "@tanstack/react-query";
+import { useDataMutation } from "@/hooks/useCRUD";
+import { toast } from "sonner";
 
 const editCategorySchema = z.object({
   categoryName: z.string({ message: "Tên danh mục không hợp lệ" }),
@@ -39,7 +42,20 @@ const EditCategoryModal: FC<editCategoryModalProps> = ({
   setIsEditDialogOpen,
   currentCategory,
 }) => {
+  const { useUpdate } = useDataMutation(["category"]);
+  const queryClient = useQueryClient();
   const handleEditCategory = (data: z.infer<typeof editCategorySchema>) => {
+    const idToUpdate: number = Number(currentCategory.categoryId);
+    console.log("id to update:", idToUpdate);
+    useUpdate.mutate(
+      { url: `/categories/${idToUpdate}`, data: data },
+      {
+        onSuccess: () => {
+          toast.success("Cập nhật danh mục thành công!");
+          queryClient.invalidateQueries({ queryKey: ["categories"] });
+        },
+      }
+    );
     setIsEditDialogOpen(false);
     console.log(data);
   };

@@ -5,6 +5,7 @@ import backend.dto.request.UpdateCategoryRequest;
 import backend.dto.response.ApiResponse;
 import backend.dto.response.CategoryResponse;
 import backend.entity.Category;
+import backend.mapper.CategoryMapper;
 import backend.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,9 +25,10 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class CategoryController {
     private CategoryService categoryService;
+    private CategoryMapper categoryMapper;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Category>>> getAllCategory(){
+    public ResponseEntity<ApiResponse<List<CategoryResponse>>> getAllCategory(){
 
         List<Category> categories = categoryService.getAllCategories();
 
@@ -33,14 +36,16 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.error("Lỗi lấy danh sách"));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.<List<Category>>success(categories,"Lấy danh sách thành công"));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse
+                .<List<CategoryResponse>>success(categories.stream()
+                        .map(categoryMapper::categoryToCategoryResponse)
+                        .collect(Collectors.toList()),"Lấy danh sách thành công"));
 
     }
 
     @PostMapping
     public ApiResponse<CategoryResponse> addCategory(@RequestBody AddCategoryRequest request){
         CategoryResponse response = categoryService.saveCategory(request);
-
         return ApiResponse.success(response, "Thêm danh mục thành công");
 
     }

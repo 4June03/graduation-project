@@ -9,6 +9,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useDataMutation } from "@/hooks/useCRUD";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface deleteCategoryModalProps {
   isDeleteDialogOpen?: boolean;
@@ -21,7 +24,23 @@ const DeleteCategoryModal: FC<deleteCategoryModalProps> = ({
   setIsDeleteDialogOpen,
   currentCategory,
 }) => {
+  const { useDelete } = useDataMutation(["category"]);
+  const queryClient = useQueryClient();
+
   const handleDeleteCategory = () => {
+    console.log("Xóa danh mục:", currentCategory.categoryId);
+    useDelete.mutate(
+      {
+        url: `/categories/${currentCategory.categoryId}`,
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["categories"] });
+          toast.success("Xóa danh mục thành công!");
+          setIsDeleteDialogOpen(false);
+        },
+      }
+    );
     console.log("Xóa danh mục thành công");
   };
 
@@ -29,10 +48,9 @@ const DeleteCategoryModal: FC<deleteCategoryModalProps> = ({
     <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete Category</DialogTitle>
+          <DialogTitle>Xóa danh mục</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this category? This action cannot be
-            undone.
+            Bạn có chắc chắn muốn xóa danh mục này không?
           </DialogDescription>
         </DialogHeader>
 

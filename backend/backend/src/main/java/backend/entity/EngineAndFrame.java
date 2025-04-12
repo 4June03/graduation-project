@@ -1,5 +1,6 @@
 package backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,7 @@ public class EngineAndFrame {
     private Double compressionRatio;
 
     @OneToOne(mappedBy = "engineAndFrame")
+    @JsonIgnore
     private Motorbike motorbike;
 
 }

@@ -31,6 +31,9 @@ import { Products } from "@/components/admin/products";
 import { Accounts } from "@/components/admin/accounts";
 import { Orders } from "@/components/admin/orders";
 import { Inventory } from "@/components/admin/inventory";
+import ModeToggle from "@/components/ui/mode-toggle";
+import { Form } from "react-hook-form";
+import FormAddMotorBike from "@/components/admin/motorbike/FormAddMotorBike";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -129,6 +132,7 @@ export default function AdminDashboard() {
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
               </Button>
+              <ModeToggle />
             </div>
           </SidebarFooter>
         </Sidebar>

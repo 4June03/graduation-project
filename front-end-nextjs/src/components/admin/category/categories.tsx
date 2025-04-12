@@ -43,6 +43,7 @@ import DeleteCategoryModal from "@/components/admin/category/DeleteCategoryModal
 import { useFetchData } from "@/hooks/useCRUD";
 
 import { ClipLoader } from "react-spinners";
+import { set } from "react-hook-form";
 
 interface Category {
   categoryId: number;
@@ -217,18 +218,7 @@ export function Categories() {
                 <TableHead className="hidden md:table-cell">
                   Description
                 </TableHead>
-                <TableHead
-                  className="cursor-pointer text-right"
-                  onClick={() => requestSort("products")}
-                >
-                  Products
-                  {sortConfig.key === "products" &&
-                    (sortConfig.direction === "ascending" ? (
-                      <ChevronUp className="ml-1 h-4 w-4 inline" />
-                    ) : (
-                      <ChevronDown className="ml-1 h-4 w-4 inline" />
-                    ))}
-                </TableHead>
+
                 <TableHead
                   className="hidden md:table-cell cursor-pointer"
                   onClick={() => requestSort("createdAt")}
@@ -259,9 +249,7 @@ export function Categories() {
                   <TableCell className="hidden md:table-cell">
                     {category.description}
                   </TableCell>
-                  <TableCell className="text-right">
-                    {category?.categoryName}
-                  </TableCell>
+
                   <TableCell className="hidden md:table-cell">
                     {category.createdAt}
                   </TableCell>
@@ -288,6 +276,7 @@ export function Categories() {
                         <DropdownMenuItem
                           className="text-red-600"
                           onClick={() => {
+                            setCurrentCategory(category);
                             setIsDeleteDialogOpen(true);
                           }}
                         >

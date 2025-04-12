@@ -1,8 +1,14 @@
 package backend.dto.response;
 
+import backend.dto.request.BasicSpecificationDTO;
+import backend.dto.request.EngineAndFrameDTO;
+import backend.dto.request.VariantDTO;
 import backend.entity.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
+
 
 @Getter
 @Setter
@@ -11,17 +17,18 @@ public class MotorBikeResponse {
 
     private String description;
 
-    private Double price;
-
     private String videoUrl;
 
-    private Category category;
+    private String categoryName;
 
-    private Brand brand;
+    private String brandName;
 
-    private BasicSpecification basicSpecification;
+    private byte rating;
 
-    private EngineAndFrame engineAndFrame;
+    private BasicSpecificationDTO basicSpecification;
 
+    private EngineAndFrameDTO engineAndFrame;
+
+    private Set<VariantDTO> variants;
 
 }

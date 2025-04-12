@@ -13,7 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class Motorbike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

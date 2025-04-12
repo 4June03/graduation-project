@@ -22,6 +22,7 @@ public class Category {
 
     private String description;
 
+    @Column(name = "created_at")
     private LocalDate createdAt;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)

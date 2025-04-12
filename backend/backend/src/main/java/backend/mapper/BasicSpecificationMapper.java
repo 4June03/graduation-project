@@ -9,4 +9,5 @@ public interface BasicSpecificationMapper {
 
     BasicSpecification DTOtoBasicSpecification(BasicSpecificationDTO dto);
 
+    BasicSpecificationDTO basicSpecificationToDTO(BasicSpecification basicSpecification);
 }

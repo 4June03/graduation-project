@@ -55,6 +55,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import AddMotorBikeModal from "@/components/admin/motorbike/AddMotorBikeModal";
 
 // Sample data
 const productsData = [
@@ -156,14 +157,6 @@ export function Products() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
-  const [newProduct, setNewProduct] = useState({
-    name: "",
-    category: "",
-    price: "",
-    stock: "",
-    status: "In Stock",
-    image: "/placeholder.svg?height=200&width=200",
-  });
 
   // Sorting function
   const requestSort = (key) => {
@@ -204,65 +197,17 @@ export function Products() {
     });
   };
 
-  // Handle add product
   const handleAddProduct = () => {
-    const id = Math.max(...products.map((p) => p.id)) + 1;
-    const status =
-      newProduct.stock === "0"
-        ? "Out of Stock"
-        : Number.parseInt(newProduct.stock) <= 5
-        ? "Low Stock"
-        : "In Stock";
-
-    setProducts([
-      ...products,
-      {
-        id,
-        name: newProduct.name,
-        category: newProduct.category,
-        price: Number.parseInt(newProduct.price),
-        stock: Number.parseInt(newProduct.stock),
-        status,
-        image: newProduct.image,
-      },
-    ]);
-
-    setNewProduct({
-      name: "",
-      category: "",
-      price: "",
-      stock: "",
-      status: "In Stock",
-      image: "/placeholder.svg?height=200&width=200",
-    });
     setIsAddDialogOpen(false);
   };
 
   // Handle edit product
   const handleEditProduct = () => {
-    const status =
-      currentProduct.stock === 0
-        ? "Out of Stock"
-        : currentProduct.stock <= 5
-        ? "Low Stock"
-        : "In Stock";
-
-    setProducts(
-      products.map((product) =>
-        product.id === currentProduct.id
-          ? {
-              ...currentProduct,
-              status,
-            }
-          : product
-      )
-    );
     setIsEditDialogOpen(false);
   };
 
   // Handle delete product
   const handleDeleteProduct = () => {
-    setProducts(products.filter((product) => product.id !== currentProduct.id));
     setIsDeleteDialogOpen(false);
   };
 
@@ -284,110 +229,10 @@ export function Products() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Products</h1>
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Product
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="w-full">
-            <DialogHeader>
-              <DialogTitle>Add New Product</DialogTitle>
-              <DialogDescription>
-                Create a new motorcycle product in your inventory.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4 w-full">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="name">Product Name</Label>
-                  <Input
-                    id="name"
-                    value={newProduct.name}
-                    onChange={(e) =>
-                      setNewProduct({ ...newProduct, name: e.target.value })
-                    }
-                    placeholder="Product name"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="category">Category</Label>
-                  <Select
-                    onValueChange={(value) =>
-                      setNewProduct({ ...newProduct, category: value })
-                    }
-                  >
-                    <SelectTrigger id="category">
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category} value={category}>
-                          {category}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="price">Price (VND)</Label>
-                  <Input
-                    id="price"
-                    type="number"
-                    value={newProduct.price}
-                    onChange={(e) =>
-                      setNewProduct({ ...newProduct, price: e.target.value })
-                    }
-                    placeholder="Product price"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="stock">Stock</Label>
-                  <Input
-                    id="stock"
-                    type="number"
-                    value={newProduct.stock}
-                    onChange={(e) =>
-                      setNewProduct({ ...newProduct, stock: e.target.value })
-                    }
-                    placeholder="Stock quantity"
-                  />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="image">Image URL</Label>
-                <Input
-                  id="image"
-                  value={newProduct.image}
-                  onChange={(e) =>
-                    setNewProduct({ ...newProduct, image: e.target.value })
-                  }
-                  placeholder="Image URL"
-                />
-                <div className="flex justify-center mt-2">
-                  <img
-                    src={newProduct.image || "/placeholder.svg"}
-                    alt="Product preview"
-                    className="h-32 w-32 object-cover border rounded-md"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsAddDialogOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button onClick={handleAddProduct}>Add Product</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <AddMotorBikeModal
+          isAddDialogOpen={isAddDialogOpen}
+          setIsAddDialogOpen={setIsAddDialogOpen}
+        />
       </div>
 
       <Card>

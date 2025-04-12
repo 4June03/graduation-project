@@ -7,6 +7,8 @@ import backend.entity.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+
+
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
 

@@ -1,5 +1,6 @@
 package backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class BasicSpecification {
     private Double rearTireSize;
 
     @OneToOne(mappedBy = "basicSpecification")
+    @JsonIgnore
     private Motorbike motorbike;
 
 }

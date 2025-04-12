@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-30T17:16:33+0700",
+    date = "2025-04-13T00:08:39+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @Component
@@ -33,5 +33,27 @@ public class BasicSpecificationMapperImpl implements BasicSpecificationMapper {
         basicSpecification.rearTireSize( dto.getRearTireSize() );
 
         return basicSpecification.build();
+    }
+
+    @Override
+    public BasicSpecificationDTO basicSpecificationToDTO(BasicSpecification basicSpecification) {
+        if ( basicSpecification == null ) {
+            return null;
+        }
+
+        BasicSpecificationDTO.BasicSpecificationDTOBuilder basicSpecificationDTO = BasicSpecificationDTO.builder();
+
+        basicSpecificationDTO.weight( basicSpecification.getWeight() );
+        basicSpecificationDTO.length( basicSpecification.getLength() );
+        basicSpecificationDTO.width( basicSpecification.getWidth() );
+        basicSpecificationDTO.height( basicSpecification.getHeight() );
+        basicSpecificationDTO.wheelbase( basicSpecification.getWheelbase() );
+        basicSpecificationDTO.seatHeight( basicSpecification.getSeatHeight() );
+        basicSpecificationDTO.groundClearance( basicSpecification.getGroundClearance() );
+        basicSpecificationDTO.fuelTankCapacity( basicSpecification.getFuelTankCapacity() );
+        basicSpecificationDTO.frontTireSize( basicSpecification.getFrontTireSize() );
+        basicSpecificationDTO.rearTireSize( basicSpecification.getRearTireSize() );
+
+        return basicSpecificationDTO.build();
     }
 }
