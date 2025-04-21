@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import {
   ChevronDown,
   ChevronUp,
@@ -56,6 +56,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import AddMotorBikeModal from "@/components/admin/motorbike/AddMotorBikeModal";
+import { useFetchData } from "@/hooks/useCRUD";
 
 // Sample data
 const productsData = [
@@ -197,22 +198,13 @@ export function Products() {
     });
   };
 
-  const handleAddProduct = () => {
-    setIsAddDialogOpen(false);
-  };
-
-  // Handle edit product
-  const handleEditProduct = () => {
-    setIsEditDialogOpen(false);
-  };
-
   // Handle delete product
   const handleDeleteProduct = () => {
     setIsDeleteDialogOpen(false);
   };
 
   // Get status badge
-  const getStatusBadge = (status) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case "In Stock":
         return <Badge className="bg-green-500">{status}</Badge>;
@@ -224,6 +216,19 @@ export function Products() {
         return <Badge>{status}</Badge>;
     }
   };
+
+  const {
+    data: motorbikes,
+    isLoading,
+    error,
+  } = useFetchData(["motorbikes"], "motorbikes");
+
+  useEffect(() => {
+    if (error) {
+      console.error("Error fetching motorbikes:", error);
+    }
+    console.log("list products", motorbikes);
+  }, [motorbikes]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -351,7 +356,7 @@ export function Products() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {getSortedProducts().map((product) => (
+              {motorbikes?.map((product) => (
                 <TableRow key={product.id}>
                   <TableCell className="font-medium">{product.id}</TableCell>
                   <TableCell>
@@ -488,7 +493,7 @@ export function Products() {
       </Dialog>
 
       {/* Edit Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+      {/* <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Edit Product</DialogTitle>
@@ -592,10 +597,10 @@ export function Products() {
             >
               Cancel
             </Button>
-            <Button onClick={handleEditProduct}>Save Changes</Button>
+            <Button>Save Changes</Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
 
       {/* Delete Dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>

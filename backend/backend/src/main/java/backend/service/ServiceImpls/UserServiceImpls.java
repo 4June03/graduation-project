@@ -28,7 +28,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true)
@@ -133,6 +132,35 @@ public class UserServiceImpls implements UserService {
         }
 
         return signedToken;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User getUserById(Integer userId) {
+        return userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id "+userId));
+    }
+
+    @Override
+    public User updateUserInfo(Integer userId, RegisterUserRequest request) {
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id "+userId));
+
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setPhone(request.getPhone());
+        user.setDob(request.getDob());
+        user.setUpdatedAt(LocalDate.now());
+
+        userRepository.save(user);
+
+        return user;
     }
 
     @Override

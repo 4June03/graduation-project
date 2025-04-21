@@ -7,6 +7,7 @@ import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.SignedJWT;
 
 import java.text.ParseException;
+import java.util.List;
 
 public interface UserService {
     public User createUser(RegisterUserRequest user);
@@ -19,4 +20,9 @@ public interface UserService {
 
     public SignedJWT verifyToken(String token) throws JOSEException, ParseException;
 
+    List<User> getAllUsers();
+
+    User getUserById(Integer userId);
+
+    User updateUserInfo(Integer userId, RegisterUserRequest request);
 }

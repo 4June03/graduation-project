@@ -49,8 +49,9 @@ public class MotorBikeController {
 
 
     @PostMapping
-    public ApiResponse<Motorbike> addNewMotorBike(@RequestBody MotorBikeDTO request){
-        Motorbike response = motorBikeService.createNewMotorBike(request);
+    public ApiResponse<MotorBikeResponse> addNewMotorBike(@RequestBody MotorBikeDTO request){
+        Motorbike motorbike = motorBikeService.createNewMotorBike(request);
+        MotorBikeResponse response = motorBikeMapper.motorBikeToMotoBikeResponse(motorbike);
         return ApiResponse.success(response, "Thêm thành motorbike thành công");
     }
 
@@ -60,6 +61,8 @@ public class MotorBikeController {
 
         return ApiResponse.success("", "Xóa motorbike thành công");
     }
+
+
 
 
 

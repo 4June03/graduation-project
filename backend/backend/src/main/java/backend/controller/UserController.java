@@ -5,6 +5,7 @@ import backend.dto.request.RegisterUserRequest;
 import backend.dto.response.ApiResponse;
 import backend.dto.response.LoginResponse;
 import backend.dto.response.RegisterUserResponse;
+import backend.dto.response.UserResponse;
 import backend.entity.User;
 import backend.mapper.UserMapper;
 import backend.service.UserService;
@@ -12,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +26,33 @@ public class UserController {
 
     private UserService userService;
     private UserMapper userMapper;
+
+
+    @GetMapping("/api/users")
+    public ApiResponse<List<UserResponse>> getAllUsers(){
+        List<User> users = userService.getAllUsers();
+
+        List<UserResponse> response = users.stream().map(userMapper::userToUserResponse).collect(Collectors.toList());
+        return ApiResponse.success(response, "Lấy danh sách thành công");
+    }
+
+    @GetMapping("/api/user/{id}")
+    public ApiResponse<UserResponse> getUserById(@PathVariable("id")Integer userId){
+        User user = userService.getUserById(userId);
+
+        UserResponse response = userMapper.userToUserResponse(user);
+
+        return ApiResponse.success(response, "lấy thông tin user thành công");
+    }
+
+    @PutMapping("/api/user/{id}")
+    public ApiResponse<UserResponse> updateUser(@PathVariable("id")Integer userId, @RequestBody RegisterUserRequest request){
+        User user = userService.updateUserInfo(userId, request);
+
+        UserResponse response = userMapper.userToUserResponse(user);
+
+        return ApiResponse.success(response, "cập nhật thông tin user thành công");
+    }
 
     @PostMapping("/api/register")
     public ResponseEntity<ApiResponse<RegisterUserResponse>> registerUser(@RequestBody RegisterUserRequest request){

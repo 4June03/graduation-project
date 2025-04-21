@@ -18,8 +18,8 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer userId;
 
     private String firstName;
 
@@ -40,7 +40,7 @@ public class User {
 
     private LocalDate createdAt;
 
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
     private Boolean isActive;
 

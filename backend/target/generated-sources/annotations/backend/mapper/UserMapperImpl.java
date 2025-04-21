@@ -2,13 +2,14 @@ package backend.mapper;
 
 import backend.dto.request.RegisterUserRequest;
 import backend.dto.response.RegisterUserResponse;
+import backend.dto.response.UserResponse;
 import backend.entity.User;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-13T00:08:38+0700",
+    date = "2025-04-20T15:33:42+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @Component
@@ -47,5 +48,26 @@ public class UserMapperImpl implements UserMapper {
         registerUserResponse.setIsActive( user.getIsActive() );
 
         return registerUserResponse;
+    }
+
+    @Override
+    public UserResponse userToUserResponse(User user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        UserResponse userResponse = new UserResponse();
+
+        userResponse.setFirstName( user.getFirstName() );
+        userResponse.setLastName( user.getLastName() );
+        userResponse.setEmail( user.getEmail() );
+        userResponse.setPhone( user.getPhone() );
+        userResponse.setAvatar( user.getAvatar() );
+        userResponse.setDob( user.getDob() );
+        userResponse.setCreatedAt( user.getCreatedAt() );
+        userResponse.setUpdatedAt( user.getUpdatedAt() );
+        userResponse.setIsActive( user.getIsActive() );
+
+        return userResponse;
     }
 }

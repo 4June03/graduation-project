@@ -1,5 +1,6 @@
 package backend.repository;
 
+import backend.entity.Cart;
 import backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -7,9 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
-    // Các truy vấn tùy chỉnh nếu cần
-    boolean existsByEmail(String email);
-
-    Optional<User> findByEmail(String email);
+public interface CartRepository extends JpaRepository<Cart, Integer> {
+    public Optional<Cart> findByUser(User user);
 }
