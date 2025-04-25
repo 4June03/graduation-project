@@ -3,21 +3,20 @@ package backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Brand {
+@Builder
+@Table(name = "branches")
+public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer brandId;
+    private Integer branchId;
 
-    private String brandName;
+    private String branchName;
 
-    @OneToMany(mappedBy = "brand")
-    private List<Motorbike> motorbikeList;
+    private String address;
+
 }

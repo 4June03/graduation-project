@@ -2,6 +2,8 @@ package backend.service.ServiceImpls;
 
 import backend.dto.request.LoginRequest;
 import backend.dto.request.RegisterUserRequest;
+import backend.dto.request.UpdateUserAddressRequest;
+import backend.entity.Address;
 import backend.entity.Role;
 import backend.entity.User;
 import backend.mapper.UserMapper;
@@ -158,6 +160,24 @@ public class UserServiceImpls implements UserService {
         user.setDob(request.getDob());
         user.setUpdatedAt(LocalDate.now());
 
+        userRepository.save(user);
+
+        return user;
+    }
+
+    @Override
+    public User updateUserAddresses(Integer userId, UpdateUserAddressRequest request) {
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id "+userId));
+
+        user.getAddresses().clear();
+        for(Address address : request.getAddresses()){
+            address.setUser(user);
+            user.getAddresses().add(address);
+        }
+
+        user.setUpdatedAt(LocalDate.now());
         userRepository.save(user);
 
         return user;

@@ -2,6 +2,7 @@ package backend.service;
 
 import backend.dto.request.LoginRequest;
 import backend.dto.request.RegisterUserRequest;
+import backend.dto.request.UpdateUserAddressRequest;
 import backend.entity.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.SignedJWT;
@@ -25,4 +26,6 @@ public interface UserService {
     User getUserById(Integer userId);
 
     User updateUserInfo(Integer userId, RegisterUserRequest request);
+
+    User updateUserAddresses(Integer userId, UpdateUserAddressRequest request);
 }

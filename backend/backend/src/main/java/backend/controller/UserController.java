@@ -2,12 +2,15 @@ package backend.controller;
 
 import backend.dto.request.LoginRequest;
 import backend.dto.request.RegisterUserRequest;
+import backend.dto.request.UpdateUserAddressRequest;
 import backend.dto.response.ApiResponse;
 import backend.dto.response.LoginResponse;
 import backend.dto.response.RegisterUserResponse;
 import backend.dto.response.UserResponse;
+import backend.entity.Address;
 import backend.entity.User;
 import backend.mapper.UserMapper;
+import backend.service.AddressService;
 import backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private UserService userService;
+    private AddressService addressService;
     private UserMapper userMapper;
 
 
@@ -54,6 +58,13 @@ public class UserController {
         return ApiResponse.success(response, "cập nhật thông tin user thành công");
     }
 
+    @PutMapping("/api/user/{id}/addresses")
+    public ApiResponse<UserResponse> updateUserAddress(@PathVariable("id")Integer userId, @RequestBody UpdateUserAddressRequest request){
+        User user  = userService.updateUserAddresses(userId, request);
+        UserResponse response = userMapper.userToUserResponse(user);
+        return ApiResponse.success(response, "cập nhật địa chỉ của user thành công");
+    }
+
     @PostMapping("/api/register")
     public ResponseEntity<ApiResponse<RegisterUserResponse>> registerUser(@RequestBody RegisterUserRequest request){
        User user =  userService.createUser(request);
@@ -76,4 +87,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponse.success(response, "Đăng nhập thành công"));
     }
+
+    @GetMapping("/api/addresses/{id}")
+    public ApiResponse<List<Address>> getAllUserAddress(@PathVariable("id") Integer userId){
+        List<Address> response = addressService.getAllAddressByUserId(userId);
+        return ApiResponse.success(response, "lấy danh sách address thành công");
+    }
+
+
+
+
 }

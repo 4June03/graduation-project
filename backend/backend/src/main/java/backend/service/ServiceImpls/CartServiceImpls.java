@@ -76,7 +76,8 @@ public class CartServiceImpls implements CartService {
     public Cart getCartByUserId(Integer userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy user với id: "+userId));
-        Cart cart = cartRepository.findByUser(user).orElseThrow(()->new RuntimeException("Lỗi lấy cart"));
+
+        Cart cart = cartRepository.findByUser(user).orElseGet(() -> Cart.builder().build());
 
         return cart;
     }

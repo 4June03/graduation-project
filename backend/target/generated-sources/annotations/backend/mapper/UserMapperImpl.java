@@ -3,13 +3,16 @@ package backend.mapper;
 import backend.dto.request.RegisterUserRequest;
 import backend.dto.response.RegisterUserResponse;
 import backend.dto.response.UserResponse;
+import backend.entity.Address;
 import backend.entity.User;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-20T15:33:42+0700",
+    date = "2025-04-23T14:17:54+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @Component
@@ -67,6 +70,10 @@ public class UserMapperImpl implements UserMapper {
         userResponse.setCreatedAt( user.getCreatedAt() );
         userResponse.setUpdatedAt( user.getUpdatedAt() );
         userResponse.setIsActive( user.getIsActive() );
+        Set<Address> set = user.getAddresses();
+        if ( set != null ) {
+            userResponse.setAddresses( new LinkedHashSet<Address>( set ) );
+        }
 
         return userResponse;
     }

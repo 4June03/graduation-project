@@ -13,6 +13,9 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class MotorBikeDTO {
+
+    private Integer bikeId;
+
     private String bikeName;
 
     private String description;

@@ -10,9 +10,9 @@ import java.util.List;
 @Getter
 @Setter
 public class CartResponse {
-    private List<CartItem> cartItemList;
-    private BigInteger total;
-    private BigInteger shippingFee;
-    private BigInteger grandTotal;
+    private List<CartItemResponse> cartItemList;
+    private Double total;
+    private Double shippingFee;
+    private Double grandTotal;
 
 }

@@ -30,4 +30,6 @@ public class UserResponse {
     private LocalDate updatedAt;
 
     private Boolean isActive;
+
+    private Set<Address> addresses;
 }

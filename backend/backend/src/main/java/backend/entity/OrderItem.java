@@ -1,26 +1,25 @@
 package backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
+@Entity
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "cart_item")
-public class CartItem {
-
+@Table(name = "order_items")
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer cartItemId;
+    private Integer orderItemId;
 
     @ManyToOne
-    @JoinColumn(name = "cart_cart_id")
-    @JsonIgnore
-    private Cart cart;
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "motorbike_id", nullable = false)
@@ -34,4 +33,7 @@ public class CartItem {
     @JoinColumn(name = "variant_color_id", nullable = false)
     private VariantColor variantColor;
 
+    private Integer quantity; // Số lượng sản phẩm
+
+    private Double price; // Giá tại thời điểm đặt hàng
 }

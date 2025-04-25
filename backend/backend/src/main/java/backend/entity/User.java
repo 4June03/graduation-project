@@ -33,7 +33,7 @@ public class User {
 
     private String avatar;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Address> addresses;
 
     private LocalDate dob;
