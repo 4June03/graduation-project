@@ -1,27 +1,34 @@
 package backend.service.ServiceImpls;
 
 import backend.entity.Brand;
+import backend.repository.BrandRepository;
 import backend.service.BrandService;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true)
 public class BrandServiceImpls implements BrandService {
+    private BrandRepository brandRepository;
+
     @Override
     public List<Brand> findAll() {
-        return List.of();
+        return brandRepository.findAll();
     }
 
     @Override
     public Optional<Brand> findById(Integer id) {
-        return Optional.empty();
+        return brandRepository.findById(id);
     }
 
     @Override
     public Brand save(Brand brand) {
-        return null;
+        return brandRepository.save(brand);
     }
 
     @Override
@@ -31,6 +38,6 @@ public class BrandServiceImpls implements BrandService {
 
     @Override
     public void deleteById(Integer id) {
-
+        brandRepository.deleteById(id);
     }
 }

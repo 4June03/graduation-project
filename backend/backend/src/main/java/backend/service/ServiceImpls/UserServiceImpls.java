@@ -149,6 +149,11 @@ public class UserServiceImpls implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("Không tìm thấy user với email: "+email));
+    }
+
+    @Override
     public User updateUserInfo(Integer userId, RegisterUserRequest request) {
         User user = userRepository
                 .findById(userId)
@@ -181,6 +186,12 @@ public class UserServiceImpls implements UserService {
         userRepository.save(user);
 
         return user;
+    }
+
+    @Override
+    public String getUserNameFromJWT(String token) throws ParseException, JOSEException {
+        SignedJWT signedJWT = verifyToken(token);
+        return signedJWT.getJWTClaimsSet().getSubject();
     }
 
     @Override

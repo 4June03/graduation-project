@@ -8,6 +8,7 @@ import backend.service.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,7 @@ public class CartServiceImpls implements CartService {
         return cart;
     }
 
+    @Transactional
     @Override
     public void removeCartItem(RemoveCartItemRequest request) {
         User user = userRepository.findById(request.getUserId())

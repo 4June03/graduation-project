@@ -22,7 +22,7 @@ public class CartItemResponse {
 //    private MotorBikeResponse motorbike;
 //    private VariantDTO variant;
 //    private VariantColorDTO variantColor;
-
+    private Integer cartItemId;
     private Integer bikeId;
     private String motorbikeName;
     private String variantName;

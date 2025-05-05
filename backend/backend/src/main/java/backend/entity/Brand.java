@@ -1,5 +1,6 @@
 package backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,5 +20,6 @@ public class Brand {
     private String brandName;
 
     @OneToMany(mappedBy = "brand")
+    @JsonIgnore
     private List<Motorbike> motorbikeList;
 }

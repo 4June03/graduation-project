@@ -25,7 +25,11 @@ public interface UserService {
 
     User getUserById(Integer userId);
 
+    User getUserByEmail(String email);
+
     User updateUserInfo(Integer userId, RegisterUserRequest request);
 
     User updateUserAddresses(Integer userId, UpdateUserAddressRequest request);
+
+    String getUserNameFromJWT(String token) throws ParseException, JOSEException;
 }

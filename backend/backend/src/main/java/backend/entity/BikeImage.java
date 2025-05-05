@@ -18,6 +18,7 @@ public class BikeImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer imageId;
 
+    @Column(name = "image_url", columnDefinition = "LONGTEXT", nullable = false)
     private String imageUrl;
 
     @ManyToOne

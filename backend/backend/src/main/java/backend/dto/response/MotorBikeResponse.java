@@ -13,6 +13,8 @@ import java.util.Set;
 @Getter
 @Setter
 public class MotorBikeResponse {
+    private Integer bikeId;
+
     private String bikeName;
 
     private String description;

@@ -37,6 +37,7 @@ public class CartController {
 
         for(CartItem c : cart.getCartItemList()){
             CartItemResponse item = CartItemResponse.builder()
+                    .cartItemId(c.getCartItemId())
                     .bikeId(c.getMotorbike().getBikeId())
                     .motorbikeName(c.getMotorbike().getBikeName())
                     .variantPrice(c.getVariant().getVariantPrice())
@@ -74,5 +75,7 @@ public class CartController {
         cartService.removeCartItem(request);
         return ApiResponse.success(null, "Xóa cart item thành công");
     }
+
+
 
 }

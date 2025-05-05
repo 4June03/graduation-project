@@ -13,6 +13,8 @@ import backend.service.MotorBikeService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -33,8 +35,8 @@ public class MotorBikeServiceImpls implements MotorBikeService {
     private BikeImageMapper bikeImageMapper;
 
     @Override
-    public List<Motorbike> findAll() {
-        return motorBikeRepository.findAll();
+    public Page<Motorbike> findAll(Pageable pageable) {
+        return motorBikeRepository.findAll(pageable);
     }
 
     @Override

@@ -19,6 +19,7 @@ public interface MotorBikeMapper {
 
     @Mapping(source = "category.categoryName", target = "categoryName")
     @Mapping(source = "brand.brandName", target = "brandName")
+    @Mapping(source = "bikeId", target = "bikeId")
     public MotorBikeResponse motorBikeToMotoBikeResponse(Motorbike motorbike);
 
 

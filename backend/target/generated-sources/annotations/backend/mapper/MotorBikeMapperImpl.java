@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-23T14:17:54+0700",
+    date = "2025-05-04T01:25:29+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @Component
@@ -60,6 +60,7 @@ public class MotorBikeMapperImpl implements MotorBikeMapper {
 
         motorBikeResponse.setCategoryName( motorbikeCategoryCategoryName( motorbike ) );
         motorBikeResponse.setBrandName( motorbikeBrandBrandName( motorbike ) );
+        motorBikeResponse.setBikeId( motorbike.getBikeId() );
         motorBikeResponse.setBikeName( motorbike.getBikeName() );
         motorBikeResponse.setDescription( motorbike.getDescription() );
         motorBikeResponse.setVideoUrl( motorbike.getVideoUrl() );

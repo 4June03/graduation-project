@@ -5,14 +5,17 @@ import backend.dto.request.AddMotorBikeRequest;
 import backend.dto.request.MotorBikeDTO;
 import backend.dto.response.ApiResponse;
 import backend.dto.response.MotorBikeResponse;
+import backend.entity.BikeColor;
+import backend.entity.Brand;
 import backend.entity.Motorbike;
 import backend.mapper.MotorBikeMapper;
-import backend.service.BikeColorService;
-import backend.service.BikeImageService;
-import backend.service.MotorBikeService;
-import backend.service.VariantService;
+import backend.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,14 +33,21 @@ public class MotorBikeController {
     private BikeColorService bikeColorService;
     private BikeImageService bikeImageService;
     private MotorBikeMapper motorBikeMapper;
-
+    private BrandService brandService;
 
 
     @GetMapping
-    public ApiResponse<List<MotorBikeResponse>>  getAllMotorBike(){
-        List<Motorbike> motorbikes = motorBikeService.findAll();
-        return  ApiResponse.success(motorbikes.stream().map(motorBikeMapper::motorBikeToMotoBikeResponse).collect(Collectors.toList()), "Thành công");
-//        return motorbikes.stream().map(motorBikeMapper::motorBikeToMotoBikeResponse).toList();
+    public ApiResponse<Page<MotorBikeResponse>> getAllMotorBike(
+            @PageableDefault(page = 0, size = 10, sort = "bikeName", direction = Sort.Direction.ASC)
+            Pageable pageable) {
+
+        // Lấy Page<Motorbike> từ service
+        Page<Motorbike> page = motorBikeService.findAll(pageable);
+
+        // Chuyển thành Page<MotorBikeResponse>
+        Page<MotorBikeResponse> dtoPage = page.map(motorBikeMapper::motorBikeToMotoBikeResponse);
+
+        return ApiResponse.success(dtoPage, "Thành công");
     }
 
     @GetMapping("/{id}")
@@ -62,8 +72,13 @@ public class MotorBikeController {
         return ApiResponse.success("", "Xóa motorbike thành công");
     }
 
+    @GetMapping("/brands")
+    private List<Brand> getAllBrands(){
+        return brandService.findAll();
+    }
 
-
-
-
+    @GetMapping("/colors")
+    private List<BikeColor> getAllBikeColors(){
+        return bikeColorService.findAll();
+    }
 }
