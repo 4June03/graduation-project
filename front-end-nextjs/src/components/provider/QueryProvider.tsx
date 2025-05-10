@@ -14,7 +14,7 @@ const QueryProvider: FC<ProviderProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
+      {/* <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" /> */}
     </QueryClientProvider>
   );
 };

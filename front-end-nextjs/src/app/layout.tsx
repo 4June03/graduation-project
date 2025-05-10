@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import { Header } from "@/components/client/header";
 import { Footer } from "@/components/client/footer";
+import { HeaderContainer } from "@/components/client/header/HeaderContainer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +40,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProvider>
-            <Header />
+            <HeaderContainer />
             {children}
             <Toaster richColors />
           </QueryProvider>

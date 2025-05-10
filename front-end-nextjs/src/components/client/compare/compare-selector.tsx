@@ -1,27 +1,35 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { X, Plus } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
+import Image from "next/image";
+import { X, Plus } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 interface Motorcycle {
-  id: number
-  name: string
-  brand: string
-  price: number
-  image: string
+  id: number;
+  name: string;
+  brand: string;
+  price: number;
+  image: string;
 }
 
 interface CompareSelectorProps {
-  motorcycles: Motorcycle[]
-  selectedMotorcycles: number[]
-  onSelectMotorcycle: (index: number, motorcycleId: number) => void
-  onRemoveMotorcycle: (index: number) => void
-  onAddMotorcycle: () => void
-  canAddMore: boolean
-  getAvailableMotorcycles: (currentIndex: number) => { id: number; name: string }[]
+  motorcycles: Motorcycle[];
+  selectedMotorcycles: number[];
+  onSelectMotorcycle: (index: number, motorcycleId: number) => void;
+  onRemoveMotorcycle: (index: number) => void;
+  onAddMotorcycle: () => void;
+  canAddMore: boolean;
+  getAvailableMotorcycles: (
+    currentIndex: number
+  ) => { id: number; name: string }[];
 }
 
 export function CompareSelector({
@@ -39,13 +47,13 @@ export function CompareSelector({
       style: "currency",
       currency: "VND",
       maximumFractionDigits: 0,
-    }).format(price)
+    }).format(price);
   }
 
   // Find motorcycle by ID
   const findMotorcycle = (id: number) => {
-    return motorcycles.find((m) => m.id === id) || null
-  }
+    return motorcycles.find((m) => m.id === id) || null;
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -69,7 +77,9 @@ export function CompareSelector({
             <div className="p-4">
               <Select
                 value={motorcycleId.toString()}
-                onValueChange={(value) => onSelectMotorcycle(index, Number.parseInt(value))}
+                onValueChange={(value) =>
+                  onSelectMotorcycle(index, Number.parseInt(value))
+                }
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Chọn xe" />
@@ -87,14 +97,18 @@ export function CompareSelector({
                 <div className="mt-4">
                   <div className="relative h-40 w-full mb-3">
                     <Image
-                      src={findMotorcycle(motorcycleId)?.image || "/placeholder.svg"}
+                      src={
+                        findMotorcycle(motorcycleId)?.image ||
+                        "/placeholder.svg"
+                      }
                       alt={findMotorcycle(motorcycleId)?.name || ""}
                       fill
                       className="object-contain"
                     />
                   </div>
                   <h4 className="font-medium text-center">
-                    {findMotorcycle(motorcycleId)?.brand} {findMotorcycle(motorcycleId)?.name}
+                    {findMotorcycle(motorcycleId)?.brand}{" "}
+                    {findMotorcycle(motorcycleId)?.name}
                   </h4>
                   <p className="text-center text-primary font-bold mt-1">
                     {formatPrice(findMotorcycle(motorcycleId)?.price || 0)}
@@ -132,5 +146,5 @@ export function CompareSelector({
         </div>
       )}
     </div>
-  )
+  );
 }
