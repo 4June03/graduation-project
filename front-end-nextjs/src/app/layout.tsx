@@ -4,9 +4,8 @@ import "./globals.css";
 import QueryProvider from "@/components/provider/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/provider/theme-provider";
-import { Header } from "@/components/client/header";
-import { Footer } from "@/components/client/footer";
 import { HeaderContainer } from "@/components/client/header/HeaderContainer";
+import { FooterContainer } from "@/components/client/footer/FooterContainer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,7 +43,7 @@ export default function RootLayout({
             {children}
             <Toaster richColors />
           </QueryProvider>
-          <Footer />
+          <FooterContainer />
         </ThemeProvider>
       </body>
     </html>
