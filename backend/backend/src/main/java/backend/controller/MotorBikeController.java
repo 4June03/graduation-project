@@ -50,6 +50,18 @@ public class MotorBikeController {
         return ApiResponse.success(dtoPage, "Thành công");
     }
 
+    @GetMapping("/category/{categoryId}")
+    public ApiResponse<Page<MotorBikeResponse>> getByCategory(
+            @PathVariable Integer categoryId,
+            @PageableDefault(page = 0, size = 10, sort = "bikeName", direction = Sort.Direction.ASC)
+            Pageable pageable) {
+
+        Page<Motorbike> page = motorBikeService.findByCategoryId(categoryId, pageable);
+        Page<MotorBikeResponse> dtoPage = page.map(motorBikeMapper::motorBikeToMotoBikeResponse);
+        return ApiResponse.success(dtoPage, "Lấy danh sách motorbike theo categoryId thành công");
+    }
+
+
     @GetMapping("/{id}")
     public ApiResponse<MotorBikeResponse> getMotorBikeById(@PathVariable("id") Integer motorBikeId){
         Motorbike motorbike = motorBikeService.findById(motorBikeId).orElseThrow(()->new RuntimeException("Không tìm thấy motorBike với id: "+motorBikeId));
@@ -81,4 +93,5 @@ public class MotorBikeController {
     private List<BikeColor> getAllBikeColors(){
         return bikeColorService.findAll();
     }
+
 }

@@ -18,4 +18,6 @@ public interface MotorBikeService {
     public Motorbike updateMotorBike(Motorbike motorbike);
 
     public void deleteById(Integer id);
+
+    Page<Motorbike> findByCategoryId(Integer categoryId, Pageable pageable);
 }

@@ -1,3 +1,4 @@
+"usse client";
 import React, { FC } from "react";
 import {
   Sheet,
@@ -8,38 +9,29 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Menu,
-  Search,
-  ShoppingCart,
-  Heart,
-  User,
-  X,
-  ChevronDown,
-} from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { HeaderAction } from "@/components/client/header/HeaderAction";
 import { HeaderLogo } from "@/components/client/header/HeaderLogo";
+import { useFetchData } from "@/hooks/useCRUD";
+import { Category } from "@/components/client/category";
 
 // Mock data for categories
-const categories = [
-  { id: 1, name: "Xe số", href: "/categories/1" },
-  { id: 2, name: "Xe tay ga", href: "/categories/2" },
-  { id: 3, name: "Xe thể thao", href: "/categories/3" },
-  { id: 4, name: "Xe phân khối lớn", href: "/categories/4" },
-  { id: 5, name: "Xe điện", href: "/categories/5" },
-  { id: 6, name: "Xe địa hình", href: "/categories/6" },
-];
+// const categories = [
+//   { id: 1, name: "Xe số", href: "/categories/1" },
+//   { id: 2, name: "Xe tay ga", href: "/categories/2" },
+//   { id: 3, name: "Xe thể thao", href: "/categories/3" },
+//   { id: 4, name: "Xe phân khối lớn", href: "/categories/4" },
+//   { id: 5, name: "Xe điện", href: "/categories/5" },
+//   { id: 6, name: "Xe địa hình", href: "/categories/6" },
+// ];
 
 // Mock data for brands
 const brands = [
@@ -59,6 +51,18 @@ export const HeaderMenu: FC<HeaderMenuProps> = ({
   setIsSearchOpen,
   isSearchOpen,
 }) => {
+  const {
+    data: apiResponse,
+    isFetching,
+    error,
+  } = useFetchData<{
+    success: boolean;
+    message: string;
+    data: Category[];
+  }>(["categories"], `/categories`);
+
+  const categories = apiResponse?.data || [];
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -84,11 +88,11 @@ export const HeaderMenu: FC<HeaderMenuProps> = ({
                   <div className="pl-4 space-y-1">
                     {categories.map((category) => (
                       <Link
-                        key={category.id}
-                        href={category.href}
+                        key={category.categoryId}
+                        href={`/categories/${category.categoryId}`}
                         className="block py-1 hover:text-primary"
                       >
-                        {category.name}
+                        {category.categoryName}
                       </Link>
                     ))}
                   </div>
@@ -136,9 +140,11 @@ export const HeaderMenu: FC<HeaderMenuProps> = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-48">
-              {categories.map((category) => (
-                <DropdownMenuItem key={category.id} asChild>
-                  <Link href={category.href}>{category.name}</Link>
+              {(categories || []).map((category) => (
+                <DropdownMenuItem key={category.categoryId} asChild>
+                  <Link href={`/categories/${category.categoryId}`}>
+                    {category.categoryName}
+                  </Link>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>

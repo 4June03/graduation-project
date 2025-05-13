@@ -130,4 +130,9 @@ public class MotorBikeServiceImpls implements MotorBikeService {
 
         motorBikeRepository.deleteById(id);
     }
+
+    @Override
+    public Page<Motorbike> findByCategoryId(Integer categoryId, Pageable pageable) {
+        return motorBikeRepository.findByCategoryCategoryId(categoryId, pageable);
+    }
 }

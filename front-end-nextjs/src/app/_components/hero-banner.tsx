@@ -28,7 +28,7 @@ const BannerContent = [
 
 export function HeroBanner() {
   return (
-    <section className="relative w-full h-[500px]">
+    <section className="relative w-full">
       <Carousel className="w-full h-full">
         <CarouselContent>
           {/* {BannerContent.map((item, index) => (

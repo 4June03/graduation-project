@@ -5,3 +5,4 @@ export * from "./filter/FilterSideBar";
 export * from "./CategoryHeader";
 export * from "./ProductGrid";
 export * from "./SortDropDown";
+export * from "./CategoryHomepageList";

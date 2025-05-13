@@ -84,7 +84,7 @@ export function CategoriesClient() {
     "categories",
   ]);
   const queryClient = useQueryClient();
-  const categories = apiResponse?.data || null;
+  const categories = apiResponse?.data || [];
 
   // Handle adding a new category
   function onAddSubmit(values: CategoryFormValues) {

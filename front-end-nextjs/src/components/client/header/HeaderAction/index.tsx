@@ -8,9 +8,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/hooks/auth";
 import { Heart, Search, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
-import React, { FC } from "react";
+import { useRouter } from "next/navigation";
+import React, { FC, useEffect } from "react";
+import { toast } from "sonner";
 
 interface HeaderActionProps {
   setIsSearchOpen: (isOpen: boolean) => void;
@@ -21,6 +24,21 @@ export const HeaderAction: FC<HeaderActionProps> = ({
   setIsSearchOpen,
   isSearchOpen,
 }) => {
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
+  const handleLogout = () => {
+    // xóa token
+    // document.cookie = "authToken=; Max-Age=0; path=/";
+    localStorage.removeItem("accessToken");
+    router.push("/");
+    toast.success("Đăng xuất thành công");
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    console.log("Đăng nhập chưa,", isLoggedIn);
+  }, [isLoggedIn]);
+
   return (
     <div className="flex items-center gap-2">
       <Button
@@ -54,18 +72,35 @@ export const HeaderAction: FC<HeaderActionProps> = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Tài khoản</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link href="/profile">Thông tin cá nhân</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/profile?tab=orders">Đơn hàng của tôi</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/favorites">Sản phẩm yêu thích</Link>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Đăng xuất</DropdownMenuItem>
+
+          {isLoggedIn && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/profile">Thông tin cá nhân</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/profile?tab=orders">Đơn hàng của tôi</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/favorites">Sản phẩm yêu thích</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                Đăng xuất
+              </DropdownMenuItem>
+            </>
+          )}
+          {!isLoggedIn && (
+            <>
+              <DropdownMenuItem asChild>
+                <Link href="/auth/login">Đăng nhập</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/auth/register">Đăng ký</Link>
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

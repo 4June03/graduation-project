@@ -1,29 +1,36 @@
+"use client";
+import { Category } from "@/components/client/category";
+import { useFetchData } from "@/hooks/useCRUD";
 import Link from "next/link";
 import React from "react";
 
 export const FooterCategory = () => {
+  const {
+    data: apiResponse,
+    isFetching,
+    error,
+  } = useFetchData<{
+    success: boolean;
+    message: string;
+    data: Category[];
+  }>(["categories"], `/categories`);
+
+  const categories = apiResponse?.data || [];
+
   return (
     <div>
       <h3 className="font-bold text-lg mb-4">Danh mục sản phẩm</h3>
       <ul className="space-y-2">
-        {[1, 1, 1, 1, 1, 1].map((_, index) => (
-          <li key={index}>
+        {(categories || []).map((category, index) => (
+          <li key={category.categoryId}>
             <Link
-              href="/categories/1"
+              href={`/categories/${category.categoryId}`}
               className="text-muted-foreground hover:text-foreground"
             >
-              Xe máy số
+              {category.categoryName}
             </Link>
           </li>
         ))}
-        <li>
-          <Link
-            href="/categories/1"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            Xe số
-          </Link>
-        </li>
       </ul>
     </div>
   );

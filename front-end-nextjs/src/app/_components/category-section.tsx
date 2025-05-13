@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { CategoryList } from "@/components/client/category-list";
+
+import { CategoryHomepageList } from "@/components/client/category";
 
 export function CategorySection() {
   return (
@@ -14,7 +15,8 @@ export function CategorySection() {
           Xem tất cả <ChevronRight className="h-4 w-4 ml-1" />
         </Link>
       </div>
-      <CategoryList />
+      <CategoryHomepageList />
+      {/* <CategoryList /> */}
     </section>
   );
 }
