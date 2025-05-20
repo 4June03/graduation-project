@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import { HeaderContainer } from "@/components/client/header/HeaderContainer";
 import { FooterContainer } from "@/components/client/footer/FooterContainer";
+import { AuthProvider } from "@/components/provider/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,10 +40,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProvider>
-            <HeaderContainer />
-            {children}
-            <Toaster richColors />
-            <FooterContainer />
+            <AuthProvider>
+              <HeaderContainer />
+              {children}
+              <Toaster richColors />
+              <FooterContainer />
+            </AuthProvider>
           </QueryProvider>
         </ThemeProvider>
       </body>

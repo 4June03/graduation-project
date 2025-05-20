@@ -13,7 +13,7 @@ export default function LoginPage() {
               <Link href="/" className="flex items-center gap-2">
                 <div className="relative h-10 w-10">
                   <Image
-                    src="/placeholder.svg?height=40&width=40"
+                    src="/images/web-logo2.png"
                     alt="Logo"
                     fill
                     className="object-contain"

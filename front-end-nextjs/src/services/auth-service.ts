@@ -26,12 +26,12 @@ export interface registerResponse {
 
 export const login = async (request: loginRequest): Promise<loginResponse> => {
   const response = await axios.post(`${BASE_URL}/api/login`, request);
-  return response.data.data;
+  return response.data;
 };
 
 export const register = async (
   request: registerRequest
 ): Promise<registerResponse> => {
   const response = await axios.post(`${BASE_URL}/api/register`, request);
-  return response.data.data;
+  return response.data;
 };
