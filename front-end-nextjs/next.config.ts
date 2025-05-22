@@ -11,8 +11,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.honda.com.vn",
-        // port: "3000",
+        hostname: "**",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
+        port: "",
         pathname: "/**",
       },
     ],

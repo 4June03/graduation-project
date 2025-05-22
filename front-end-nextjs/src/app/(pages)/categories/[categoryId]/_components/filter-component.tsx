@@ -1,33 +1,23 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-import { Slider } from "@/components/ui/slider"
-import { Check } from "lucide-react"
-
-interface Brand {
-  id: string
-  name: string
-}
-
-interface Color {
-  id: string
-  name: string
-  color: string
-}
+import { Brand, Color } from "@/app/(pages)/categories/type";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Check } from "lucide-react";
 
 interface FilterComponentProps {
-  priceRange: [number, number]
-  setPriceRange: (value: [number, number]) => void
-  selectedBrands: string[]
-  toggleBrand: (brandId: string) => void
-  selectedColors: string[]
-  toggleColor: (colorId: string) => void
-  resetFilters: () => void
-  brands: Brand[]
-  colors: Color[]
-  formatPrice: (price: number) => string
+  priceRange: [number, number];
+  setPriceRange: (value: [number, number]) => void;
+  selectedBrands: string[];
+  toggleBrand: (brandId: string) => void;
+  selectedColors: string[];
+  toggleColor: (colorId: string) => void;
+  resetFilters: () => void;
+  brands: Brand[];
+  colors: Color[];
+  formatPrice: (price: number) => string;
 }
 
 export function FilterComponent({
@@ -68,8 +58,12 @@ export function FilterComponent({
             className="mb-6"
           />
           <div className="flex justify-between items-center">
-            <div className="text-sm font-medium">{formatPrice(priceRange[0])}</div>
-            <div className="text-sm font-medium">{formatPrice(priceRange[1])}</div>
+            <div className="text-sm font-medium">
+              {formatPrice(priceRange[0])}
+            </div>
+            <div className="text-sm font-medium">
+              {formatPrice(priceRange[1])}
+            </div>
           </div>
         </div>
       </div>
@@ -85,7 +79,10 @@ export function FilterComponent({
                 checked={selectedBrands.includes(brand.id)}
                 onCheckedChange={() => toggleBrand(brand.id)}
               />
-              <Label htmlFor={`brand-${brand.id}`} className="text-sm font-normal cursor-pointer">
+              <Label
+                htmlFor={`brand-${brand.id}`}
+                className="text-sm font-normal cursor-pointer"
+              >
                 {brand.name}
               </Label>
             </div>
@@ -100,14 +97,22 @@ export function FilterComponent({
           {colors.map((color) => (
             <button
               key={color.id}
-              className={`w-8 h-8 rounded-full flex items-center justify-center ${color.color} ${
-                selectedColors.includes(color.id) ? "ring-2 ring-offset-2 ring-primary" : "ring-1 ring-muted"
+              className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                color.color
+              } ${
+                selectedColors.includes(color.id)
+                  ? "ring-2 ring-offset-2 ring-primary"
+                  : "ring-1 ring-muted"
               }`}
               onClick={() => toggleColor(color.id)}
               title={color.name}
             >
               {selectedColors.includes(color.id) && (
-                <Check className={`h-4 w-4 ${color.id === "white" ? "text-black" : "text-white"}`} />
+                <Check
+                  className={`h-4 w-4 ${
+                    color.id === "white" ? "text-black" : "text-white"
+                  }`}
+                />
               )}
             </button>
           ))}
@@ -129,5 +134,5 @@ export function FilterComponent({
         Xóa bộ lọc
       </Button>
     </div>
-  )
+  );
 }

@@ -5,6 +5,7 @@ import backend.dto.request.AddMotorBikeRequest;
 import backend.dto.request.MotorBikeDTO;
 import backend.dto.response.ApiResponse;
 import backend.dto.response.MotorBikeResponse;
+import backend.dto.response.MotorbikeCardResponse;
 import backend.entity.BikeColor;
 import backend.entity.Brand;
 import backend.entity.Motorbike;
@@ -51,13 +52,13 @@ public class MotorBikeController {
     }
 
     @GetMapping("/category/{categoryId}")
-    public ApiResponse<Page<MotorBikeResponse>> getByCategory(
+    public ApiResponse<Page<MotorbikeCardResponse>> getByCategory(
             @PathVariable Integer categoryId,
             @PageableDefault(page = 0, size = 10, sort = "bikeName", direction = Sort.Direction.ASC)
             Pageable pageable) {
 
         Page<Motorbike> page = motorBikeService.findByCategoryId(categoryId, pageable);
-        Page<MotorBikeResponse> dtoPage = page.map(motorBikeMapper::motorBikeToMotoBikeResponse);
+        Page<MotorbikeCardResponse> dtoPage = page.map(MotorbikeCardResponse::fromEntity);
         return ApiResponse.success(dtoPage, "Lấy danh sách motorbike theo categoryId thành công");
     }
 

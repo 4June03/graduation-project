@@ -1,43 +1,39 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Heart, ShoppingCart } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import { Heart, ShoppingCart } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-
-export interface ProductData {
-  id: number
-  name: string
-  image: string
-  price: number
-  oldPrice?: number | null
-  brand: string
-  isNew?: boolean
-  inStock?: boolean
-}
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Category } from "@/app/admin/dashboard/categories/components/categories-client";
+import { CategoryMotorbike } from "@/app/(pages)/categories/type";
 
 interface ProductCardProps {
-  product: ProductData
+  motorbike: CategoryMotorbike;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ motorbike }: ProductCardProps) {
   // Format price to VND
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
       currency: "VND",
       maximumFractionDigits: 0,
-    }).format(price)
-  }
+    }).format(price);
+  };
 
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
       <CardContent className="p-0">
         <div className="relative">
-          <Link href={`/products/${product.id}`}>
+          <Link href={`/products/${motorbike?.bikeId}`}>
             <div className="relative h-48 w-full">
-              <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
+              <Image
+                src={motorbike?.imageUrls[0] || "/placeholder.svg"}
+                alt={"alternative text"}
+                fill
+                className="object-cover"
+              />
             </div>
           </Link>
           <Button
@@ -48,17 +44,17 @@ export function ProductCard({ product }: ProductCardProps) {
           >
             <Heart className="h-5 w-5" />
           </Button>
-          {product.isNew && (
+          {motorbike?.isNew && (
             <Badge className="absolute top-2 left-2" variant="default">
               Mới
             </Badge>
           )}
-          {product.oldPrice && (
+          {motorbike?.oldPrice && (
             <Badge className="absolute top-2 left-2" variant="destructive">
               Giảm giá
             </Badge>
           )}
-          {product.inStock === false && (
+          {motorbike.totalStock === 0 && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <Badge variant="outline" className="bg-white text-foreground">
                 Hết hàng
@@ -67,29 +63,39 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
         <div className="p-4">
-          <div className="text-sm text-muted-foreground mb-1">{product.brand}</div>
-          <Link href={`/products/${product.id}`}>
+          <div className="text-sm text-muted-foreground mb-1">
+            {motorbike?.brandName}
+          </div>
+          <Link href={`/products/${motorbike?.bikeId}`}>
             <h3 className="font-medium text-lg mb-2 hover:text-primary transition-colors line-clamp-2">
-              {product.name}
+              {motorbike?.bikeName}
             </h3>
           </Link>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-lg">{formatPrice(product.price)}</span>
-            {product.oldPrice && (
-              <span className="text-muted-foreground line-through text-sm">{formatPrice(product.oldPrice)}</span>
+            <span className="font-bold text-lg">
+              {formatPrice(motorbike?.price)}
+            </span>
+            {motorbike?.oldPrice && (
+              <span className="text-muted-foreground line-through text-sm">
+                {formatPrice(motorbike?.oldPrice)}
+              </span>
             )}
           </div>
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex gap-2">
-        <Button className="w-full" size="sm" disabled={product.inStock === false}>
+        <Button
+          className="w-full"
+          size="sm"
+          disabled={motorbike?.totalStock === 0}
+        >
           <ShoppingCart className="h-4 w-4 mr-2" />
           Thêm vào giỏ
         </Button>
         <Button variant="outline" size="sm" asChild>
-          <Link href={`/products/${product.id}`}>Chi tiết</Link>
+          <Link href={`/products/${motorbike?.bikeId}`}>Chi tiết</Link>
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

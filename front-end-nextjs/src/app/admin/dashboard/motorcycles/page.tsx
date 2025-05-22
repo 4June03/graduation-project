@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/pagination";
 import { useDataMutation, useFetchData } from "@/hooks/useCRUD";
 import { useQueryClient } from "@tanstack/react-query";
+import { DeleteMotorcycleModal } from "@/app/admin/dashboard/motorcycles/components/delete-motorcyles-modal";
 
 const brands = [
   "Tất cả",
@@ -71,6 +72,12 @@ export default function MotorcyclesPage() {
   ]);
   const queryClient = useQueryClient();
   const motorcycles = apiResponse?.data?.content || null;
+  // State cho modal xóa
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [motorcycleToDelete, setMotorcycleToDelete] = useState<{
+    bikeId: number;
+    bikeName: string;
+  } | null>(null);
 
   useEffect(() => {
     console.log("List motorbikes: ", motorcycles);
@@ -86,6 +93,15 @@ export default function MotorcyclesPage() {
       (searchTerm === "" ||
         motorcycle.brandName.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+
+  // Xử lý mở modal xóa
+  const handleDeleteClick = (motorcycle: {
+    bikeId: number;
+    bikeName: string;
+  }) => {
+    setMotorcycleToDelete(motorcycle);
+    setDeleteModalOpen(true);
+  };
 
   // Hàm tạo các nút phân trang
   const renderPaginationItems = () => {
@@ -256,7 +272,16 @@ export default function MotorcyclesPage() {
                           >
                             Sửa
                           </Button>
-                          <Button variant="destructive" size="sm">
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() =>
+                              handleDeleteClick({
+                                bikeId: motorcycle.bikeId,
+                                bikeName: motorcycle.bikeName,
+                              })
+                            }
+                          >
                             Xóa
                           </Button>
                         </div>
@@ -311,6 +336,16 @@ export default function MotorcyclesPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modal xác nhận xóa */}
+      {motorcycleToDelete && (
+        <DeleteMotorcycleModal
+          isOpen={deleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          motorcycleId={motorcycleToDelete.bikeId}
+          motorcycleName={motorcycleToDelete.bikeName}
+        />
+      )}
     </div>
   );
 }
