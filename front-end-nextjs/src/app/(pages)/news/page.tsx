@@ -45,7 +45,7 @@ export default function NewsPage() {
   return (
     <main className="flex min-h-screen flex-col">
       <div className="bg-muted/30 py-6">
-        <div className="container">
+        <div className="container w-full mx-auto">
           <h1 className="text-3xl font-bold mb-2">Tin tức</h1>
           <div className="flex items-center text-sm text-muted-foreground">
             <Link href="/" className="hover:text-foreground">
@@ -57,7 +57,7 @@ export default function NewsPage() {
         </div>
       </div>
 
-      <div className="container py-8">
+      <div className="container py-8 w-full mx-auto">
         {/* Featured News */}
         <div className="mb-12">
           <Link href={`/news/${featuredNews.id}`}>

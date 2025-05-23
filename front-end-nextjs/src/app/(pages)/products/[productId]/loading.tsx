@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="container py-8">
+    <div className="container py-8 w-full mx-auto">
       <div className="animate-pulse">
         <div className="h-4 bg-gray-200 rounded w-3/4 mb-6"></div>
 

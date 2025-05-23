@@ -54,13 +54,13 @@ export function ProductCard({ motorbike }: ProductCardProps) {
               Giảm giá
             </Badge>
           )}
-          {motorbike.totalStock === 0 && (
+          {/* {motorbike?.totalStock === 0 && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <Badge variant="outline" className="bg-white text-foreground">
                 Hết hàng
               </Badge>
             </div>
-          )}
+          )} */}
         </div>
         <div className="p-4">
           <div className="text-sm text-muted-foreground mb-1">
@@ -83,16 +83,16 @@ export function ProductCard({ motorbike }: ProductCardProps) {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex gap-2">
+      <CardFooter className="p-4 pt-0 flex gap-2 w-full overflow-hidden">
         <Button
-          className="w-full"
+          className="w-1/2"
           size="sm"
           disabled={motorbike?.totalStock === 0}
         >
           <ShoppingCart className="h-4 w-4 mr-2" />
           Thêm vào giỏ
         </Button>
-        <Button variant="outline" size="sm" asChild>
+        <Button variant="outline" size="sm" className="w-1/2" asChild>
           <Link href={`/products/${motorbike?.bikeId}`}>Chi tiết</Link>
         </Button>
       </CardFooter>

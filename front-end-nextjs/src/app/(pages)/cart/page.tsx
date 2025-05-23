@@ -89,7 +89,7 @@ export default function CartPage() {
   return (
     <main className="flex min-h-screen flex-col">
       <div className="bg-muted/30 py-6">
-        <div className="container">
+        <div className="container w-full mx-auto">
           <h1 className="text-3xl font-bold mb-2">Giỏ hàng</h1>
           <div className="flex items-center text-sm text-muted-foreground">
             <Link href="/" className="hover:text-foreground">
@@ -101,7 +101,7 @@ export default function CartPage() {
         </div>
       </div>
 
-      <div className="container py-8">
+      <div className="container py-8 w-full mx-auto">
         {cartItems.length > 0 ? (
           <div className="grid md:grid-cols-3 gap-8">
             {/* Cart Items */}

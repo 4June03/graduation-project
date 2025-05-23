@@ -177,7 +177,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         </div>
       </div>
 
-      <div className="container py-8">
+      <div className="container py-8 w-full mx-auto">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Gallery */}
           <ProductGallery images={galleryImages} />
