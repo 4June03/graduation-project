@@ -18,7 +18,13 @@ export async function getMotorbikeById(id: number): Promise<Product> {
       throw new Error(`Failed to fetch motorbike: ${response.status}`);
     }
 
-    return await response.json();
+    const result = (await response.json()) as {
+      success: boolean;
+      message: string;
+      data: Product;
+    };
+
+    return result.data;
   } catch (error) {
     console.error("Error fetching motorbike:", error);
 

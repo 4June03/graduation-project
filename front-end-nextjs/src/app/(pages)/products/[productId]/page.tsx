@@ -28,7 +28,7 @@ export default async function ProductDetailPage({
   const product: Product = await getMotorbikeById(id);
 
   // console.log("prodetail: ", product);
-  console.log("product.variants:", product.variants);
+  console.log("product.variants:", product);
   return (
     <Suspense
       fallback={
