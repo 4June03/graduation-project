@@ -29,7 +29,7 @@ export async function getMotorbikesFromCategory(
     const motorbikes: CategoryMotorbike[] = data.data.content || [];
     const totalElement: number = data?.data.totalElements || 0;
     const totalPage: number = data?.data.totalPages || 0;
-    console.log("List by Category", motorbikes);
+    // console.log("List by Category", motorbikes);
     console.log("total element", totalElement);
     console.log("total page", totalPage);
 
@@ -84,7 +84,7 @@ function generateMockMotorbikes(categoryId: string): CategoryMotorbike[] {
       Math.random() > 0.7
         ? Math.floor(Math.random() * 120000000) + 20000000
         : undefined,
-    brand: brands[Math.floor(Math.random() * brands.length)],
+    brandName: brands[Math.floor(Math.random() * brands.length)],
     isNew: Math.random() > 0.8,
   }));
 }

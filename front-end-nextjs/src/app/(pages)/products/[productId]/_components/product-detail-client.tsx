@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Product } from "@/types/product";
+
 import { Breadcrumb } from "@/components/client/layout/breadcrumb";
 import { ProductGallery } from "@/components/client/products/product-gallery";
 import { ProductVariantSelector } from "@/components/client/products/product-variant-selector";
 import { ProductColorSelector } from "@/components/client/products/product-color-selector";
+import { Product } from "@/app/(pages)/products/type";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -104,8 +105,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   ];
 
   // Lấy biến thể và màu sắc đã chọn
-  const selectedVariant = product.variants[selectedVariantIndex];
-  const selectedColor = selectedVariant.variantColors[selectedColorIndex];
+  const selectedVariant = product?.variants[selectedVariantIndex];
+  const selectedColor = selectedVariant?.variantColors[selectedColorIndex];
 
   // Chuẩn bị hình ảnh cho gallery
   const galleryImages = selectedColor.images.map((img, index) => ({
@@ -168,6 +169,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       value: `${product.engineAndFrame.compressionRatio}:1`,
     },
   ];
+
+  // Nếu chưa có variants, hiển thị loading placeholder
+  if (!product?.variants?.length) {
+    return <div className="container py-8">Đang tải thông tin sản phẩm…</div>;
+  }
 
   return (
     <main className="flex min-h-screen flex-col">
