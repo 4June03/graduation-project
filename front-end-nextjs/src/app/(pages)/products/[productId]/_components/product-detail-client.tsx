@@ -8,6 +8,10 @@ import { ProductGallery } from "@/components/client/products/product-gallery";
 import { ProductVariantSelector } from "@/components/client/products/product-variant-selector";
 import { ProductColorSelector } from "@/components/client/products/product-color-selector";
 import { Product } from "@/app/(pages)/products/type";
+import { useAuth } from "@/components/provider/AuthProvider";
+import { AddToCartRequest } from "@/app/(pages)/cart/type";
+import { toast } from "sonner";
+import { addToCart } from "@/app/(pages)/cart/_lib/service";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -17,7 +21,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const router = useRouter();
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-
+  const { userId } = useAuth();
   // Xử lý khi thay đổi biến thể
   const handleVariantChange = (variantIndex: number) => {
     setSelectedVariantIndex(variantIndex);
@@ -31,31 +35,47 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
   // Xử lý thêm vào giỏ hàng
   const handleAddToCart = async () => {
-    const selectedVariant = product.variants[selectedVariantIndex];
-    const selectedColor = selectedVariant.variantColors[selectedColorIndex];
+    try {
+      const selectedVariant = product.variants[selectedVariantIndex];
+      const selectedVariantColor =
+        selectedVariant.variantColors[selectedColorIndex];
 
-    // Dữ liệu gửi lên API
-    const cartData = {
-      userId: 1, // Giả sử userId là 1, trong thực tế sẽ lấy từ context hoặc state
-      productId: product.bikeId,
-      variantId: selectedVariant.variantId,
-      variantColorId: selectedColor.colorId,
-    };
+      if (!userId) {
+        toast.error("Vui lòng đăng nhập");
+        return;
+      }
 
-    console.log("Dữ liệu gửi lên API thêm vào giỏ hàng:", cartData);
+      // Dữ liệu gửi lên API
+      const cartData: AddToCartRequest = {
+        userId: userId,
+        productId: product.bikeId,
+        variantId: selectedVariant.variantId,
+        variantColorId: selectedVariantColor.variantColorId,
+      };
 
-    // Trong thực tế, đây sẽ là một API call
-    // const response = await fetch('/api/cart/add', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(cartData),
-    // });
-    // const result = await response.json();
+      console.log("Variant:", selectedVariant);
 
-    // Giả lập API call thành công
-    alert("Đã thêm sản phẩm vào giỏ hàng");
+      console.log("Dữ liệu gửi lên API thêm vào giỏ hàng:", cartData);
+
+      const response = await addToCart(cartData);
+
+      // Trong thực tế, đây sẽ là một API call
+      // const response = await fetch("localhost:8080/cart", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(cartData),
+      // });
+      // const result = await response.json();
+
+      // Giả lập API call thành công
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+        console.error("Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
+      }
+    }
   };
 
   // Xử lý mua ngay
@@ -65,7 +85,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
     // Dữ liệu gửi lên API
     const cartData = {
-      userId: 1, // Giả sử userId là 1, trong thực tế sẽ lấy từ context hoặc state
+      userId: userId, // Giả sử userId là 1, trong thực tế sẽ lấy từ context hoặc state
       productId: product.bikeId,
       variantId: selectedVariant.variantId,
       variantColorId: selectedColor.colorId,
@@ -239,7 +259,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               <ProductColorSelector
                 colors={selectedVariant.variantColors}
                 selectedColorIndex={selectedColorIndex}
-                onChange={handleColorChange}
+                onChangeColor={handleColorChange}
               />
 
               {/* Hiển thị giá */}

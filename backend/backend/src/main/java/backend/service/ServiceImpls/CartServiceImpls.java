@@ -52,7 +52,7 @@ public class CartServiceImpls implements CartService {
             throw new RuntimeException("motor bike không tồn tại biến thể này bikeId: "+motorbike.getBikeId()+"- variantId-bikeId: "+variant.getMotorbikes().getBikeId());
         }
         if(variantColor.getVariant().getVariantId() != variant.getVariantId()){
-            throw new RuntimeException("Biến thể và màu biến thể không khớp");
+            throw new RuntimeException("Biến thể và màu biến thể không khớp"+variantColor.getVariant().getVariantName());
         }
 
         CartItem cartItem = CartItem.builder()

@@ -20,7 +20,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,12 +29,9 @@ import java.util.stream.Collectors;
 public class MotorBikeController {
 
     private MotorBikeService motorBikeService;
-    private VariantService variantService;
     private BikeColorService bikeColorService;
-    private BikeImageService bikeImageService;
     private MotorBikeMapper motorBikeMapper;
     private BrandService brandService;
-
 
     @GetMapping
     public ApiResponse<Page<MotorBikeResponse>> getAllMotorBike(
@@ -58,6 +54,7 @@ public class MotorBikeController {
             Pageable pageable) {
 
         Page<Motorbike> page = motorBikeService.findByCategoryId(categoryId, pageable);
+
         Page<MotorbikeCardResponse> dtoPage = page.map(MotorbikeCardResponse::fromEntity);
         return ApiResponse.success(dtoPage, "Lấy danh sách motorbike theo categoryId thành công");
     }

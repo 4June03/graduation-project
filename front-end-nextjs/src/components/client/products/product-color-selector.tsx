@@ -1,16 +1,20 @@
-"use client"
+"use client";
 
-import type { VariantColor } from "@/types/product"
+import type { VariantColor } from "@/types/product";
 
 interface ProductColorSelectorProps {
-  colors: VariantColor[]
-  selectedColorIndex: number
-  onChange: (colorIndex: number) => void
+  colors: VariantColor[];
+  selectedColorIndex: number;
+  onChangeColor: (colorIndex: number) => void;
 }
 
-export function ProductColorSelector({ colors, selectedColorIndex, onChange }: ProductColorSelectorProps) {
+export function ProductColorSelector({
+  colors,
+  selectedColorIndex,
+  onChangeColor,
+}: ProductColorSelectorProps) {
   if (!colors || colors.length === 0) {
-    return null
+    return null;
   }
 
   return (
@@ -21,35 +25,33 @@ export function ProductColorSelector({ colors, selectedColorIndex, onChange }: P
           {colors.map((color, index) => {
             // Giả sử colorId là mã màu, trong thực tế bạn cần map colorId sang mã màu thực tế
             const colorMap: Record<number, string> = {
-              1: "#FF0000", // Đỏ
-              2: "#000000", // Đen
-              3: "#FFFFFF", // Trắng
-              4: "#0000FF", // Xanh dương
-              5: "#008000", // Xanh lá
-              6: "#FFFF00", // Vàng
+              1: "#FFFFFF", // Trắng
+              2: "#FF0000", // Đỏ
+              3: "#000000", // Đen
+              4: "#0000FF", // Xanh (xanh dương)
+              5: "#FFFF00", // Vàng
               7: "#FFA500", // Cam
-              8: "#800080", // Tím
-              9: "#A52A2A", // Nâu
-              10: "#808080", // Xám
-            }
+            };
 
-            const colorCode = colorMap[color.colorId] || "#CCCCCC"
+            const colorCode = colorMap[color.colorId] || "#CCCCCC";
 
             return (
               <button
                 key={color.colorId}
-                onClick={() => onChange(index)}
+                onClick={() => onChangeColor(index)}
                 className={`w-10 h-10 rounded-full border-2 ${
-                  selectedColorIndex === index ? "border-black ring-2 ring-black ring-offset-2" : "border-gray-300"
+                  selectedColorIndex === index
+                    ? "border-black ring-2 ring-black ring-offset-2"
+                    : "border-gray-300"
                 }`}
                 style={{ backgroundColor: colorCode }}
                 aria-label={`Màu ${color.colorId}`}
                 title={`Màu ${color.colorId}`}
               />
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
+  );
 }

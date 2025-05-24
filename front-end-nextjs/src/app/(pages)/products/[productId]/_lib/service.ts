@@ -1,4 +1,4 @@
-import type { Product } from "@/types/product";
+import { Product } from "@/app/(pages)/products/type";
 
 /**
  * Lấy thông tin chi tiết xe máy từ API
@@ -67,6 +67,7 @@ export async function getMotorbikeById(id: number): Promise<Product> {
           variantStock: 10,
           variantColors: [
             {
+              variantColorId: 1,
               colorId: 1, // Đỏ
               images: [
                 {
@@ -81,6 +82,7 @@ export async function getMotorbikeById(id: number): Promise<Product> {
               ],
             },
             {
+              variantColorId: 2,
               colorId: 2, // Đen
               images: [
                 {
@@ -102,6 +104,7 @@ export async function getMotorbikeById(id: number): Promise<Product> {
           variantStock: 5,
           variantColors: [
             {
+              variantColorId: 3,
               colorId: 3, // Trắng
               images: [
                 {
@@ -119,6 +122,7 @@ export async function getMotorbikeById(id: number): Promise<Product> {
               ],
             },
             {
+              variantColorId: 4,
               colorId: 4, // Xanh dương
               images: [
                 {

@@ -3,6 +3,7 @@ export interface ProductImage {
 }
 
 export interface VariantColor {
+  variantColorId: number;
   colorId: number;
   images: ProductImage[];
 }

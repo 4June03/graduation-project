@@ -35,7 +35,9 @@ export default async function ProductDetailPage({
         <div className="container py-8">Đang tải thông tin sản phẩm...</div>
       }
     >
-      <ProductDetailClient product={product} />
+      <div className="container py-8 w-full mx-auto">
+        <ProductDetailClient product={product} />
+      </div>
     </Suspense>
   );
 }

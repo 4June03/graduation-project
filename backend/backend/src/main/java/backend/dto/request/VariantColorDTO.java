@@ -10,6 +10,9 @@ import java.util.List;
 @Builder
 @Data
 public class VariantColorDTO {
+
+    private Integer variantColorId;
+
     private Integer colorId;
     // Danh sách ảnh của màu này
     private List<BikeImageDTO> images;

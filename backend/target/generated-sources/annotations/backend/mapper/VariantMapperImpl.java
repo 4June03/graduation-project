@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-23T14:17:54+0700",
+    date = "2025-05-25T00:34:39+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @Component
@@ -29,6 +29,7 @@ public class VariantMapperImpl implements VariantMapper {
 
         Variant.VariantBuilder variant = Variant.builder();
 
+        variant.variantId( dto.getVariantId() );
         variant.variantName( dto.getVariantName() );
         variant.variantPrice( dto.getVariantPrice() );
         variant.variantStock( dto.getVariantStock() );
@@ -69,6 +70,7 @@ public class VariantMapperImpl implements VariantMapper {
 
         VariantColor.VariantColorBuilder variantColor = VariantColor.builder();
 
+        variantColor.variantColorId( variantColorDTO.getVariantColorId() );
         variantColor.images( bikeImageDTOListToBikeImageList( variantColorDTO.getImages() ) );
 
         return variantColor.build();

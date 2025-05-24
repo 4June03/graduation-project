@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-04T01:25:29+0700",
+    date = "2025-05-25T00:34:40+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @Component
@@ -80,6 +80,7 @@ public class MotorBikeMapperImpl implements MotorBikeMapper {
 
         VariantDTO.VariantDTOBuilder variantDTO = VariantDTO.builder();
 
+        variantDTO.variantId( variant.getVariantId() );
         variantDTO.variantName( variant.getVariantName() );
         variantDTO.variantPrice( variant.getVariantPrice() );
         variantDTO.variantStock( variant.getVariantStock() );
@@ -97,6 +98,7 @@ public class MotorBikeMapperImpl implements MotorBikeMapper {
         VariantColorDTO.VariantColorDTOBuilder variantColorDTO = VariantColorDTO.builder();
 
         variantColorDTO.colorId( variantColorColorColorId( variantColor ) );
+        variantColorDTO.variantColorId( variantColor.getVariantColorId() );
         variantColorDTO.images( bikeImageListToBikeImageDTOList( variantColor.getImages() ) );
 
         return variantColorDTO.build();

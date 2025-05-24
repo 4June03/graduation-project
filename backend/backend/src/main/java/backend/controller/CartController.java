@@ -23,6 +23,7 @@ import java.util.List;
 @RequestMapping("/cart")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true)
+@CrossOrigin(origins = "http://localhost:3000")
 public class CartController {
     private CartService cartService;
     private MotorBikeMapper motorBikeMapper;
