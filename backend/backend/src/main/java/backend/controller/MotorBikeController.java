@@ -92,4 +92,16 @@ public class MotorBikeController {
         return bikeColorService.findAll();
     }
 
+    // API tìm kiếm: /motorbikes/search?name=abc&page=0&size=10
+    @GetMapping("/search")
+    public ApiResponse<Page<MotorBikeResponse>> searchByName(
+            @RequestParam("name") String name,
+            @PageableDefault(page = 0, size = 10, sort = "bikeName", direction = Sort.Direction.ASC)
+            Pageable pageable
+    ) {
+        Page<Motorbike> page = motorBikeService.searchByName(name, pageable);
+        Page<MotorBikeResponse> dtoPage = page.map(motorBikeMapper::motorBikeToMotoBikeResponse);
+        return ApiResponse.success(dtoPage, "Tìm kiếm thành công cho: \"" + name + "\"");
+    }
+
 }

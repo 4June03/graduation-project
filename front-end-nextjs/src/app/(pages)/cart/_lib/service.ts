@@ -43,7 +43,9 @@ export function getUserIdFromToken(): number {
 }
 
 // Get cart by user ID
-export async function getCartByUserId(userId: number): Promise<CartData> {
+export async function getCartByUserId(
+  userId: number | null
+): Promise<CartData> {
   try {
     const response = await fetch(`http://localhost:8080/cart/${userId}`, {
       method: "GET",

@@ -15,7 +15,7 @@ function getUserIdFromToken(): number {
 }
 
 // Get user by ID
-export async function getUserById(userId: number): Promise<UserData> {
+export async function getUserById(userId: number | null): Promise<UserData> {
   try {
     const response = await fetch(`http://localhost:8080/api/user/${userId}`, {
       method: "GET",

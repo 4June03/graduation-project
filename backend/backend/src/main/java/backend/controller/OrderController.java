@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true)
 @RequestMapping("/api/orders")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
     private OrderService orderService;
     private UserService userService;

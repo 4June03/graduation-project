@@ -20,4 +20,6 @@ public interface MotorBikeService {
     public void deleteById(Integer id);
 
     Page<Motorbike> findByCategoryId(Integer categoryId, Pageable pageable);
+
+    Page<Motorbike> searchByName(String bikeName, Pageable pageable);
 }

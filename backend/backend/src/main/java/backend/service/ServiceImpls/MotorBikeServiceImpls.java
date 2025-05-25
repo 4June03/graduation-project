@@ -135,4 +135,9 @@ public class MotorBikeServiceImpls implements MotorBikeService {
     public Page<Motorbike> findByCategoryId(Integer categoryId, Pageable pageable) {
         return motorBikeRepository.findByCategoryCategoryId(categoryId, pageable);
     }
+
+    @Override
+    public Page<Motorbike> searchByName(String bikeName, Pageable pageable) {
+        return motorBikeRepository.findByBikeNameContainingIgnoreCase(bikeName, pageable);
+    }
 }

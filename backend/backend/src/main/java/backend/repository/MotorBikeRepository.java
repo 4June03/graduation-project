@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface MotorBikeRepository extends JpaRepository<Motorbike, Integer> {
 
     Page<Motorbike> findByCategoryCategoryId(Integer categoryId, Pageable pageable);
+
+    Page<Motorbike> findByBikeNameContainingIgnoreCase(String bikeName, Pageable pageable);
 }
