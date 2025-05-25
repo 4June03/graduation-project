@@ -25,6 +25,8 @@ public class CartItemResponse {
     private Integer cartItemId;
     private Integer bikeId;
     private String motorbikeName;
+    private Integer variantId;
+    private Integer variantColorId;
     private String variantName;
     private String colorName;
     private Double variantPrice;

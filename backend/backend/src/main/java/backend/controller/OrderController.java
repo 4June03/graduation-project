@@ -87,7 +87,7 @@ public class OrderController {
 
         response.setOrderItems(order.getOrderItems().stream()
                 .map(this::toOrderItemResponse)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
 
         if (order.getBranch() != null) {
             response.setBranchId(order.getBranch().getBranchId());
@@ -105,7 +105,6 @@ public class OrderController {
         dto.setVariantName(item.getVariant().getVariantName());
         dto.setVariantColorId(item.getVariantColor().getVariantColorId());
         dto.setColorName(item.getVariantColor().getColor().getColorName());
-        dto.setQuantity(item.getQuantity());
         dto.setPrice(item.getPrice());
         return dto;
     }

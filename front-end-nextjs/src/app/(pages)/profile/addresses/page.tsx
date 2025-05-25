@@ -1,43 +1,26 @@
-"use client";
+import { getCurrentUser } from "../_lib/service";
+import { AddressesClient } from "./_components/addresses-client";
 
-import { ProfileLayout } from "@/components/client/profile/profile-layout";
-import { AddressList } from "@/components/client/profile/address-list";
+export default async function AddressesPage() {
+  try {
+    // Fetch user data on server side
+    const userData = await getCurrentUser();
 
-// Mock data for addresses
-const initialAddresses = [
-  {
-    id: 1,
-    name: "Nguyễn Văn A",
-    phone: "0912345678",
-    address: "123 Đường Lê Lợi, Phường Bến Nghé",
-    district: "Quận 1",
-    city: "TP. Hồ Chí Minh",
-    isDefault: true,
-  },
-  {
-    id: 2,
-    name: "Nguyễn Văn A",
-    phone: "0912345678",
-    address: "456 Đường Nguyễn Huệ, Phường Bến Nghé",
-    district: "Quận 1",
-    city: "TP. Hồ Chí Minh",
-    isDefault: false,
-  },
-  {
-    id: 3,
-    name: "Nguyễn Văn A",
-    phone: "0912345678",
-    address: "789 Đường Lê Văn Việt, Phường Hiệp Phú",
-    district: "Quận 9",
-    city: "TP. Hồ Chí Minh",
-    isDefault: false,
-  },
-];
+    return <AddressesClient initialAddresses={userData.addresses} />;
+  } catch (error) {
+    console.error("Error loading addresses:", error);
 
-export default function AddressesPage() {
-  return (
-    <ProfileLayout title="Địa chỉ của tôi" activeTab="addresses">
-      <AddressList initialAddresses={initialAddresses} />
-    </ProfileLayout>
-  );
+    return (
+      <div className="container py-8">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">
+            Có lỗi xảy ra
+          </h1>
+          <p className="text-muted-foreground">
+            Không thể tải danh sách địa chỉ. Vui lòng thử lại sau.
+          </p>
+        </div>
+      </div>
+    );
+  }
 }

@@ -33,7 +33,5 @@ public class OrderItem {
     @JoinColumn(name = "variant_color_id", nullable = false)
     private VariantColor variantColor;
 
-    private Integer quantity; // Số lượng sản phẩm
-
     private Double price; // Giá tại thời điểm đặt hàng
 }

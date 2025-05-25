@@ -1,43 +1,27 @@
-"use client";
-import { ProfileLayout } from "@/components/client/profile/profile-layout";
-import { PersonalInfoForm } from "@/components/client/profile/personal-info-form";
+import { getCurrentUser } from "./_lib/service";
+import { ProfileClient } from "./_components/profile-client";
 
-// Dummy data for favorite products
-const favoriteProducts = [
-  {
-    id: 1,
-    name: "Honda SH 150i",
-    brand: "Honda",
-    price: 102900000,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 2,
-    name: "Honda Wave Alpha",
-    brand: "Honda",
-    price: 17800000,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 3,
-    name: "Yamaha Exciter 155 VVA",
-    brand: "Yamaha",
-    price: 47000000,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 4,
-    name: "Suzuki Raider R150",
-    brand: "Suzuki",
-    price: 50990000,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-];
+export default async function ProfilePage() {
+  try {
+    // Fetch user data on server side
+    const userData = await getCurrentUser();
 
-export default function ProfilePage() {
-  return (
-    <ProfileLayout title="Tài khoản của tôi" activeTab="personal-info">
-      <PersonalInfoForm />
-    </ProfileLayout>
-  );
+    return <ProfileClient initialUserData={userData} />;
+  } catch (error) {
+    console.error("Error loading profile:", error);
+
+    // Return error state or redirect to login
+    return (
+      <div className="container py-8">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">
+            Có lỗi xảy ra
+          </h1>
+          <p className="text-muted-foreground">
+            Không thể tải thông tin tài khoản. Vui lòng thử lại sau.
+          </p>
+        </div>
+      </div>
+    );
+  }
 }

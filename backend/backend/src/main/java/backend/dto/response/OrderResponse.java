@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ public class OrderResponse {
     private UserResponse user;
     private LocalDate orderDate;
     private LocalDate updatedAt;
-    private List<OrderItemResponse> orderItems;
+    private Set<OrderItemResponse> orderItems;
     private Double shippingFee;
     private Double subtotal;
     private Double totalAmount;

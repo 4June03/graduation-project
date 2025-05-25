@@ -2,9 +2,12 @@ package backend.dto.request;
 
 import backend.enums.DeliveryMethod;
 import backend.enums.PaymentMethod;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,4 +20,13 @@ public class OrderRequest {
     private Integer shippingAddressId;
     @NotNull(message = "ID chi nhánh là bắt buộc khi nhận tại cửa hàng")
     private Integer branchId;
+
+    @NotNull
+    private Double subtotal;
+
+    @NotNull
+    private Double shippingFee;
+
+//    @NotEmpty(message = "Đơn hàng phải có ít nhất một sản phẩm")
+//    private List<OrderItemRequest> items;
 }

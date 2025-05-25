@@ -4,6 +4,7 @@ import backend.dto.request.OrderRequest;
 import backend.entity.*;
 import backend.enums.DeliveryMethod;
 import backend.enums.OrderStatus;
+import backend.enums.PaymentMethod;
 import backend.enums.PaymentStatus;
 import backend.repository.*;
 import backend.service.OrderService;
@@ -35,6 +36,7 @@ public class OrderServiceImpls implements OrderService {
         Cart cart = cartRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy giỏ hàng cho người dùng với id: " + user.getUserId()));
 
+
         // 2. Tạo đối tượng Order với các giá trị ban đầu
         Order order = Order.builder()
                 .user(user) // Liên kết đơn hàng với người dùng
@@ -42,6 +44,9 @@ public class OrderServiceImpls implements OrderService {
                 .orderStatus(OrderStatus.PENDING)
                 .deliveryMethod(request.getDeliveryMethod())
                 .paymentStatus(PaymentStatus.PENDING)
+                .paymentMethod(PaymentMethod.CASH)
+                .shippingFee(request.getShippingFee())
+                .subtotal(request.getSubtotal())
                 .build();
 
         // 3. Thiết lập địa chỉ giao hàng hoặc chi nhánh dựa trên phương thức giao hàng
