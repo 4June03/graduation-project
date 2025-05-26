@@ -94,13 +94,13 @@ public class MotorBikeController {
 
     // API tìm kiếm: /motorbikes/search?name=abc&page=0&size=10
     @GetMapping("/search")
-    public ApiResponse<Page<MotorBikeResponse>> searchByName(
+    public ApiResponse<Page<MotorbikeCardResponse>> searchByName(
             @RequestParam("name") String name,
             @PageableDefault(page = 0, size = 10, sort = "bikeName", direction = Sort.Direction.ASC)
             Pageable pageable
     ) {
         Page<Motorbike> page = motorBikeService.searchByName(name, pageable);
-        Page<MotorBikeResponse> dtoPage = page.map(motorBikeMapper::motorBikeToMotoBikeResponse);
+        Page<MotorbikeCardResponse> dtoPage = page.map(MotorbikeCardResponse::fromEntity);
         return ApiResponse.success(dtoPage, "Tìm kiếm thành công cho: \"" + name + "\"");
     }
 

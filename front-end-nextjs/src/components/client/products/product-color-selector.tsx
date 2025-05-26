@@ -31,6 +31,7 @@ export function ProductColorSelector({
               4: "#0000FF", // Xanh (xanh dương)
               5: "#FFFF00", // Vàng
               7: "#FFA500", // Cam
+              8: "#3B2F2F", //Nâu
             };
 
             const colorCode = colorMap[color.colorId] || "#CCCCCC";
