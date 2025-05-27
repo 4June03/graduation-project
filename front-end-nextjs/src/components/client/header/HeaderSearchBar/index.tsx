@@ -5,21 +5,31 @@ import React, { FC } from "react";
 
 interface HeaderSearchBarProps {
   setIsSearchOpen: (isOpen: boolean) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  handleSearch: (e: React.FormEvent) => void;
 }
 
 export const HeaderSearchBar: FC<HeaderSearchBarProps> = ({
   setIsSearchOpen,
+  searchQuery,
+  setSearchQuery,
+  handleSearch,
 }) => {
   return (
     <div className="mt-4 relative">
-      <div className="flex">
+      <form onSubmit={handleSearch} className="flex">
         <Input
           placeholder="Tìm kiếm sản phẩm..."
           className="flex-1"
           autoFocus
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <Button className="ml-2">Tìm kiếm</Button>
-      </div>
+        <Button type="submit" className="ml-2">
+          Tìm kiếm
+        </Button>
+      </form>
       <Button
         variant="ghost"
         size="icon"
