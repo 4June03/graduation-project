@@ -12,6 +12,17 @@ import nookies from "nookies";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAuth } from "@/components/provider/AuthProvider";
+import { jwtDecode } from "jwt-decode";
+
+export interface DecodedToken {
+  sub: string;
+  scope: string;
+  iss: string;
+  exp: number;
+  iat: number;
+  userId: number;
+  jti: string;
+}
 
 export const useLogin = () => {
   const router = useRouter();
@@ -36,7 +47,16 @@ export const useLogin = () => {
       router.refresh();
       // localStorage.setItem("accessToken", data.accessToken);
 
-      router.push("/");
+      // Giải mã token để lấy scope
+      const decoded = jwtDecode<DecodedToken>(data.accessToken);
+      const { scope } = decoded;
+      console.log("scope", scope);
+      // Điều hướng tùy scope
+      if (scope === "ADMIN") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/");
+      }
     },
     onError: (error) => {
       console.log("Lỗi đăng nhập " + error.message);

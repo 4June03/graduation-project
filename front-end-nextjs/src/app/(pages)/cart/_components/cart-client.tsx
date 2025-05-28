@@ -259,12 +259,6 @@ export default function CartClient({ initialCartData }: CartClientProps) {
                         </span>
                         <span>{formatPrice(shippingFee)}</span>
                       </div>
-                      {couponApplied && (
-                        <div className="flex justify-between text-green-600">
-                          <span>Giảm giá (10%)</span>
-                          <span>-{formatPrice(couponDiscount)}</span>
-                        </div>
-                      )}
                     </div>
 
                     <Separator />
@@ -274,35 +268,6 @@ export default function CartClient({ initialCartData }: CartClientProps) {
                       <span className="text-primary">
                         {formatPrice(grandTotal)}
                       </span>
-                    </div>
-
-                    {/* Coupon Code */}
-                    <div>
-                      <Label htmlFor="coupon">Mã giảm giá</Label>
-                      <div className="flex mt-1">
-                        <Input
-                          id="coupon"
-                          placeholder="Nhập mã giảm giá"
-                          className="rounded-r-none"
-                          value={couponCode}
-                          onChange={(e) => setCouponCode(e.target.value)}
-                        />
-                        <Button
-                          className="rounded-l-none"
-                          onClick={applyCoupon}
-                          disabled={!couponCode}
-                        >
-                          Áp dụng
-                        </Button>
-                      </div>
-                      {couponApplied && (
-                        <p className="text-green-600 text-sm mt-1">
-                          Đã áp dụng mã giảm giá 10%
-                        </p>
-                      )}
-                      <p className="text-xs text-muted-foreground mt-2">
-                        Mã giảm giá mẫu: MOTORBIKE10
-                      </p>
                     </div>
 
                     <Button asChild className="w-full" size="lg">

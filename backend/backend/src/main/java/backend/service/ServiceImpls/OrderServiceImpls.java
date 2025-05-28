@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -92,5 +93,28 @@ public class OrderServiceImpls implements OrderService {
     @Override
     public Order getOrderById(Integer orderId) {
         return orderRepository.findById(orderId).orElseThrow(()->new RuntimeException("Không thể lấy thông tin order với id: "+orderId));
+    }
+
+    @Override
+    public List<Order> getOrdersByUser(User user) {
+        return orderRepository.findByUser(user);
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void updatePaymentStatus(Integer orderId, PaymentStatus status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng với id: " + orderId));
+        order.setPaymentStatus(status);
+        orderRepository.save(order);
     }
 }
