@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import RegisterForm from "@/components/authentication/RegisterForm";
-// Sử dụng alias @
+
 export default function RegisterPage() {
   return (
     <main className="flex min-h-screen flex-col">

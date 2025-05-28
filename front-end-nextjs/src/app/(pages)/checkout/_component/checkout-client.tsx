@@ -104,7 +104,9 @@ export default function CheckoutClient({ initialData }: CheckoutClientProps) {
       const result = await createOrder(orderData, token);
 
       if (result.success) {
-        toast.success(`Đơn hàng #${result.data.orderNumber} đã được tạo.`);
+        toast.success(`Đơn hàng #${result.data.orderId} đã được tạo.`);
+        console.log("Đơn hàng vừa được tạo:", result.data);
+        router.push(`/order-success?orderId=${result.data.orderId}`);
         // router.push(`/payment?orderId=${result.data.orderId}`);
       } else {
         throw new Error(result.message);

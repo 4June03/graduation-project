@@ -40,7 +40,7 @@ export default async function CartPage() {
     // Fetch cart data from API
     const cartData = await getCartByUserId(userId);
 
-    // console.log("CArt data", cartData);
+    console.log("CArt data từ server", cartData);
 
     return (
       <Suspense fallback={<CartLoading />}>

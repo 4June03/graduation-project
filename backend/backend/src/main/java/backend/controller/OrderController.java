@@ -1,6 +1,7 @@
 package backend.controller;
 
 import backend.dto.request.OrderRequest;
+import backend.dto.response.AddressResponse;
 import backend.dto.response.ApiResponse;
 import backend.dto.response.OrderItemResponse;
 import backend.dto.response.OrderResponse;
@@ -85,6 +86,10 @@ public class OrderController {
                 .paymentMethod(order.getPaymentMethod())
                 .paymentStatus(order.getPaymentStatus())
                 .build();
+
+        if (order.getShippingAddress() != null) {
+            response.setShippingAddress(new AddressResponse(order.getShippingAddress()));
+        }
 
         response.setOrderItems(order.getOrderItems().stream()
                 .map(this::toOrderItemResponse)

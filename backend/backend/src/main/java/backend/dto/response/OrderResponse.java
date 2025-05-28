@@ -1,6 +1,6 @@
 package backend.dto.response;
 
-import backend.entity.Address;
+
 import backend.enums.DeliveryMethod;
 import backend.enums.OrderStatus;
 import backend.enums.PaymentMethod;
@@ -32,5 +32,5 @@ public class OrderResponse {
     private PaymentStatus paymentStatus;
     private Integer branchId;
     private String branchName;
-    private Address shippingAddress;
+    private AddressResponse shippingAddress;
 }
