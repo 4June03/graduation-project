@@ -8,7 +8,11 @@ export function useAuth() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const t = localStorage.getItem("accessToken");
+
+    // Lấy token từ cookies thay vì localStorage
+    const cookies = nookies.get();
+    const t = cookies.accessToken;
+    // const t = localStorage.getItem("accessToken");
     setToken(t);
     if (t) {
       const payload = parseToken(t);

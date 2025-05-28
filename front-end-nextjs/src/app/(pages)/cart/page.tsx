@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { getCartByUserId, getUserIdFromToken } from "./_lib/service";
 import CartClient from "./_components/cart-client";
+import { cookies } from "next/headers";
+import { parseToken } from "@/utils/jwt";
 
 // Loading component
 function CartLoading() {
@@ -24,12 +26,21 @@ function CartLoading() {
 export default async function CartPage() {
   try {
     // Get user ID from token
-    const userId = getUserIdFromToken();
+    // const userId = getUserIdFromToken();
+    const cookieStore = cookies();
+    const token = (await cookieStore).get("accessToken")?.value;
+    console.log("Token phía server", token);
 
+    let userId: number | null = null;
+
+    if (token) {
+      const payload = parseToken(token);
+      userId = payload?.userId ?? null;
+    }
     // Fetch cart data from API
     const cartData = await getCartByUserId(userId);
 
-    console.log("CArt data", cartData);
+    // console.log("CArt data", cartData);
 
     return (
       <Suspense fallback={<CartLoading />}>

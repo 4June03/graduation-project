@@ -7,6 +7,7 @@ import {
   loginRequest,
   loginResponse,
 } from "../apis/auth";
+import nookies from "nookies";
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -23,9 +24,18 @@ export const useLogin = () => {
       console.log("đăng nhập thành công", data?.accessToken);
       toast.success("Đăng nhập thành công");
 
-      router.refresh();
-      localStorage.setItem("accessToken", data.accessToken);
+      // Lưu token vào cookie, có thể chỉnh maxAge theo độ dài TTL của JWT
+      nookies.set(null, "accessToken", data.accessToken, {
+        path: "/", // cookie sẽ có tác dụng trên toàn site
+        maxAge: 60 * 60 * 24 * 7, // 7 ngày
+        httpOnly: false, // client-side vẫn có thể đọc bằng JS (nếu cần)
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+      });
       setToken(data.accessToken);
+      router.refresh();
+      // localStorage.setItem("accessToken", data.accessToken);
+
       router.push("/");
     },
     onError: (error) => {

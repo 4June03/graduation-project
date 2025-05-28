@@ -6,13 +6,6 @@ import {
 } from "@/app/(pages)/profile/type";
 
 // Mock user ID - replace with actual token parsing
-function getUserIdFromToken(): number {
-  // TODO: Implement actual token parsing logic
-  // const token = getTokenFromCookies() or getTokenFromLocalStorage()
-  // const decoded = jwt.decode(token)
-  // return decoded.userId
-  return 1; // Mock user ID
-}
 
 // Get user by ID
 export async function getUserById(userId: number | null): Promise<UserData> {
@@ -125,7 +118,6 @@ export async function updateUserAddresses(
 }
 
 // Get current user data
-export async function getCurrentUser(): Promise<UserData> {
-  const userId = getUserIdFromToken();
+export async function getCurrentUser(userId: number | null): Promise<UserData> {
   return getUserById(userId);
 }

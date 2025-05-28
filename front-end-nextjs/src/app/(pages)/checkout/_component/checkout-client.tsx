@@ -19,13 +19,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 
+import { createOrder, calculateShippingFee } from "../_lib/service";
 import { CheckoutData, CheckoutFormData } from "@/app/(pages)/checkout/type";
 import { toast } from "sonner";
-import {
-  calculateShippingFee,
-  createOrder,
-  getCheckoutData,
-} from "@/app/(pages)/checkout/_lib/service";
+import { cleanImageUrl } from "@/app/(pages)/cart/_lib/service";
 import { useAuth } from "@/components/provider/AuthProvider";
 
 interface CheckoutClientProps {
@@ -41,23 +38,19 @@ function formatPrice(price: number) {
   }).format(price);
 }
 
-export default async function CheckoutClient({
-  initialData,
-}: CheckoutClientProps) {
+export default function CheckoutClient({ initialData }: CheckoutClientProps) {
   const router = useRouter();
-  const { token, userId } = useAuth();
-  const { cartData, userData, branches } = initialData;
-
+  const { cartData, userData } = initialData;
+  const { token } = useAuth();
   const [formData, setFormData] = useState<CheckoutFormData>({
     deliveryMethod: "STORE_PICKUP",
     paymentMethod: "CASH",
-    branchId: branches[0]?.branchId,
   });
   const [note, setNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Calculate totals
-  const subtotal = cartData?.totalPrice || 0;
+  const subtotal = cartData?.grandTotal || 0;
   const shippingFee = calculateShippingFee(formData.deliveryMethod);
   const total = subtotal + shippingFee;
 
@@ -71,7 +64,6 @@ export default async function CheckoutClient({
         value === "HOME_DELIVERY"
           ? userData.addresses[0]?.addressId
           : undefined,
-      branchId: value === "STORE_PICKUP" ? branches[0]?.branchId : undefined,
     }));
   };
 
@@ -82,17 +74,9 @@ export default async function CheckoutClient({
     }));
   };
 
-  const handleBranchChange = (branchId: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      branchId: Number.parseInt(branchId),
-    }));
-  };
-
   const handleSubmit = async () => {
-    if (!cartData?.cartItems?.length) {
-      toast.error("Giỏ hàng trống");
-
+    if (!cartData?.cartItemList?.length) {
+      toast.error("Vui lòng thêm sản phẩm vào giỏ hàng trước khi đặt hàng.");
       return;
     }
 
@@ -100,12 +84,7 @@ export default async function CheckoutClient({
       formData.deliveryMethod === "HOME_DELIVERY" &&
       !formData.shippingAddressId
     ) {
-      toast.error("Vui lòng chọn địa chỉ giao hàng");
-      return;
-    }
-
-    if (formData.deliveryMethod === "STORE_PICKUP" && !formData.branchId) {
-      toast.error("Vui lòng chọn cửa hàng");
+      toast.error("Vui lòng chọn địa chỉ giao hàng.");
       return;
     }
 
@@ -120,29 +99,26 @@ export default async function CheckoutClient({
         ...(formData.deliveryMethod === "HOME_DELIVERY" && {
           shippingAddressId: formData.shippingAddressId,
         }),
-        ...(formData.deliveryMethod === "STORE_PICKUP" && {
-          branchId: formData.branchId,
-        }),
       };
 
       const result = await createOrder(orderData, token);
 
       if (result.success) {
-        toast.success("Đặt hàng thành công!");
-        router.push(`/payment?orderId=${result.data.orderId}`);
+        toast.success(`Đơn hàng #${result.data.orderNumber} đã được tạo.`);
+        // router.push(`/payment?orderId=${result.data.orderId}`);
       } else {
         throw new Error(result.message);
       }
     } catch (error) {
       console.error("Error creating order:", error);
 
-      toast.error("Có lỗi xảy ra khi dặt hàng, vui lòng thử lại");
+      toast.error("Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại sau.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (!cartData?.cartItems?.length) {
+  if (!cartData?.cartItemList?.length) {
     return (
       <main className="flex min-h-screen flex-col">
         <div className="bg-muted/30 py-6">
@@ -218,40 +194,7 @@ export default async function CheckoutClient({
                       </p>
 
                       {formData.deliveryMethod === "STORE_PICKUP" && (
-                        <div className="mt-4 space-y-4">
-                          <div className="bg-muted/30 p-4 rounded-lg">
-                            <h3 className="font-medium mb-2">Chọn cửa hàng</h3>
-                            <RadioGroup
-                              value={formData.branchId?.toString()}
-                              onValueChange={handleBranchChange}
-                              className="space-y-3"
-                            >
-                              {(branches || []).map((branch) => (
-                                <div
-                                  key={branch.branchId}
-                                  className="flex items-start space-x-3"
-                                >
-                                  <RadioGroupItem
-                                    value={branch.branchId.toString()}
-                                    id={`branch-${branch.branchId}`}
-                                    className="mt-1"
-                                  />
-                                  <div>
-                                    <Label
-                                      htmlFor={`branch-${branch.branchId}`}
-                                      className="font-medium cursor-pointer"
-                                    >
-                                      {branch.branchName}
-                                    </Label>
-                                    <p className="text-sm text-muted-foreground">
-                                      {branch.address}
-                                    </p>
-                                  </div>
-                                </div>
-                              ))}
-                            </RadioGroup>
-                          </div>
-
+                        <div className="mt-4">
                           <div>
                             <Label htmlFor="store-note">Ghi chú</Label>
                             <Textarea
@@ -375,7 +318,7 @@ export default async function CheckoutClient({
                       Thanh toán khi nhận hàng (COD)
                     </Label>
                     <p className="text-sm text-muted-foreground mt-1">
-                      Thanh toán bằng tiền mặt khi nhận xe
+                      Thanh toán khi nhận xe
                     </p>
                   </div>
                 </div>
@@ -392,35 +335,36 @@ export default async function CheckoutClient({
               <CardContent className="space-y-4">
                 {/* Cart Items */}
                 <div className="space-y-3">
-                  {cartData.cartItems.map((item: any) => (
-                    <div key={item.cartItemId} className="flex gap-3">
-                      <div className="relative h-16 w-16 flex-shrink-0 rounded-md overflow-hidden">
-                        <Image
-                          src={
-                            item.variantColor?.images?.[0]?.imageUrl ||
-                            "/placeholder.svg"
-                          }
-                          alt={item.bikeName}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-medium line-clamp-1">
-                          {item.bikeName}
-                        </h4>
-                        <p className="text-sm text-muted-foreground">
-                          {item.variantName}
-                        </p>
-                        <div className="flex justify-between mt-1">
-                          <span className="text-sm">SL: {item.quantity}</span>
-                          <span className="font-medium">
-                            {formatPrice(item.variantPrice)}
-                          </span>
+                  {(cartData.cartItemList || [])?.map((item: any) => {
+                    const imageUrl = cleanImageUrl(item?.imageUrl);
+
+                    return (
+                      <div key={item.cartItemId} className="flex gap-3">
+                        <div className="relative h-16 w-16 flex-shrink-0 rounded-md overflow-hidden">
+                          <Image
+                            src={imageUrl || "/placeholder.svg"}
+                            alt={item.motorbikeName}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-medium line-clamp-1">
+                            {item.bikeName}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {item.variantName}
+                          </p>
+                          <div className="flex justify-between mt-1">
+                            <span className="text-sm">SL: {item.quantity}</span>
+                            <span className="font-medium">
+                              {formatPrice(item.variantPrice)}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 <Separator />
@@ -442,7 +386,9 @@ export default async function CheckoutClient({
                   <Separator />
                   <div className="flex justify-between font-medium text-lg">
                     <span>Tổng cộng</span>
-                    <span className="text-primary">{formatPrice(total)}</span>
+                    <span className="text-primary">
+                      {formatPrice(subtotal + shippingFee)}
+                    </span>
                   </div>
                 </div>
               </CardContent>

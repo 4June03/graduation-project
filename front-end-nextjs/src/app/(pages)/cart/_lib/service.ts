@@ -35,11 +35,8 @@ const mockCartData: CartData = {
 
 // Function to get user ID from token
 export function getUserIdFromToken(): number {
-  // TODO: Implement actual token parsing logic
-  // const token = getTokenFromCookies() or getTokenFromLocalStorage()
-  // const decoded = jwt.decode(token)
-  // return decoded.userId
-  return 1; // Mock user ID for now
+  // Nếu đang chạy trong môi trường server của Next.js App Router
+  return 1; // Giả sử user ID là 1, bạn có thể thay đổi logic này để lấy từ token
 }
 
 // Get cart by user ID

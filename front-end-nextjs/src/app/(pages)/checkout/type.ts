@@ -1,3 +1,6 @@
+import { CartData } from "@/app/(pages)/cart/type";
+import { User } from "@/app/admin/dashboard/users/components/users-client";
+
 export interface Branch {
   branchId: number;
   branchName: string;
@@ -8,10 +11,8 @@ export interface CheckoutFormData {
   deliveryMethod: "HOME_DELIVERY" | "STORE_PICKUP";
   paymentMethod: "CASH";
   shippingAddressId?: number;
-  branchId?: number;
   note?: string;
 }
-
 export interface CreateOrderRequest {
   deliveryMethod: "HOME_DELIVERY" | "STORE_PICKUP";
   paymentMethod: "CASH";
@@ -35,5 +36,4 @@ export interface CreateOrderResponse {
 export interface CheckoutData {
   cartData: any;
   userData: any;
-  branches: Branch[] | [];
 }

@@ -55,9 +55,10 @@ public class OrderServiceImpls implements OrderService {
                     .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ với id: " + request.getShippingAddressId()));
             order.setShippingAddress(shippingAddress);
         } else if (request.getDeliveryMethod() == DeliveryMethod.STORE_PICKUP) {
-            Branch branch = branchRepository.findById(request.getBranchId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy chi nhánh với id: " + request.getBranchId()));
-            order.setBranch(branch);
+//            Branch branch = branchRepository.findById(request.getBranchId())
+//                    .orElseThrow(() -> new RuntimeException("Không tìm thấy chi nhánh với id: " + request.getBranchId()));
+//            order.setBranch(branch);
+            order.setDeliveryMethod(DeliveryMethod.STORE_PICKUP);
         }
 
         // 4. Chuyển đổi CartItem thành OrderItem

@@ -1,11 +1,23 @@
 import { getCurrentUser } from "./_lib/service";
 import { ProfileClient } from "./_components/profile-client";
+import { cookies } from "next/headers";
+import { parseToken } from "@/utils/jwt";
 
 export default async function ProfilePage() {
   try {
-    // Fetch user data on server side
-    const userData = await getCurrentUser();
+    const cookieStore = cookies();
+    const token = (await cookieStore).get("accessToken")?.value;
+    console.log("Token phía server", token);
 
+    let userId: number | null = null;
+
+    if (token) {
+      const payload = parseToken(token);
+      userId = payload?.userId ?? null;
+    }
+    // Fetch user data on server side
+    const userData = await getCurrentUser(userId);
+    console.log("User data phía server", userData);
     return <ProfileClient initialUserData={userData} />;
   } catch (error) {
     console.error("Error loading profile:", error);
