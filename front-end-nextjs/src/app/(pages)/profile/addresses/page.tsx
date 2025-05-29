@@ -1,10 +1,23 @@
+import { cookies } from "next/headers";
 import { getCurrentUser } from "../_lib/service";
 import { AddressesClient } from "./_components/addresses-client";
+import { parseToken } from "@/utils/jwt";
 
 export default async function AddressesPage() {
   try {
     // Fetch user data on server side
-    const userData = await getCurrentUser();
+    const cookieStore = cookies();
+    const token = (await cookieStore).get("accessToken")?.value;
+    console.log("Token phía server", token);
+
+    let userId: number | null = null;
+
+    if (token) {
+      const payload = parseToken(token);
+      userId = payload?.userId ?? null;
+    }
+    // Fetch user data on server side
+    const userData = await getCurrentUser(userId);
 
     return <AddressesClient initialAddresses={userData.addresses} />;
   } catch (error) {

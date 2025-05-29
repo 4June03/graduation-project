@@ -25,7 +25,6 @@ public class OrderServiceImpls implements OrderService {
     private OrderRepository orderRepository;
     private CartRepository cartRepository;
     private AddressRepository addressRepository;
-    private BranchRepository branchRepository;
     private MotorBikeRepository motorBikeRepository;
     private VariantRepository variantRepository;
     private VariantColorRepository variantColorRepository;

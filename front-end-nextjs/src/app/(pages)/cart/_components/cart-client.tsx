@@ -203,7 +203,7 @@ export default function CartClient({ initialCartData }: CartClientProps) {
               </div>
 
               {/* Related Products */}
-              <div className="mt-8">
+              {/* <div className="mt-8">
                 <h2 className="text-xl font-semibold mb-4">
                   Có thể bạn cũng thích
                 </h2>
@@ -236,7 +236,7 @@ export default function CartClient({ initialCartData }: CartClientProps) {
                     </Card>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Order Summary */}
