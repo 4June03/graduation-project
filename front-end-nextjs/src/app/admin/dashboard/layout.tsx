@@ -44,11 +44,7 @@ const navItems: NavItem[] = [
     href: "/admin/dashboard/motorcycles",
     icon: Bike,
   },
-  {
-    title: "Quản lí nội dung web",
-    href: "/admin/dashboard/content",
-    icon: FileText,
-  },
+
   {
     title: "Quản lí đơn hàng",
     href: "/admin/dashboard/orders",
@@ -64,16 +60,12 @@ const navItems: NavItem[] = [
     href: "/admin/dashboard/users",
     icon: Users,
   },
-  {
-    title: "Quản lí khuyến mại",
-    href: "/admin/dashboard/promotions",
-    icon: Gift,
-  },
-  {
-    title: "Quản lí thống kê",
-    href: "/admin/dashboard/statistics",
-    icon: BarChart3,
-  },
+
+  // {
+  //   title: "Quản lí thống kê",
+  //   href: "/admin/dashboard/statistics",
+  //   icon: BarChart3,
+  // },
 ];
 
 export default function DashboardLayout({

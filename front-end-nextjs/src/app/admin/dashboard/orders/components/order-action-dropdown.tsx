@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, Eye, Check, CreditCard } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,21 +9,42 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import type { Order, OrderStatus } from "./orders-client"
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+} from "@/components/ui/dropdown-menu";
+import {
+  ApiOrder,
+  ORDER_STATUS_OPTIONS,
+  PAYMENT_STATUS_OPTIONS,
+} from "@/app/admin/dashboard/orders/type";
 
 interface OrderActionDropdownProps {
-  order: Order
-  onStatusChange: (orderId: string, newStatus: OrderStatus) => void
-  onViewDetails: () => void
+  order: ApiOrder;
+  onOrderStatusChange: (
+    orderId: number,
+    newStatus: ApiOrder["orderStatus"]
+  ) => void;
+  onPaymentStatusChange: (
+    orderId: number,
+    newStatus: ApiOrder["paymentStatus"]
+  ) => void;
+  onViewDetails: () => void;
 }
 
-export function OrderActionDropdown({ order, onStatusChange, onViewDetails }: OrderActionDropdownProps) {
-  // Define available status transitions
-  const availableStatuses: OrderStatus[] = ["pending", "processing", "completed", "cancelled"].filter(
-    (status) => status !== order.status,
-  ) as OrderStatus[]
+export function OrderActionDropdown({
+  order,
+  onOrderStatusChange,
+  onPaymentStatusChange,
+  onViewDetails,
+}: OrderActionDropdownProps) {
+  // Filter out current status from options
+  const orderStatusOptions = ORDER_STATUS_OPTIONS.filter(
+    (option) => option.value !== order.orderStatus
+  );
+  const paymentStatusOptions = PAYMENT_STATUS_OPTIONS.filter(
+    (option) => option.value !== order.paymentStatus
+  );
 
   return (
     <DropdownMenu>
@@ -34,30 +56,69 @@ export function OrderActionDropdown({ order, onStatusChange, onViewDetails }: Or
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-        <DropdownMenuItem onClick={onViewDetails}>Xem chi tiết</DropdownMenuItem>
+        <DropdownMenuItem onClick={onViewDetails}>
+          <Eye className="mr-2 h-4 w-4" />
+          Xem chi tiết
+        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
-        <DropdownMenuLabel>Cập nhật trạng thái</DropdownMenuLabel>
-        {availableStatuses.map((status) => (
-          <DropdownMenuItem key={status} onClick={() => onStatusChange(order.id, status)}>
-            {getStatusLabel(status)}
-          </DropdownMenuItem>
-        ))}
+
+        {/* Order Status Submenu */}
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <Check className="mr-2 h-4 w-4" />
+            Cập nhật trạng thái đơn hàng
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            {orderStatusOptions.map((option) => (
+              <DropdownMenuItem
+                key={option.value}
+                onClick={() =>
+                  onOrderStatusChange(
+                    order.orderId,
+                    option.value as ApiOrder["orderStatus"]
+                  )
+                }
+              >
+                {option.label}
+              </DropdownMenuItem>
+            ))}
+            {orderStatusOptions.length === 0 && (
+              <DropdownMenuItem disabled>
+                Không có trạng thái khác
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+
+        {/* Payment Status Submenu */}
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <CreditCard className="mr-2 h-4 w-4" />
+            Cập nhật trạng thái thanh toán
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            {paymentStatusOptions.map((option) => (
+              <DropdownMenuItem
+                key={option.value}
+                onClick={() =>
+                  onPaymentStatusChange(
+                    order.orderId,
+                    option.value as ApiOrder["paymentStatus"]
+                  )
+                }
+              >
+                {option.label}
+              </DropdownMenuItem>
+            ))}
+            {paymentStatusOptions.length === 0 && (
+              <DropdownMenuItem disabled>
+                Không có trạng thái khác
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
-
-function getStatusLabel(status: OrderStatus): string {
-  switch (status) {
-    case "pending":
-      return "Chuyển sang Chờ xử lý"
-    case "processing":
-      return "Chuyển sang Đang xử lý"
-    case "completed":
-      return "Đánh dấu Hoàn thành"
-    case "cancelled":
-      return "Hủy đơn hàng"
-    default:
-      return status
-  }
+  );
 }
