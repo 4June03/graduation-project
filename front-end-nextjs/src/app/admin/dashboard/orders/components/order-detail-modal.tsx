@@ -88,9 +88,9 @@ export function OrderDetailModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-h-[80vh] overflow-y-auto w-full">
-        <DialogHeader>
-          <DialogTitle>
+      <DialogContent className="max-w-5xl w-[90vw] max-h-[90vh] overflow-y-auto p-6">
+        <DialogHeader className="mb-4">
+          <DialogTitle className="text-2xl">
             {orderDetail
               ? `Chi tiết đơn hàng #${orderDetail.orderId}`
               : "Chi tiết đơn hàng"}
@@ -99,17 +99,17 @@ export function OrderDetailModal({
         </DialogHeader>
 
         {isLoading ? (
-          <div className="flex items-center justify-center py-8">
-            <RefreshCw className="h-6 w-6 animate-spin mr-2" />
-            <span>Đang tải dữ liệu...</span>
+          <div className="flex items-center justify-center py-12">
+            <RefreshCw className="h-8 w-8 animate-spin mr-3" />
+            <span className="text-lg">Đang tải dữ liệu...</span>
           </div>
         ) : orderDetail ? (
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Order Status Actions */}
-            <div className="flex flex-wrap gap-2 justify-end">
+            <div className="flex flex-wrap gap-3 justify-end">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline">
                     Cập nhật trạng thái đơn hàng
                   </Button>
                 </DropdownMenuTrigger>
@@ -132,7 +132,7 @@ export function OrderDetailModal({
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline">
                     Cập nhật trạng thái thanh toán
                   </Button>
                 </DropdownMenuTrigger>
@@ -155,23 +155,29 @@ export function OrderDetailModal({
             </div>
 
             {/* Order Information */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Thông tin đơn hàng</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Mã đơn hàng:</span>
-                    <span className="font-medium">#{orderDetail.orderId}</span>
+            <div className="bg-slate-50 p-5 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">Thông tin đơn hàng</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground font-medium">
+                      Mã đơn hàng:
+                    </span>
+                    <span className="font-semibold text-lg">
+                      #{orderDetail.orderId}
+                    </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Ngày đặt:</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground font-medium">
+                      Ngày đặt:
+                    </span>
                     <span>
                       {format(new Date(orderDetail.orderDate), "dd/MM/yyyy")}
                     </span>
                   </div>
                   {orderDetail.updatedAt && (
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground font-medium">
                         Cập nhật lần cuối:
                       </span>
                       <span>
@@ -182,8 +188,8 @@ export function OrderDetailModal({
                       </span>
                     </div>
                   )}
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground font-medium">
                       Phương thức giao hàng:
                     </span>
                     <span>
@@ -191,8 +197,8 @@ export function OrderDetailModal({
                     </span>
                   </div>
                   {orderDetail.paymentMethod && (
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground font-medium">
                         Phương thức thanh toán:
                       </span>
                       <span>{orderDetail.paymentMethod}</span>
@@ -200,32 +206,36 @@ export function OrderDetailModal({
                   )}
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">
+                    <span className="text-muted-foreground font-medium">
                       Trạng thái đơn hàng:
                     </span>
                     <Badge
-                      className={getOrderStatusColor(orderDetail.orderStatus)}
+                      className={`${getOrderStatusColor(
+                        orderDetail.orderStatus
+                      )} text-sm px-3 py-1`}
                     >
                       {getOrderStatusText(orderDetail.orderStatus)}
                     </Badge>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">
+                    <span className="text-muted-foreground font-medium">
                       Trạng thái thanh toán:
                     </span>
                     <Badge
-                      className={getPaymentStatusColor(
+                      className={`${getPaymentStatusColor(
                         orderDetail.paymentStatus
-                      )}
+                      )} text-sm px-3 py-1`}
                     >
                       {getPaymentStatusText(orderDetail.paymentStatus)}
                     </Badge>
                   </div>
                   {orderDetail.branchName && (
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Chi nhánh:</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground font-medium">
+                        Chi nhánh:
+                      </span>
                       <span>{orderDetail.branchName}</span>
                     </div>
                   )}
@@ -233,32 +243,38 @@ export function OrderDetailModal({
               </div>
             </div>
 
-            <Separator />
-
             {/* Customer Information */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">
+            <div className="bg-slate-50 p-5 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">
                 Thông tin khách hàng
               </h3>
               {orderDetail.user ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Họ tên:</span>
-                      <span>{getFullName(orderDetail.user)}</span>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground font-medium">
+                        Họ tên:
+                      </span>
+                      <span className="font-medium">
+                        {getFullName(orderDetail.user)}
+                      </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Email:</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground font-medium">
+                        Email:
+                      </span>
                       <span>{orderDetail.user.email}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground font-medium">
                         Số điện thoại:
                       </span>
                       <span>{orderDetail.user.phone}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Ngày sinh:</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground font-medium">
+                        Ngày sinh:
+                      </span>
                       <span>
                         {format(new Date(orderDetail.user.dob), "dd/MM/yyyy")}
                       </span>
@@ -266,94 +282,104 @@ export function OrderDetailModal({
                   </div>
 
                   {orderDetail.shippingAddress && (
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
+                    <div>
+                      <div className="mb-2">
+                        <span className="text-muted-foreground font-medium">
                           Địa chỉ giao hàng:
                         </span>
-                        <span className="text-right">
-                          {orderDetail.shippingAddress.addressDetail}
-                        </span>
+                      </div>
+                      <div className="p-3 bg-white rounded border">
+                        {orderDetail.shippingAddress.addressDetail}
                       </div>
                     </div>
                   )}
                 </div>
               ) : (
-                <div className="text-muted-foreground">
+                <div className="text-muted-foreground py-3">
                   Không có thông tin khách hàng
                 </div>
               )}
             </div>
 
-            <Separator />
-
             {/* Order Items */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Sản phẩm đặt hàng</h3>
+            <div className="bg-slate-50 p-5 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">Sản phẩm đặt hàng</h3>
               {orderDetail.orderItems && orderDetail.orderItems.length > 0 ? (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Sản phẩm</TableHead>
-                      <TableHead>Phiên bản</TableHead>
-                      <TableHead>Màu sắc</TableHead>
-                      <TableHead>Số lượng</TableHead>
-                      <TableHead className="text-right">Giá</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {orderDetail.orderItems.map((item) => (
-                      <TableRow key={item.orderItemId}>
-                        <TableCell className="font-medium">
-                          {item.motorbikeName}
-                        </TableCell>
-                        <TableCell>{item.variantName}</TableCell>
-                        <TableCell>{item.colorName}</TableCell>
-                        <TableCell>{item.quantity || 1}</TableCell>
-                        <TableCell className="text-right">
-                          {formatCurrency(item.price)}
-                        </TableCell>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-[30%]">Sản phẩm</TableHead>
+                        <TableHead className="w-[25%]">Phiên bản</TableHead>
+                        <TableHead className="w-[15%]">Màu sắc</TableHead>
+                        <TableHead className="w-[10%]">Số lượng</TableHead>
+                        <TableHead className="w-[20%] text-right">
+                          Giá
+                        </TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {orderDetail.orderItems.map((item) => (
+                        <TableRow key={item.orderItemId}>
+                          <TableCell className="font-medium">
+                            {item.motorbikeName}
+                          </TableCell>
+                          <TableCell>{item.variantName}</TableCell>
+                          <TableCell>{item.colorName}</TableCell>
+                          <TableCell>{item.quantity || 1}</TableCell>
+                          <TableCell className="text-right">
+                            {formatCurrency(item.price)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               ) : (
-                <div className="text-muted-foreground">
+                <div className="text-muted-foreground py-3">
                   Không có sản phẩm nào
                 </div>
               )}
             </div>
 
-            <Separator />
-
             {/* Order Summary */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Tóm tắt đơn hàng</h3>
-              <div className="space-y-2">
+            <div className="bg-slate-50 p-5 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">Tóm tắt đơn hàng</h3>
+              <div className="space-y-3 max-w-md ml-auto">
                 {orderDetail.subtotal !== null && (
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Tạm tính:</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground font-medium">
+                      Tạm tính:
+                    </span>
                     <span>{formatCurrency(orderDetail.subtotal)}</span>
                   </div>
                 )}
                 {orderDetail.shippingFee !== null && (
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground font-medium">
                       Phí giao hàng:
                     </span>
                     <span>{formatCurrency(orderDetail.shippingFee)}</span>
                   </div>
                 )}
-                <Separator />
-                <div className="flex justify-between text-lg font-semibold">
+                <Separator className="my-2" />
+                <div className="flex justify-between items-center text-lg font-semibold">
                   <span>Tổng cộng:</span>
                   <span>{formatCurrency(totalAmount)}</span>
                 </div>
               </div>
             </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-end space-x-3 pt-2">
+              <Button variant="outline" onClick={onClose}>
+                Đóng
+              </Button>
+              <Button>In hóa đơn</Button>
+            </div>
           </div>
         ) : (
-          <div className="py-8 text-center text-muted-foreground">
+          <div className="py-12 text-center text-muted-foreground">
             Không thể tải thông tin đơn hàng
           </div>
         )}
