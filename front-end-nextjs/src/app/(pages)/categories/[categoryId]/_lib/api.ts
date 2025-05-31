@@ -1,6 +1,10 @@
 // Types cho dữ liệu API
 
-import { ApiResponse, CategoryMotorbike } from "@/app/(pages)/categories/type";
+import {
+  ApiResponse,
+  Brand,
+  CategoryMotorbike,
+} from "@/app/(pages)/categories/type";
 
 export interface CategoryData {
   id: string;
@@ -54,6 +58,31 @@ export async function getMotorbikesFromCategory(
   }
 }
 
+// Hàm gọi API để lấy danh sách brands
+export async function getBrands(): Promise<Brand[]> {
+  try {
+    const response = await fetch(`http://localhost:8080/motorbikes/brands`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch brands: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching brands:", error);
+
+    // Trả về dữ liệu mẫu nếu API không hoạt động
+    return [
+      { brandId: 1, brandName: "Honda" },
+      { brandId: 2, brandName: "Yamaha" },
+      { brandId: 3, brandName: "Suzuki" },
+      { brandId: 4, brandName: "Kawasaki" },
+    ];
+  }
+}
+
 // Hàm lấy tên danh mục từ ID
 function getCategoryNameById(categoryId: string): string {
   const categories = [
@@ -86,6 +115,8 @@ function generateMockMotorbikes(categoryId: string): CategoryMotorbike[] {
         : undefined,
     brandName: brands[Math.floor(Math.random() * brands.length)],
     isNew: Math.random() > 0.8,
+    brandId: Math.floor(Math.random() * 6) + 1, // Giả sử có 6 brand
+    categoryId: Number(categoryId),
   }));
 }
 

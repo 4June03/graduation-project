@@ -1,6 +1,7 @@
 package backend.controller;
 
 
+import backend.dto.response.MotorbikeCardResponse;
 import backend.service.StatsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,13 @@ public class StatsController {
     @GetMapping("/top-selling")
     public List<Map<String, Object>> topSelling(@RequestParam(defaultValue = "5") int limit) {
         return statsService.getTopSelling(limit);
+    }
+
+    // API trả về DTO MotorbikeCardResponse
+    @GetMapping("/top-selling-cards")
+    public List<MotorbikeCardResponse> topSellingCards(
+            @RequestParam(defaultValue = "5") int limit) {
+        return statsService.getTopSellingCards(limit);
     }
 
     @GetMapping("/total-revenue")

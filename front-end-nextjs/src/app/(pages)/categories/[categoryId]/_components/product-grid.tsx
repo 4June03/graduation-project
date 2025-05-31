@@ -1,4 +1,5 @@
 import { CategoryMotorbike } from "@/app/(pages)/categories/type";
+import { EmptyState } from "@/components/client/category/EmptyState";
 import { Pagination } from "@/components/client/products/pagination";
 import { ProductCard } from "@/components/client/products/product-card";
 
@@ -18,10 +19,13 @@ export function ProductGrid({
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {(motorbikes || []).map((motorbike) => (
-          <ProductCard key={motorbike.bikeId} motorbike={motorbike} />
-        ))}
+        {motorbikes.length > 0 &&
+          (motorbikes || []).map((motorbike) => (
+            <ProductCard key={motorbike.bikeId} motorbike={motorbike} />
+          ))}
       </div>
+
+      {motorbikes.length == 0 && <EmptyState />}
 
       {/* Pagination component */}
       <Pagination

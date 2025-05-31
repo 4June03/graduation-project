@@ -1,10 +1,10 @@
-import Link from "next/link"
-import Image from "next/image"
-import { CalendarDays, ChevronRight } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import { CalendarDays, ChevronRight } from "lucide-react";
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 // Mock news data
 const featuredNews = {
@@ -18,7 +18,7 @@ const featuredNews = {
   date: "15/03/2023",
   category: "Sản phẩm mới",
   author: "Nguyễn Văn A",
-}
+};
 
 const news = Array.from({ length: 9 }, (_, i) => ({
   id: i + 2,
@@ -39,7 +39,7 @@ const news = Array.from({ length: 9 }, (_, i) => ({
   date: `${(i % 28) + 1}/0${(i % 3) + 1}/2023`,
   category: ["Sản phẩm mới", "Công nghệ", "Thị trường", "Kinh nghiệm"][i % 4],
   author: ["Nguyễn Văn A", "Trần Thị B", "Lê Văn C"][i % 3],
-}))
+}));
 
 export default function NewsPage() {
   return (
@@ -82,8 +82,12 @@ export default function NewsPage() {
                       <span className="mx-2">•</span>
                       <span>{featuredNews.author}</span>
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">{featuredNews.title}</h2>
-                    <p className="text-muted-foreground mb-6">{featuredNews.excerpt}</p>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                      {featuredNews.title}
+                    </h2>
+                    <p className="text-muted-foreground mb-6">
+                      {featuredNews.excerpt}
+                    </p>
                     <div className="mt-auto">
                       <span className="text-primary flex items-center hover:underline">
                         Đọc tiếp <ChevronRight className="h-4 w-4 ml-1" />
@@ -105,7 +109,12 @@ export default function NewsPage() {
               <Card className="overflow-hidden hover:shadow-md transition-shadow h-full">
                 <CardContent className="p-0">
                   <div className="relative h-48 w-full">
-                    <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
+                    <Image
+                      src={item.image || "/placeholder.svg"}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                    />
                     <Badge className="absolute top-3 left-3" variant="default">
                       {item.category}
                     </Badge>
@@ -115,8 +124,12 @@ export default function NewsPage() {
                       <CalendarDays className="h-4 w-4 mr-1" />
                       <span>{item.date}</span>
                     </div>
-                    <h3 className="font-semibold text-lg mb-2 line-clamp-2">{item.title}</h3>
-                    <p className="text-muted-foreground mb-3 line-clamp-3">{item.excerpt}</p>
+                    <h3 className="font-semibold text-lg mb-2 line-clamp-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground mb-3 line-clamp-3">
+                      {item.excerpt}
+                    </p>
                     <div className="text-primary flex items-center hover:underline">
                       Đọc tiếp <ChevronRight className="h-4 w-4 ml-1" />
                     </div>
@@ -128,5 +141,5 @@ export default function NewsPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }

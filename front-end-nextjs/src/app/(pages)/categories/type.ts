@@ -7,6 +7,8 @@ export interface CategoryMotorbike {
   imageUrls: string[];
   isNew?: boolean;
   totalStock?: number;
+  brandId: number;
+  categoryId: number;
 }
 
 export interface Category {
@@ -23,8 +25,8 @@ export interface ApiResponse {
 }
 
 export interface Brand {
-  id: string;
-  name: string;
+  brandId: number;
+  brandName: string;
 }
 export interface Color {
   id: string;

@@ -1,40 +1,45 @@
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Filter } from "lucide-react"
-import { FilterComponent } from "./filter-component"
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Filter } from "lucide-react";
+import { FilterComponent } from "./filter-component";
 
 interface Brand {
-  id: string
-  name: string
+  brandId: number;
+  brandName: string;
 }
 
 interface Color {
-  id: string
-  name: string
-  color: string
+  colorId: string;
+  colorName: string;
 }
 
 interface MobileFilterProps {
-  isFilterOpen: boolean
-  setIsFilterOpen: (value: boolean) => void
-  priceRange: [number, number]
-  setPriceRange: (value: [number, number]) => void
-  selectedBrands: string[]
-  toggleBrand: (brandId: string) => void
-  selectedColors: string[]
-  toggleColor: (colorId: string) => void
-  resetFilters: () => void
-  brands: Brand[]
-  colors: Color[]
-  formatPrice: (price: number) => string
+  isFilterOpen: boolean;
+  setIsFilterOpen: (value: boolean) => void;
+  selectedPriceRanges: string[];
+  togglePriceRange: (rangeId: string) => void;
+  selectedBrands: number[];
+  toggleBrand: (brandId: number) => void;
+  selectedColors: string[];
+  toggleColor: (colorId: string) => void;
+  resetFilters: () => void;
+  brands: Brand[];
+  colors: Color[];
+  formatPrice: (price: number) => string;
 }
 
 export function MobileFilter({
   isFilterOpen,
   setIsFilterOpen,
-  priceRange,
-  setPriceRange,
+  selectedPriceRanges,
+  togglePriceRange,
   selectedBrands,
   toggleBrand,
   selectedColors,
@@ -58,19 +63,16 @@ export function MobileFilter({
         </SheetHeader>
         <ScrollArea className="h-[calc(100vh-80px)] py-4">
           <FilterComponent
-            priceRange={priceRange}
-            setPriceRange={setPriceRange}
+            selectedPriceRanges={selectedPriceRanges}
+            togglePriceRange={togglePriceRange}
             selectedBrands={selectedBrands}
             toggleBrand={toggleBrand}
-            selectedColors={selectedColors}
-            toggleColor={toggleColor}
             resetFilters={resetFilters}
             brands={brands}
-            colors={colors}
             formatPrice={formatPrice}
           />
         </ScrollArea>
       </SheetContent>
     </Sheet>
-  )
+  );
 }

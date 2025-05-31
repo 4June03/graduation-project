@@ -3,6 +3,7 @@ import { getCartByUserId, getUserIdFromToken } from "./_lib/service";
 import CartClient from "./_components/cart-client";
 import { cookies } from "next/headers";
 import { parseToken } from "@/utils/jwt";
+import { redirect } from "next/navigation";
 
 // Loading component
 function CartLoading() {
@@ -36,6 +37,8 @@ export default async function CartPage() {
     if (token) {
       const payload = parseToken(token);
       userId = payload?.userId ?? null;
+    } else {
+      redirect("/auth/login");
     }
     // Fetch cart data from API
     const cartData = await getCartByUserId(userId);

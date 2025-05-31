@@ -1,5 +1,7 @@
 package backend.service;
 
+import backend.dto.response.MotorbikeCardResponse;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,4 +13,6 @@ public interface StatsService {
     Long getTotalBikesSold();
     Long getTotalCustomers();
     List<Map<String, Object>> getInventoryStatus();
+
+    List<MotorbikeCardResponse> getTopSellingCards(int limit);
 }

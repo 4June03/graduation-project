@@ -31,7 +31,7 @@ export async function getMotorbikeById(id: number): Promise<Product> {
     // Trả về dữ liệu mẫu khi có lỗi (chỉ dùng trong môi trường development)
     return {
       bikeId: 1,
-      bikeName: "Testtttttttttttttttt",
+      bikeName: "Honda",
       description: "This is an example motorbike.",
       videoUrl: "http://example.com/video",
       categoryName: "Xe số",

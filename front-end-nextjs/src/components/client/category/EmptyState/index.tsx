@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 
 interface EmptyStateProps {
-  resetFilters: () => void;
+  resetFilters?: () => void;
 }
 
 export function EmptyState({ resetFilters }: EmptyStateProps) {

@@ -1,6 +1,9 @@
 package backend.service.ServiceImpls;
 
+import backend.dto.response.MotorbikeCardResponse;
+import backend.entity.Motorbike;
 import backend.entity.Variant;
+import backend.repository.MotorBikeRepository;
 import backend.repository.StatsRepository;
 import backend.repository.VariantRepository;
 import backend.service.StatsService;
@@ -10,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.YearMonth;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.function.Function;
+
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +23,7 @@ import java.util.*;
 public class StatsServiceImpl implements StatsService {
     private StatsRepository statsRepo;
     private VariantRepository variantRepo;
-
+    private MotorBikeRepository motorBikeRepository;
 
     @Override
     public List<Map<String, Object>> getTopSelling(int limit) {
@@ -89,5 +95,35 @@ public class StatsServiceImpl implements StatsService {
             ));
         }
         return res;
+    }
+
+    @Override
+    public List<MotorbikeCardResponse> getTopSellingCards(int limit) {
+        // 1) Lấy raw kết quả [bikeId, bikeName, revenue, totalSold]
+        List<Object[]> raw = statsRepo.findTopSelling();
+
+        // 2) Lấy bikeId top N
+        List<Integer> topIds = raw.stream()
+                .limit(limit)
+                .map(row -> (Integer) row[0])
+                .collect(Collectors.toList());
+
+        if (topIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // 3) Fetch tất cả Motorbike entities theo danh sách ID
+        List<Motorbike> bikes = motorBikeRepository.findAllById(topIds);
+
+        // 4) Map theo ID để giữ thứ tự
+        Map<Integer, Motorbike> bikeMap = bikes.stream()
+                .collect(Collectors.toMap(Motorbike::getBikeId, Function.identity()));
+
+        // 5) Chuyển về DTO giữ nguyên thứ tự topIds
+        return topIds.stream()
+                .map(bikeMap::get)
+                .filter(Objects::nonNull)
+                .map(MotorbikeCardResponse::fromEntity)
+                .collect(Collectors.toList());
     }
 }

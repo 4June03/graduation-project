@@ -11,30 +11,9 @@ import { MobileFilter } from "./mobile-filter";
 import { SortDropdown } from "./sort-dropdown";
 
 import { useFetchData } from "@/hooks/useCRUD";
-import { CategoryMotorbike } from "@/app/(pages)/categories/type";
+import { Brand, CategoryMotorbike } from "@/app/(pages)/categories/type";
 import { Category } from "@/app/admin/dashboard/categories/components/categories-client";
-
-// Mock data for brands
-const brands = [
-  { id: "honda", name: "Honda" },
-  { id: "yamaha", name: "Yamaha" },
-  { id: "suzuki", name: "Suzuki" },
-  { id: "piaggio", name: "Piaggio" },
-  { id: "sym", name: "SYM" },
-  { id: "kawasaki", name: "Kawasaki" },
-];
-
-// Mock data for colors
-const colors = [
-  { id: "black", name: "Đen", color: "bg-black" },
-  { id: "white", name: "Trắng", color: "bg-white border" },
-  { id: "red", name: "Đỏ", color: "bg-red-500" },
-  { id: "blue", name: "Xanh dương", color: "bg-blue-500" },
-  { id: "green", name: "Xanh lá", color: "bg-green-500" },
-  { id: "yellow", name: "Vàng", color: "bg-yellow-500" },
-  { id: "gray", name: "Xám", color: "bg-gray-500" },
-  { id: "orange", name: "Cam", color: "bg-orange-500" },
-];
+import { priceRanges } from "@/app/(pages)/categories/[categoryId]/_components/filter-component";
 
 // Format price to VND
 function formatPrice(price: number) {
@@ -52,6 +31,7 @@ interface CategoryClientProps {
   categories: Category[];
   totalElement: number;
   totalPage: number;
+  brands: Brand[];
 }
 
 export function CategoryClient({
@@ -61,12 +41,13 @@ export function CategoryClient({
   categories,
   totalElement,
   totalPage,
+  brands = [],
 }: CategoryClientProps) {
   const [priceRange, setPriceRange] = useState<[number, number]>([
     0, 200000000,
   ]);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<number[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState("newest");
@@ -74,26 +55,32 @@ export function CategoryClient({
 
   const keys: string[] = ["motorbikes"];
 
-  // Filter products based on selected filters
   const filteredProducts = motorbikes.filter((motorbike) => {
+    // Get first variant price for filtering
+    const firstVariantPrice = motorbike.price || motorbike.price;
+
     // Filter by price range
-    if (motorbike.price < priceRange[0] || motorbike.price > priceRange[1]) {
-      return false;
+    if (selectedPriceRanges.length > 0) {
+      const isInPriceRange = selectedPriceRanges.some((rangeId) => {
+        const range = priceRanges.find((r) => r.id === rangeId);
+        if (!range) return false;
+        return (
+          firstVariantPrice >= range.min &&
+          (range.max === Number.POSITIVE_INFINITY
+            ? true
+            : firstVariantPrice <= range.max)
+        );
+      });
+      if (!isInPriceRange) return false;
     }
 
     // Filter by brand
     if (
       selectedBrands.length > 0 &&
-      !selectedBrands.includes(motorbike?.brandName.toLowerCase())
+      (motorbike.brandId == null || !selectedBrands.includes(motorbike.brandId))
     ) {
       return false;
     }
-
-    //   // For color filtering, we would need color data in the product
-    //   // This is a placeholder for when that data is available
-    // if (selectedColors.length > 0 && !selectedColors.includes(product.color)) {
-    //   return false
-    // }
 
     return true;
   });
@@ -123,13 +110,24 @@ export function CategoryClient({
     indexOfLastProduct
   );
 
+  console.log("Danh sashc sản phẩm hiện tại:", currentProducts);
+
   // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [priceRange, selectedBrands, selectedColors, sortOrder]);
+  }, [priceRange, selectedBrands, sortOrder]);
+
+  // Toggle price range selection
+  const togglePriceRange = (rangeId: string) => {
+    setSelectedPriceRanges((prev) =>
+      prev.includes(rangeId)
+        ? prev.filter((id) => id !== rangeId)
+        : [...prev, rangeId]
+    );
+  };
 
   // Toggle brand selection
-  const toggleBrand = (brandId: string) => {
+  const toggleBrand = (brandId: number) => {
     setSelectedBrands((prev) =>
       prev.includes(brandId)
         ? prev.filter((id) => id !== brandId)
@@ -137,20 +135,21 @@ export function CategoryClient({
     );
   };
 
+  // Toggle brand selection
+  // const toggleBrand = (brandId: string) => {
+  //   setSelectedBrands((prev) =>
+  //     prev.includes(brandId)
+  //       ? prev.filter((id) => id !== brandId)
+  //       : [...prev, brandId]
+  //   );
+  // };
+
   // Toggle color selection
-  const toggleColor = (colorId: string) => {
-    setSelectedColors((prev) =>
-      prev.includes(colorId)
-        ? prev.filter((id) => id !== colorId)
-        : [...prev, colorId]
-    );
-  };
 
   // Reset all filters
   const resetFilters = () => {
     setPriceRange([0, 200000000]);
     setSelectedBrands([]);
-    setSelectedColors([]);
   };
 
   // Handle page change
@@ -164,8 +163,7 @@ export function CategoryClient({
   const isFiltersDefault =
     priceRange[0] === 0 &&
     priceRange[1] === 200000000 &&
-    selectedBrands.length === 0 &&
-    selectedColors.length === 0;
+    selectedBrands.length === 0;
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -180,7 +178,7 @@ export function CategoryClient({
             />
 
             <div className="flex items-center gap-2">
-              <MobileFilter
+              {/* <MobileFilter
                 isFilterOpen={isFilterOpen}
                 setIsFilterOpen={setIsFilterOpen}
                 priceRange={priceRange}
@@ -191,9 +189,8 @@ export function CategoryClient({
                 toggleColor={toggleColor}
                 resetFilters={resetFilters}
                 brands={brands}
-                colors={colors}
                 formatPrice={formatPrice}
-              />
+              /> */}
 
               <SortDropdown sortOrder={sortOrder} setSortOrder={setSortOrder} />
             </div>
@@ -202,15 +199,12 @@ export function CategoryClient({
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="hidden lg:block">
               <FilterSidebar
-                priceRange={priceRange}
-                setPriceRange={setPriceRange}
+                selectedPriceRanges={selectedPriceRanges}
+                togglePriceRange={togglePriceRange}
                 selectedBrands={selectedBrands}
                 toggleBrand={toggleBrand}
-                selectedColors={selectedColors}
-                toggleColor={toggleColor}
                 resetFilters={resetFilters}
                 brands={brands}
-                colors={colors}
                 formatPrice={formatPrice}
                 isDisabled={isFiltersDefault}
               />
@@ -220,7 +214,7 @@ export function CategoryClient({
               <TabsContent value={categoryId} className="mt-0">
                 {currentProducts.length > 0 ? (
                   <ProductGrid
-                    motorbikes={motorbikes}
+                    motorbikes={currentProducts}
                     currentPage={currentPage}
                     totalPages={totalPage}
                     onPageChange={handlePageChange}

@@ -28,8 +28,6 @@ export const HeaderAction: FC<HeaderActionProps> = ({
   const { isLoggedIn } = useAuth();
   const router = useRouter();
   const handleLogout = () => {
-    // xóa token
-    // document.cookie = "authToken=; Max-Age=0; path=/";
     localStorage.removeItem("accessToken");
     router.push("/");
     toast.success("Đăng xuất thành công");
@@ -60,9 +58,6 @@ export const HeaderAction: FC<HeaderActionProps> = ({
           <Link href="/cart" aria-label="Cart">
             <div className="relative">
               <ShoppingCart className="h-5 w-5" />
-              <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center">
-                2
-              </Badge>
             </div>
           </Link>
         </Button>
@@ -83,11 +78,9 @@ export const HeaderAction: FC<HeaderActionProps> = ({
                 <Link href="/profile">Thông tin cá nhân</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/profile?tab=orders">Đơn hàng của tôi</Link>
+                <Link href="/profile/orders">Đơn hàng của tôi</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/favorites">Sản phẩm yêu thích</Link>
-              </DropdownMenuItem>
+
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>
                 Đăng xuất

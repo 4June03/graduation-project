@@ -26,6 +26,8 @@ public class MotorbikeCardResponse {
     private String categoryName;
     private String brandName;
     private boolean isNew;
+    private Integer brandId;
+    private Integer categoryId;
     /**
      * Chuyển từ entity Motorbike sang DTO chỉ chứa thông tin cần thiết cho card
      */
@@ -35,6 +37,8 @@ public class MotorbikeCardResponse {
         dto.setBikeName(bike.getBikeName());
         dto.setCategoryName(bike.getCategory().getCategoryName());
         dto.setBrandName(bike.getBrand().getBrandName());
+        dto.setBrandId(bike.getBrand().getBrandId());
+        dto.setCategoryId(bike.getCategory().getCategoryId());
         // Tính tổng số lượng tồn kho
         int sumStock = bike.getVariants().stream()
                 .mapToInt(Variant::getVariantStock)
