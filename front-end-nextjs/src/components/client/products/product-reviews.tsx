@@ -1,53 +1,63 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Star } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Review {
-  id: string
-  author: string
-  date: string
-  rating: number
-  title: string
-  content: string
-  helpful: number
-  notHelpful: number
+  id: string;
+  author: string;
+  date: string;
+  rating: number;
+  title: string;
+  content: string;
+  helpful: number;
+  notHelpful: number;
 }
 
 interface ProductReviewsProps {
-  reviews: Review[]
-  averageRating: number
-  totalReviews: number
+  reviews: Review[];
+  averageRating: number;
+  totalReviews: number;
 }
 
-export function ProductReviews({ reviews, averageRating, totalReviews }: ProductReviewsProps) {
-  const [expandedReviews, setExpandedReviews] = useState<string[]>([])
-  const [helpfulReviews, setHelpfulReviews] = useState<string[]>([])
-  const [notHelpfulReviews, setNotHelpfulReviews] = useState<string[]>([])
+export function ProductReviews({
+  reviews,
+  averageRating,
+  totalReviews,
+}: ProductReviewsProps) {
+  const [expandedReviews, setExpandedReviews] = useState<string[]>([]);
+  const [helpfulReviews, setHelpfulReviews] = useState<string[]>([]);
+  const [notHelpfulReviews, setNotHelpfulReviews] = useState<string[]>([]);
 
   const toggleReviewExpansion = (reviewId: string) => {
-    setExpandedReviews((prev) => (prev.includes(reviewId) ? prev.filter((id) => id !== reviewId) : [...prev, reviewId]))
-  }
+    setExpandedReviews((prev) =>
+      prev.includes(reviewId)
+        ? prev.filter((id) => id !== reviewId)
+        : [...prev, reviewId]
+    );
+  };
 
   const markReviewAsHelpful = (reviewId: string) => {
     if (!helpfulReviews.includes(reviewId)) {
-      setHelpfulReviews((prev) => [...prev, reviewId])
+      setHelpfulReviews((prev) => [...prev, reviewId]);
       // Remove from not helpful if it's there
-      setNotHelpfulReviews((prev) => prev.filter((id) => id !== reviewId))
+      setNotHelpfulReviews((prev) => prev.filter((id) => id !== reviewId));
     }
-  }
+  };
 
   const markReviewAsNotHelpful = (reviewId: string) => {
     if (!notHelpfulReviews.includes(reviewId)) {
-      setNotHelpfulReviews((prev) => [...prev, reviewId])
+      setNotHelpfulReviews((prev) => [...prev, reviewId]);
       // Remove from helpful if it's there
-      setHelpfulReviews((prev) => prev.filter((id) => id !== reviewId))
+      setHelpfulReviews((prev) => prev.filter((id) => id !== reviewId));
     }
-  }
+  };
 
   if (!reviews || reviews.length === 0) {
-    return <div className="py-4 text-center text-gray-500">No reviews available</div>
+    return (
+      <div className="py-4 text-center text-gray-500">No reviews available</div>
+    );
   }
 
   return (
@@ -59,24 +69,33 @@ export function ProductReviews({ reviews, averageRating, totalReviews }: Product
               <Star
                 key={i}
                 className={`h-5 w-5 ${
-                  i < Math.round(averageRating) ? "fill-yellow-400 text-yellow-400" : "fill-gray-200 text-gray-200"
+                  i < Math.round(averageRating)
+                    ? "fill-yellow-400 text-yellow-400"
+                    : "fill-gray-200 text-gray-200"
                 }`}
               />
             ))}
           </div>
-          <span className="text-lg font-medium">{averageRating.toFixed(1)} out of 5</span>
+          <span className="text-lg font-medium">
+            {averageRating.toFixed(1)} out of 5
+          </span>
         </div>
-        <span className="text-sm text-gray-500">Based on {totalReviews} reviews</span>
+        <span className="text-sm text-gray-500">
+          Based on {totalReviews} reviews
+        </span>
       </div>
 
       <div className="space-y-4">
         {reviews.map((review) => {
-          const isExpanded = expandedReviews.includes(review.id)
-          const isHelpful = helpfulReviews.includes(review.id)
-          const isNotHelpful = notHelpfulReviews.includes(review.id)
+          const isExpanded = expandedReviews.includes(review.id);
+          const isHelpful = helpfulReviews.includes(review.id);
+          const isNotHelpful = notHelpfulReviews.includes(review.id);
 
           return (
-            <div key={review.id} className="rounded-lg border border-gray-200 p-4">
+            <div
+              key={review.id}
+              className="rounded-lg border border-gray-200 p-4"
+            >
               <div className="flex justify-between">
                 <div>
                   <h4 className="font-medium">{review.author}</h4>
@@ -87,7 +106,9 @@ export function ProductReviews({ reviews, averageRating, totalReviews }: Product
                     <Star
                       key={i}
                       className={`h-4 w-4 ${
-                        i < review.rating ? "fill-yellow-400 text-yellow-400" : "fill-gray-200 text-gray-200"
+                        i < review.rating
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "fill-gray-200 text-gray-200"
                       }`}
                     />
                   ))}
@@ -96,7 +117,13 @@ export function ProductReviews({ reviews, averageRating, totalReviews }: Product
 
               <h3 className="mt-2 font-medium">{review.title}</h3>
               <div className="mt-1">
-                <p className={`text-gray-600 ${!isExpanded && review.content.length > 150 ? "line-clamp-2" : ""}`}>
+                <p
+                  className={`text-gray-600 ${
+                    !isExpanded && review.content.length > 150
+                      ? "line-clamp-2"
+                      : ""
+                  }`}
+                >
                   {review.content}
                 </p>
                 {review.content.length > 150 && (
@@ -131,7 +158,7 @@ export function ProductReviews({ reviews, averageRating, totalReviews }: Product
                 </button>
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -139,5 +166,5 @@ export function ProductReviews({ reviews, averageRating, totalReviews }: Product
         <Button variant="outline">Write a Review</Button>
       </div>
     </div>
-  )
+  );
 }

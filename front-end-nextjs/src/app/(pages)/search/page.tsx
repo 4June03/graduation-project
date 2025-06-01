@@ -4,15 +4,19 @@ import { SearchHeader } from "@/app/(pages)/search/_component/search-header";
 import { SearchResults } from "@/app/(pages)/search/_component/search-result";
 
 interface SearchPageProps {
-  searchParams: {
+  // searchParams: {
+  //   q?: string;
+  // };
+  searchParams: Promise<{
     q?: string;
-  };
+  }>;
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const query = searchParams.q || "";
-
-  // Fetch search results
+  // const query = searchParams.q || "";
+  // // Fetch search results
+  // const searchResults = query ? await searchMotorbikes(query) : [];
+  const { q: query = "" } = await searchParams;
   const searchResults = query ? await searchMotorbikes(query) : [];
 
   return (

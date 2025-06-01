@@ -1,13 +1,22 @@
-"use client"
+"use client";
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface SortingDropdownProps {
-  value: string
-  onValueChange: (value: string) => void
+  value: string;
+  onValueChange: (value: string) => void;
 }
 
-export function SortingDropdown({ value, onValueChange }: SortingDropdownProps) {
+export function SortingDropdown({
+  value,
+  onValueChange,
+}: SortingDropdownProps) {
   return (
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger className="w-[180px]">
@@ -22,5 +31,5 @@ export function SortingDropdown({ value, onValueChange }: SortingDropdownProps) 
         <SelectItem value="popular">Phổ biến nhất</SelectItem>
       </SelectContent>
     </Select>
-  )
+  );
 }

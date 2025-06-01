@@ -1,44 +1,50 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ProductSpecifications } from "./product-specifications"
-import { ProductFeatures } from "./product-features"
-import { ProductReviews } from "./product-reviews"
+import { useState } from "react";
+import { ProductSpecifications } from "./product-specifications";
+import { ProductFeatures } from "./product-features";
+import { ProductReviews } from "./product-reviews";
 
 interface Specification {
-  name: string
-  value: string
+  name: string;
+  value: string;
 }
 
 interface Feature {
-  id: string
-  title: string
-  description: string
+  id: string;
+  title: string;
+  description: string;
 }
 
 interface Review {
-  id: string
-  author: string
-  date: string
-  rating: number
-  title: string
-  content: string
-  helpful: number
-  notHelpful: number
+  id: string;
+  author: string;
+  date: string;
+  rating: number;
+  title: string;
+  content: string;
+  helpful: number;
+  notHelpful: number;
 }
 
 interface ProductTabsProps {
-  specifications: Specification[]
-  features: Feature[]
-  reviews: Review[]
-  averageRating: number
-  totalReviews: number
+  specifications: Specification[];
+  features: Feature[];
+  reviews: Review[];
+  averageRating: number;
+  totalReviews: number;
 }
 
-type TabType = "specifications" | "features" | "reviews"
+type TabType = "specifications" | "features" | "reviews";
 
-export function ProductTabs({ specifications, features, reviews, averageRating, totalReviews }: ProductTabsProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("specifications")
+export function ProductTabs({
+  specifications,
+  features,
+  reviews,
+  averageRating,
+  totalReviews,
+}: ProductTabsProps) {
+  const [activeTab, setActiveTab] = useState<TabType>("specifications");
 
   return (
     <div className="mt-8">
@@ -78,12 +84,18 @@ export function ProductTabs({ specifications, features, reviews, averageRating, 
       </div>
 
       <div className="py-6">
-        {activeTab === "specifications" && <ProductSpecifications specifications={specifications} />}
+        {activeTab === "specifications" && (
+          <ProductSpecifications specifications={specifications} />
+        )}
         {activeTab === "features" && <ProductFeatures features={features} />}
         {activeTab === "reviews" && (
-          <ProductReviews reviews={reviews} averageRating={averageRating} totalReviews={totalReviews} />
+          <ProductReviews
+            reviews={reviews}
+            averageRating={averageRating}
+            totalReviews={totalReviews}
+          />
         )}
       </div>
     </div>
-  )
+  );
 }

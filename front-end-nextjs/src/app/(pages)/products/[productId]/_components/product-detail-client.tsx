@@ -59,16 +59,6 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
       const response = await addToCart(cartData);
 
-      // Trong thực tế, đây sẽ là một API call
-      // const response = await fetch("localhost:8080/cart", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(cartData),
-      // });
-      // const result = await response.json();
-
       // Giả lập API call thành công
     } catch (error) {
       if (error instanceof Error) {

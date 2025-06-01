@@ -24,7 +24,7 @@ const categories = [
     count: 18,
   },
   {
-    id: 4,
+    id: 9,
     name: "Xe phân khối lớn",
     image: "/images/sport-cate2.png",
     count: 12,
@@ -36,7 +36,7 @@ const categories = [
     count: 8,
   },
   {
-    id: 6,
+    id: 10,
     name: "Xe địa hình",
     image: "/images/land-cate.png",
     count: 15,

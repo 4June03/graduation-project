@@ -3,9 +3,9 @@ import { useFetchData } from "@/hooks/useCRUD";
 import { MotorcycleForm } from "../../components/motorcycle-form";
 
 interface EditMotorcyclePageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // Mock function to fetch motorcycle data by ID
@@ -19,7 +19,11 @@ async function getMotorcycleById(id: string) {
 export default async function EditMotorcyclePage({
   params,
 }: EditMotorcyclePageProps) {
-  const res = await getMotorcycleById(params.id);
+  // Await the params to get the motorcycle ID
+  const { id: bikeId } = await params;
+
+  // const res = await getMotorcycleById(params.id);
+  const res = await getMotorcycleById(bikeId);
   console.log("Motorcycle data:", res);
 
   return (

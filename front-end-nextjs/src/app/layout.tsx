@@ -33,21 +33,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <ThemeProvider
+        {/* <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
-        >
-          <QueryProvider>
-            <AuthProvider>
-              <HeaderContainer />
-              {children}
-              <Toaster richColors />
-              <FooterContainer />
-            </AuthProvider>
-          </QueryProvider>
-        </ThemeProvider>
+        > */}
+        <QueryProvider>
+          <AuthProvider>
+            <HeaderContainer />
+            {children}
+            <Toaster richColors />
+            <FooterContainer />
+          </AuthProvider>
+        </QueryProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

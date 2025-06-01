@@ -1,14 +1,14 @@
-import { formatCurrency } from "@/lib/utils"
+import { formatCurrency } from "@/app/admin/dashboard/_lib/stats-service";
 
 interface ProductInfoProps {
-  name: string
-  brand: string
-  price: number
-  originalPrice?: number
-  rating: number
-  reviewCount: number
-  availability: "in-stock" | "low-stock" | "out-of-stock"
-  sku: string
+  name: string;
+  brand: string;
+  price: number;
+  originalPrice?: number;
+  rating: number;
+  reviewCount: number;
+  availability: "in-stock" | "low-stock" | "out-of-stock";
+  sku: string;
 }
 
 export function ProductInfo({
@@ -21,15 +21,17 @@ export function ProductInfo({
   availability,
   sku,
 }: ProductInfoProps) {
-  const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0
+  const discount = originalPrice
+    ? Math.round(((originalPrice - price) / originalPrice) * 100)
+    : 0;
 
   const availabilityMap = {
     "in-stock": { label: "In Stock", color: "text-green-600" },
     "low-stock": { label: "Low Stock", color: "text-amber-600" },
     "out-of-stock": { label: "Out of Stock", color: "text-red-600" },
-  }
+  };
 
-  const { label, color } = availabilityMap[availability]
+  const { label, color } = availabilityMap[availability];
 
   return (
     <div className="space-y-4">
@@ -43,7 +45,9 @@ export function ProductInfo({
           {[...Array(5)].map((_, i) => (
             <svg
               key={i}
-              className={`h-5 w-5 ${i < rating ? "text-yellow-400" : "text-gray-300"}`}
+              className={`h-5 w-5 ${
+                i < rating ? "text-yellow-400" : "text-gray-300"
+              }`}
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -61,20 +65,25 @@ export function ProductInfo({
         <span className="text-2xl font-bold">{formatCurrency(price)}</span>
         {originalPrice && (
           <>
-            <span className="text-lg text-gray-500 line-through">{formatCurrency(originalPrice)}</span>
-            <span className="rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-800">{discount}% OFF</span>
+            <span className="text-lg text-gray-500 line-through">
+              {formatCurrency(originalPrice)}
+            </span>
+            <span className="rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-800">
+              {discount}% OFF
+            </span>
           </>
         )}
       </div>
 
       <div className="flex items-center space-x-4 text-sm">
         <div>
-          <span className="font-medium">Availability:</span> <span className={color}>{label}</span>
+          <span className="font-medium">Availability:</span>{" "}
+          <span className={color}>{label}</span>
         </div>
         <div>
           <span className="font-medium">SKU:</span> {sku}
         </div>
       </div>
     </div>
-  )
+  );
 }

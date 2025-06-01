@@ -6,15 +6,15 @@ import OrderSuccessLoading from "./loading";
 import OrderSuccessClient from "@/app/(pages)/order-success/_component/order-success-client";
 
 interface OrderSuccessPageProps {
-  searchParams: {
+  searchParams: Promise<{
     orderId?: string;
-  };
+  }>;
 }
 
 export default async function OrderSuccessPage({
   searchParams,
 }: OrderSuccessPageProps) {
-  const { orderId } = searchParams;
+  const { orderId } = await searchParams;
 
   if (!orderId) {
     notFound();

@@ -145,7 +145,7 @@ export function ProfileClient({ initialUserData }: ProfileClientProps) {
         </CardHeader>
         <CardContent>
           <form className="space-y-6">
-            <div className="flex flex-col items-center gap-4 mb-6">
+            {/* <div className="flex flex-col items-center gap-4 mb-6">
               <Avatar className="h-24 w-24">
                 <AvatarImage
                   src={
@@ -161,7 +161,7 @@ export function ProfileClient({ initialUserData }: ProfileClientProps) {
               <Button variant="outline" size="sm">
                 Thay đổi ảnh
               </Button>
-            </div>
+            </div> */}
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">

@@ -65,14 +65,18 @@ export const useLogin = () => {
 };
 
 export const useRegister = () => {
+  const router = useRouter();
   return useMutation<registerResponse, Error, registerRequest>({
     mutationFn: register,
     onSuccess: (data) => {
       console.log("đăng ký thành công", data.message);
+      toast.success("Đăng ký thành công, vui lòng đăng nhập");
+      router.push("/auth/login");
     },
 
     onError: (error) => {
       console.log("Lỗi đăng ký, " + error.message);
+      toast.error("Đăng ký thất bại, vui lòng thử lại");
     },
   });
 };

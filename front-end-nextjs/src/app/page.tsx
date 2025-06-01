@@ -1,7 +1,7 @@
 import { CategorySection } from "@/app/_components/category-section";
 import { FeaturedProductsSection } from "@/app/_components/featured-products-section";
+import { GallerySection } from "@/app/_components/gallery-selection";
 import { HeroBanner } from "@/app/_components/hero-banner";
-import { NewsPromotionsSection } from "@/app/_components/news-promotions-section";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
       <HeroBanner />
       <CategorySection />
       <FeaturedProductsSection />
-      <NewsPromotionsSection />
+      <GallerySection />
     </main>
   );
 }

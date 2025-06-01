@@ -1,11 +1,17 @@
-import Link from "next/link"
-import Image from "next/image"
-import { CalendarDays, ChevronRight, Share2, MessageSquare, ThumbsUp } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import {
+  CalendarDays,
+  ChevronRight,
+  Share2,
+  MessageSquare,
+  ThumbsUp,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
 
 // Mock news data
 const news = {
@@ -59,9 +65,13 @@ const news = {
       date: "01/03/2023",
     },
   ],
-}
+};
 
-export default function NewsDetailPage({ params }: { params: { newsId: string } }) {
+export default function NewsDetailPage({
+  params,
+}: {
+  params: Promise<{ newsId: string }>;
+}) {
   return (
     <main className="flex min-h-screen flex-col">
       <div className="bg-muted/30 py-6">
@@ -105,11 +115,19 @@ export default function NewsDetailPage({ params }: { params: { newsId: string } 
               </div>
 
               <div className="relative h-[300px] md:h-[400px] w-full">
-                <Image src={news.image || "/placeholder.svg"} alt={news.title} fill className="object-cover" />
+                <Image
+                  src={news.image || "/placeholder.svg"}
+                  alt={news.title}
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               <div className="p-6">
-                <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: news.content }}></div>
+                <div
+                  className="prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: news.content }}
+                ></div>
 
                 <div className="flex flex-wrap gap-2 mt-8">
                   {news.tags.map((tag) => (
@@ -159,8 +177,12 @@ export default function NewsDetailPage({ params }: { params: { newsId: string } 
                             />
                           </div>
                           <div className="p-3 w-2/3">
-                            <div className="text-xs text-muted-foreground mb-1">{item.date}</div>
-                            <h3 className="font-medium text-sm line-clamp-2">{item.title}</h3>
+                            <div className="text-xs text-muted-foreground mb-1">
+                              {item.date}
+                            </div>
+                            <h3 className="font-medium text-sm line-clamp-2">
+                              {item.title}
+                            </h3>
                           </div>
                         </div>
                       </CardContent>
@@ -179,10 +201,18 @@ export default function NewsDetailPage({ params }: { params: { newsId: string } 
             <div className="bg-white rounded-lg shadow-sm p-6 mt-6">
               <h2 className="text-xl font-bold mb-4">Danh mục</h2>
               <div className="space-y-2">
-                {["Sản phẩm mới", "Công nghệ", "Thị trường", "Kinh nghiệm", "Sự kiện"].map((category) => (
+                {[
+                  "Sản phẩm mới",
+                  "Công nghệ",
+                  "Thị trường",
+                  "Kinh nghiệm",
+                  "Sự kiện",
+                ].map((category) => (
                   <Link
                     key={category}
-                    href={`/news/category/${category.toLowerCase().replace(/\s+/g, "-")}`}
+                    href={`/news/category/${category
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
                     className="flex items-center justify-between py-2 border-b hover:text-primary"
                   >
                     <span>{category}</span>
@@ -195,5 +225,5 @@ export default function NewsDetailPage({ params }: { params: { newsId: string } 
         </div>
       </div>
     </main>
-  )
+  );
 }

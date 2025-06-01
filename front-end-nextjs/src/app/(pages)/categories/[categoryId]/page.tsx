@@ -8,11 +8,11 @@ import { CategoryClient } from "./_components/category-client";
 export default async function CategoryPage({
   params,
 }: {
-  params: { categoryId: string };
+  params: Promise<{ categoryId: string }>;
 }) {
   // Fetch dữ liệu từ API
 
-  const { categoryId } = params;
+  const { categoryId } = await params;
   const { motorbikes, totalElement, totalPage, categoryName } =
     await getMotorbikesFromCategory(categoryId);
   // const categories = await getAllCategories();
