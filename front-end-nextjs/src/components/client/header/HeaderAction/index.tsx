@@ -12,7 +12,7 @@ import {
 
 import { Heart, Search, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { FC, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -29,7 +29,9 @@ export const HeaderAction: FC<HeaderActionProps> = ({
   const router = useRouter();
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
-    router.push("/");
+    document.cookie = "accessToken=; Max-Age=0; path=/;";
+
+    router.push("/auth/login");
     toast.success("Đăng xuất thành công");
     window.location.reload();
   };

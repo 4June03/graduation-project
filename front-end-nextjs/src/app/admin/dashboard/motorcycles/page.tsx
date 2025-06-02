@@ -254,9 +254,7 @@ export default function MotorcyclesPage() {
                             variant="outline"
                             size="sm"
                             onClick={() =>
-                              router.push(
-                                `/admin/dashboard/motorcycles/edit/${motorcycle.bikeId}`
-                              )
+                              router.push(`/products/${motorcycle.bikeId}`)
                             }
                           >
                             Chi tiết

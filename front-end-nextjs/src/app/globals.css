@@ -119,3 +119,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+[data-nextjs-route-problems],
+.__nextjs-dev_indicators_issues {
+  display: none !important;
+}

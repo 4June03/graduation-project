@@ -75,7 +75,7 @@ export default function NewsDetailPage({
   return (
     <main className="flex min-h-screen flex-col">
       <div className="bg-muted/30 py-6">
-        <div className="container">
+        <div className="container w-full mx-auto">
           <div className="flex items-center text-sm text-muted-foreground">
             <Link href="/" className="hover:text-foreground">
               Trang chủ
@@ -90,7 +90,7 @@ export default function NewsDetailPage({
         </div>
       </div>
 
-      <div className="container py-8">
+      <div className="container py-8 w-full mx-auto">
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -114,14 +114,14 @@ export default function NewsDetailPage({
                 </div>
               </div>
 
-              <div className="relative h-[300px] md:h-[400px] w-full">
+              {/* <div className="relative h-[300px] md:h-[400px] w-full">
                 <Image
                   src={news.image || "/placeholder.svg"}
                   alt={news.title}
                   fill
                   className="object-cover"
                 />
-              </div>
+              </div> */}
 
               <div className="p-6">
                 <div
@@ -160,7 +160,7 @@ export default function NewsDetailPage({
           </div>
 
           <div>
-            <div className="bg-white rounded-lg shadow-sm p-6">
+            {/* <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-xl font-bold mb-4">Tin tức liên quan</h2>
               <div className="space-y-4">
                 {news.relatedNews.map((item) => (
@@ -196,7 +196,7 @@ export default function NewsDetailPage({
                   <Link href="/news">Xem tất cả tin tức</Link>
                 </Button>
               </div>
-            </div>
+            </div> */}
 
             <div className="bg-white rounded-lg shadow-sm p-6 mt-6">
               <h2 className="text-xl font-bold mb-4">Danh mục</h2>

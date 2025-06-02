@@ -13,11 +13,12 @@ export function CategoryTabs({
 }: CategoryTabsProps) {
   return (
     <TabsList className="overflow-x-auto">
-      <TabsTrigger value="all" asChild>
+      {/* <TabsTrigger value="all" asChild>
         <Link href="/categories/all">Tất cả</Link>
-      </TabsTrigger>
+      </TabsTrigger> */}
       {categories.map((category) => (
         <TabsTrigger
+          className="px-10"
           key={category.categoryId}
           value={category.categoryId.toString()}
           asChild

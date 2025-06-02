@@ -35,7 +35,7 @@ const news = Array.from({ length: 9 }, (_, i) => ({
   ][i],
   excerpt:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.",
-  image: "/placeholder.svg?height=300&width=500",
+  // image: "/placeholder.svg?height=300&width=500",
   date: `${(i % 28) + 1}/0${(i % 3) + 1}/2023`,
   category: ["Sản phẩm mới", "Công nghệ", "Thị trường", "Kinh nghiệm"][i % 4],
   author: ["Nguyễn Văn A", "Trần Thị B", "Lê Văn C"][i % 3],
@@ -64,7 +64,7 @@ export default function NewsPage() {
             <Card className="overflow-hidden hover:shadow-md transition-shadow">
               <CardContent className="p-0">
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="relative h-[300px] md:h-auto">
+                  {/* <div className="relative h-[300px] md:h-auto">
                     <Image
                       src={featuredNews.image || "/placeholder.svg"}
                       alt={featuredNews.title}
@@ -74,7 +74,7 @@ export default function NewsPage() {
                     <Badge className="absolute top-4 left-4" variant="default">
                       {featuredNews.category}
                     </Badge>
-                  </div>
+                  </div> */}
                   <div className="p-6 flex flex-col justify-center">
                     <div className="flex items-center text-sm text-muted-foreground mb-3">
                       <CalendarDays className="h-4 w-4 mr-1" />
@@ -108,7 +108,7 @@ export default function NewsPage() {
             <Link key={item.id} href={`/news/${item.id}`}>
               <Card className="overflow-hidden hover:shadow-md transition-shadow h-full">
                 <CardContent className="p-0">
-                  <div className="relative h-48 w-full">
+                  {/* <div className="relative h-48 w-full">
                     <Image
                       src={item.image || "/placeholder.svg"}
                       alt={item.title}
@@ -118,7 +118,7 @@ export default function NewsPage() {
                     <Badge className="absolute top-3 left-3" variant="default">
                       {item.category}
                     </Badge>
-                  </div>
+                  </div> */}
                   <div className="p-4">
                     <div className="flex items-center text-sm text-muted-foreground mb-2">
                       <CalendarDays className="h-4 w-4 mr-1" />
